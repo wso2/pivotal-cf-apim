@@ -12,7 +12,7 @@ service<http> serviceBroker {
 
         json catalog = {"services":[
                                    {"id":"wso2-apim-service-broker",
-                                       "name":"WSO2 API-M Service Broker",
+                                       "name":"wso2-apim",
                                        "description":"WSO2 API-M service broker for Pivotal CloudFoundry",
                                        "tags":["wso2", "api"],
                                        "requires":[],
@@ -28,7 +28,7 @@ service<http> serviceBroker {
                                        "plan_updateable":false,
                                        "plans":[
                                                {"id":"1",
-                                                   "name":"Default Plan",
+                                                   "name":"default",
                                                    "description":"Default plan without any costs",
                                                    "max_storage_tb":0,
                                                    "metadata":{
