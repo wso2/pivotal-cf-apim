@@ -7,14 +7,14 @@ This repository contains CloudFoundry service broker for WSO2 API Manager. The s
 - Build broker service API using the following command:
   
   ````
-  $ ballerina build service broker-service.bal
+  $ ballerina build service wso2apim/cf/service-broker/
   ````
   
 - Create broker service API Docker image using the following command:
 
   ````
   $ docker_image=<repository>/<image-name>:<version>
-  $ ballerina docker broker-service.bsz -t ${docker_image} -y 
+  $ ballerina docker servicebroker.bsz -t ${docker_image} -y 
   ````
   
 - Push broker service API Docker image to a Docker registry:
@@ -74,7 +74,8 @@ This repository contains CloudFoundry service broker for WSO2 API Manager. The s
 - Bind WSO2 API-M service to an application using the following command:
 
   ````
-  cf bind-service <application-name> wso2-apim
+  parameters='{ "apiName":"foo", "apiVersion": "v1.0", "contextPath": "/foo", "serviceEndpoint": "http://foo.org", "serviceEndpointUsername": "admin", "serviceEndpointPassword": "admin"}'
+  cf bind-service <application-name> wso2-apim -c ${parameters}
   Binding service wso2-apim to app spring-music in org pcfdev-org / space pcfdev-space as admin...
   OK
   TIP: Use 'cf restage spring-music' to ensure your env variable changes take effect
