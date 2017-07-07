@@ -32,7 +32,7 @@ This repository contains CloudFoundry service broker for WSO2 API Manager. The s
 - Create service broker using the following command:
 
   ````
-  $ cf create-service-broker wso2-apim <username> <password> <broker-service-api-url>
+  $ cf create-service-broker wso2-apim <broker-service-api-username> <broker-service-api-password> <broker-service-api-url>
   ````
   
 - Find WSO2 API-M service name and plan name using the following command:
