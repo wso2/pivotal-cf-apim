@@ -21,6 +21,8 @@ service<http> serviceBroker {
     @http:Path {value:"/catalog"}
     resource catalog (message m) {
 
+        system:println("HTTP GET /catalog");
+
         json catalog = {"services":[
                                    {"id":"wso2-apim-service-broker",
                                        "name":"wso2-apim",
@@ -135,12 +137,12 @@ service<http> serviceBroker {
         string serviceEndpointPassword = strings:valueOf(parameters.serviceEndpointPassword);
 
         string token = wso2apimclient:getAccessToken(tokenEndpoint, username, password, clientId, clientSecret);
-        json tags = [bindingId];
+        string reference = createReference(bindingId);
 
         string apiId = "";
         string error = "";
         apiId, error = wso2apimclient:createApi(publisherEndpoint, token, apiName, apiVersion, contextPath, serviceEndpoint,
-                                 serviceEndpointUsername, serviceEndpointPassword, tags);
+                                 serviceEndpointUsername, serviceEndpointPassword, reference);
         if (apiId == "") {
             json payload = { "error": error };
             http:setStatusCode(responseMessage, 400);
@@ -172,14 +174,39 @@ service<http> serviceBroker {
 
         // Find API ID
         string apiId = "";
+        string apiName = "";
         string error = "";
-        apiId, error = wso2apimclient:getApiIdByTag(bindingId);
+        string reference = createReference(bindingId);
+        string token = wso2apimclient:getAccessToken(tokenEndpoint, username, password, clientId, clientSecret);
 
-        // TODO: Implement API deletion logic
-        message response = {};
+        message responseMessage = {};
+        apiId, apiName, error = wso2apimclient:getApiIdNameByReference(publisherEndpoint, token, reference);
+        if(apiId == "") {
+            json payload = { "error": "Could not find API with binding id " + bindingId };
+            http:setStatusCode(responseMessage, 404);
+            messages:setJsonPayload(responseMessage, payload);
+            reply responseMessage;
+        }
+        if(error != "") {
+            json payload = { "error": error };
+            http:setStatusCode(responseMessage, 400);
+            messages:setJsonPayload(responseMessage, payload);
+            reply responseMessage;
+        }
+
+        boolean success = false;
+        success, error = wso2apimclient:deleteApi(publisherEndpoint, token, apiId, apiName);
+        if(!success) {
+            json payload = { "error": error };
+            http:setStatusCode(responseMessage, 400);
+            messages:setJsonPayload(responseMessage, payload);
+            reply responseMessage;
+        }
+
         json payload = {};
-        messages:setJsonPayload(response, payload);
-        reply response;
+        http:setStatusCode(responseMessage, 200);
+        messages:setJsonPayload(responseMessage, payload);
+        reply responseMessage;
     }
 
     @http:DELETE {}

@@ -4,6 +4,7 @@ import ballerina.lang.messages;
 import ballerina.net.http;
 import ballerina.lang.system;
 import ballerina.lang.strings;
+import ballerina.lang.jsons;
 import ballerina.utils;
 
 function getAccessToken (string tokenEndpoint, string username, string password, string clientId, string clientSecret) (string) {
@@ -23,6 +24,7 @@ function getAccessToken (string tokenEndpoint, string username, string password,
 
     if (http:getStatusCode(responseMessage) == 200) {
         json response = messages:getJsonPayload(responseMessage);
+        system:println(response.access_token);
         return strings:valueOf(response.access_token);
     } else {
         system:println("Error: Could not acquire an access token!");
@@ -33,7 +35,7 @@ function getAccessToken (string tokenEndpoint, string username, string password,
 
 function createApi (string publisherEndpoint, string token, string apiName,
                     string apiVersion, string contextPath, string serviceEndpoint,
-                    string serviceUsername, string servicePassword, json tags) (string apiId, string error) {
+                    string serviceUsername, string servicePassword, string reference) (string apiId, string error) {
 
     system:println("Creating API " + apiName + "...");
 
@@ -45,7 +47,7 @@ function createApi (string publisherEndpoint, string token, string apiName,
 
     json payload = {
                        "name":apiName,
-                       "description":"An API generated using CloudFoundry service broker for WSO2 API Manager.\r\n",
+                       "description":"An API generated using CloudFoundry service broker for WSO2 API Manager.\r\n" + reference,
                        "context":contextPath,
                        "version":apiVersion,
                        "provider":"WSO2",
@@ -60,7 +62,7 @@ function createApi (string publisherEndpoint, string token, string apiName,
                                    "http",
                                    "https"
                                    ],
-                       "tags": tags,
+                       "tags": [],
                        "tiers":["Unlimited"],
                        "maxTps":{
                                     "sandbox":5000,
@@ -161,8 +163,36 @@ function deleteApi (string publisherEndpoint, string token, string apiId, string
     }
 }
 
-function getApiIdByTag(string tag) (string apiId, string error) {
-    return "", "";
+function getApiIdNameByReference(string publisherEndpoint, string token, string reference) (string apiId, string apiName, string error) {
+    system:println("Finding API by reference " + reference + "...");
+
+    message requestMessage = {};
+    messages:setHeader(requestMessage, "Authorization", "Bearer " + token);
+
+    http:ClientConnector publisherApi = create http:ClientConnector(publisherEndpoint + "/v0.11/apis/");
+    message responseMessage = http:ClientConnector.get(publisherApi, "", requestMessage);
+    system:println(responseMessage);
+
+    if (http:getStatusCode(responseMessage) == 200) {
+        json response = messages:getJsonPayload(responseMessage);
+        int i = 0;
+        while(i < jsons:getInt(response.list, "$.length()")) {
+            var api = response.list[i];
+            system:println("description = " + strings:valueOf(api.description));
+            system:println("reference = " + reference);
+
+            if(strings:contains(strings:valueOf(api.description), reference)) {
+                return strings:valueOf(api.id), strings:valueOf(api.name), "";
+            }
+            i = i + 1;
+        }
+        return "", "", "";
+    } else {
+        error = messages:getStringPayload(responseMessage);
+        system:println("Error: Could not retrieve APIs");
+        system:println(error);
+        return "", "", error;
+    }
 }
 
 function setBasicAuthHeader (message m, string username, string password) {

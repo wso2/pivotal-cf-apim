@@ -10,3 +10,7 @@ function createErrorResponse(string errorMessage) (message) {
     messages:setJsonPayload(responseMessage, error);
     return responseMessage;
 }
+
+function createReference(string bindingId) (string) {
+    return "[binding-id:" + bindingId + "]";
+}
