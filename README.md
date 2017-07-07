@@ -7,7 +7,7 @@ This repository contains CloudFoundry service broker for WSO2 API Manager. The s
 - Build broker service API using the following command:
   
   ````
-  $ ballerina build service wso2apim/cf/service-broker/
+  $ ballerina build service wso2apim/cf/servicebroker/
   ````
   
 - Create broker service API Docker image using the following command:
