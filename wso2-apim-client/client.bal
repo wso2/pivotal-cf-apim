@@ -15,7 +15,7 @@ function main (string[] args) {
 
     string publisherEndpoint = system:getEnv("WSO2_APIM_PUBLISHER_ENDPOINT");
     string serviceEndpoint = "http://foo.org/bar";
-    createApi(publisherEndpoint, token, "foo", "v1.0", "/foo", serviceEndpoint, "admin", "admin");
+    createApi(publisherEndpoint, token, "bar", "v1.0", "/bar", serviceEndpoint, "admin", "admin");
 }
 
 function getAccessToken (string tokenEndpoint, string username, string password, string clientId, string clientSecret) (string) {
@@ -32,14 +32,20 @@ function getAccessToken (string tokenEndpoint, string username, string password,
 
     http:ClientConnector tokenApi = create http:ClientConnector(tokenEndpoint);
     message responseMessage = http:ClientConnector.post(tokenApi, "", requestMessage);
-    system:println(responseMessage);
-    json response = messages:getJsonPayload(responseMessage);
-    return strings:valueOf(response.access_token);
+
+    if(http:getStatusCode(responseMessage) == 200) {
+        json response = messages:getJsonPayload(responseMessage);
+        return strings:valueOf(response.access_token);
+    } else {
+        system:println("Error: Could not acquire an access token!");
+        system:println(messages:getStringPayload(responseMessage));
+        return "";
+    }
 }
 
 function createApi (string publisherEndpoint, string token, string apiName,
                     string apiVersion, string contextPath, string serviceEndpoint,
-                    string serviceUsername, string servicePassword) {
+                    string serviceUsername, string servicePassword) (boolean) {
 
     system:println("Creating API " + apiName + "...");
 
@@ -116,7 +122,14 @@ function createApi (string publisherEndpoint, string token, string apiName,
 
     http:ClientConnector publisherApi = create http:ClientConnector(publisherEndpoint);
     message responseMessage = http:ClientConnector.post(publisherApi, "", requestMessage);
-    system:println(responseMessage);
+    if(http:getStatusCode(responseMessage) == 201) {
+        system:println("API " + apiName + " created successfully");
+        return true;
+    } else {
+        system:println("Error: Could not create API " + apiName);
+        system:println(messages:getStringPayload(responseMessage));
+        return false;
+    }
 }
 
 function setBasicAuthHeader (message m, string username, string password) {
