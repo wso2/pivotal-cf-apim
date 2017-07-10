@@ -2,7 +2,7 @@
 
 This repository contains CloudFoundry (CF) service broker for WSO2 API Manager. The service broker API has been implemented using Ballerina and it can be run on CF as an application using Docker. The servce broker does not provision WSO2 API Manager, rather it points to an existing deployment.
 
-Refer [Quick Start](#Quick Start) for trying this out on a local machine with [PCF Dev](https://pivotal.io/pcf-dev) and [Installation](#Installation) for installing this on an existing CF environment.
+Refer [Quick Start](#quick-start) for trying this out on a local machine with [PCF Dev](https://pivotal.io/pcf-dev) and [Installation](#installation) for installing this on an existing CF environment.
 
 ## Quick Start
 
