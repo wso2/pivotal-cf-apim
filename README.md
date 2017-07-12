@@ -8,10 +8,10 @@ Refer [Quick Start](#quick-start) for trying this out on a local machine with [P
 
 The following prerequisites are needed for the quick start:
 
- - [PCF Dev] v1.10((https://pivotal.io/platform/pcf-tutorials/getting-started-with-pivotal-cloud-foundry-dev/install-pcf-dev)
+ - [PCF Dev v1.10](https://pivotal.io/platform/pcf-tutorials/getting-started-with-pivotal-cloud-foundry-dev/install-pcf-dev)
  - [Java Development Kit (JDK) 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
  - [WSO2 API Manager v2.1.0](http://wso2.com/api-management/) distribution
- - [Ballerina](https://ballerinalang.org/) v0.89 runtime distribution
+ - [Ballerina v0.89](https://ballerinalang.org/) runtime distribution
 
 ## Quick Start
 
@@ -56,7 +56,7 @@ The quick start provides steps for installing WSO2 API Manager service broker on
     "owner": "admin",
     "grantType": "password refresh_token",
     "saasApp": true
-}' http://<wso2-apim-hostname>:9763/client-registration/v0.11/register
+  }' http://<wso2-apim-hostname>:9763/client-registration/v0.11/register
   ````
 
 - Expose following environment variables:
@@ -127,7 +127,7 @@ The quick start provides steps for installing WSO2 API Manager service broker on
   OK
   ````
 
-- Deploy spring music application on CF by refering [this](https://github.com/cloudfoundry-samples/spring-music).
+- Deploy sample spring music application on CF by following [this github repository](https://github.com/cloudfoundry-samples/spring-music).
 
 - List applications using the following command:
 
@@ -164,13 +164,13 @@ The following prerequisites are needed to install CloudFoundry service broker fo
 
  - [Java Development Kit (JDK) 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
  - [WSO2 API Manager v2.1.0](http://wso2.com/api-management/) distribution
- - [Ballerina](https://ballerinalang.org/) v0.89 tools distribution
+ - [Ballerina v0.89](https://ballerinalang.org/) tools distribution
  - A CloudFoundry environment
  - [Docker](http://docker.com/) runtime
 
 ## Installation
 
-The installation provides steps for installing WSO2 API Manager service broker on an existing CloudFoundry environment.
+This section provides steps for installing WSO2 API Manager service broker on an existing CloudFoundry environment.
 
 - Download Ballerina tools distribution from [ballerinalang.org](https://ballerinalang.org/) and add it's bin folder path to the PATH variable:
   
@@ -204,10 +204,10 @@ The installation provides steps for installing WSO2 API Manager service broker o
     "owner": "admin",
     "grantType": "password refresh_token",
     "saasApp": true
-}' http://<wso2-apim-hostname>:9763/client-registration/v0.11/register
+  }' http://<wso2-apim-hostname>:9763/client-registration/v0.11/register
   ````
 
-- Build broker service API using the following command:
+- Build service broker API using the following command:
   
   ````
   $ cd 
@@ -215,22 +215,22 @@ The installation provides steps for installing WSO2 API Manager service broker o
   ````
   
 - Create a Docker repository either in [Docker Hub](https://hub.docker.com/) or any other Docker registry that is not secured. 
-  Currently, [CloudFoundry does not support](https://docs.pivotal.io/pivotalcf/1-10/adminguide/docker.html) using Docker registries that require user credentials. Then, note down the repository name for the next step.
+  Currently, [CloudFoundry does not support](https://docs.pivotal.io/pivotalcf/1-10/adminguide/docker.html) using Docker registries that require user credentials. Note down the repository name for the next step.
 
-- Create broker service API Docker image using the following command:
+- Create service broker API Docker image using the following command:
 
   ````
   $ docker_image=<repository>/wso2-apim-cf-service-broker-api:1.0.0
   $ ballerina docker servicebroker.bsz -t ${docker_image} -y 
   ````
   
-- Push broker service API Docker image to a Docker registry:
+- Push service broker API Docker image to a Docker registry:
 
   ````
   $ docker push ${docker_image}
   ````
   
-- Push broker service API to CloudFoundry as an application:
+- Push service broker API to CloudFoundry as an application:
 
   ````
   $ cf push wso2-apim-cf-service-broker-api --docker-image ${docker_image}
