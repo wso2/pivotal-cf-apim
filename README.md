@@ -4,6 +4,11 @@ This repository contains CloudFoundry (CF) service broker for WSO2 API Manager. 
 
 Refer [Quick Start](#quick-start) for trying this out on a local machine with [PCF Dev](https://pivotal.io/pcf-dev) and [Installation](#installation) for installing this on an existing CF environment.
 
+## Deployment Architecture
+
+The following diagram illustrates the deployment architecture:
+![](images/deployment-architecture.png)
+
 ## Quick Start Prerequisites
 
 The following prerequisites are needed for the quick start:
