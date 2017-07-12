@@ -4,6 +4,15 @@ This repository contains CloudFoundry (CF) service broker for WSO2 API Manager. 
 
 Refer [Quick Start](#quick-start) for trying this out on a local machine with [PCF Dev](https://pivotal.io/pcf-dev) and [Installation](#installation) for installing this on an existing CF environment.
 
+## Quick Start Prerequisites
+
+The following prerequisites are needed for the quick start:
+
+ - [PCF Dev] v1.10((https://pivotal.io/platform/pcf-tutorials/getting-started-with-pivotal-cloud-foundry-dev/install-pcf-dev)
+ - [Java Development Kit (JDK) 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+ - [WSO2 API Manager v2.1.0](http://wso2.com/api-management/) distribution
+ - [Ballerina](https://ballerinalang.org/) v0.89 runtime distribution
+
 ## Quick Start
 
 The quick start provides steps for installing WSO2 API Manager service broker on PCF Dev.
@@ -34,21 +43,28 @@ The quick start provides steps for installing WSO2 API Manager service broker on
 - Clone this git repository:
   
   ````
-  $ git clone https://github.com/imesh/wso2-apim-cf-service-broker.git
+  $ git clone https://github.com/wso2/cf-service-broker-apim.git
   ````
 
-- Execute the following script to register a client in WSO2 API Manager for invoking its admin REST API:
+- Execute the following command to register a client in WSO2 API Manager for invoking its admin REST API:
 
   ````
-  $ ./register-api-client.sh
+  $ curl -X POST -u <username>:<password> -H "Content-Type: application/json" -d '{
+    "callbackUrl": "https://localhost/callback",
+    "clientName": "wso2-apim-cf-service-broker",
+    "tokenScope": "Production",
+    "owner": "admin",
+    "grantType": "password refresh_token",
+    "saasApp": true
+}' http://<wso2-apim-hostname>:9763/client-registration/v0.11/register
   ````
 
 - Expose following environment variables:
 
   ````
-  $ export WSO2_APIM_TOKEN_ENDPOINT=https://localhost:8243/token
-  $ export WSO2_APIM_PUBLISHER_ENDPOINT=https://localhost:9443/api/am/publisher
-  $ export WSO2_APIM_PUBLISHER_UI_URL=https://localhost:9443/publisher/
+  $ export WSO2_APIM_TOKEN_ENDPOINT=https://<wso2-apim-hostname>:8243/token
+  $ export WSO2_APIM_PUBLISHER_ENDPOINT=https://<wso2-apim-hostname>:9443/api/am/publisher
+  $ export WSO2_APIM_PUBLISHER_UI_URL=https://<wso2-apim-hostname>:9443/publisher/
   $ export WSO2_APIM_CLIENT_ID=<client-id-generated-above>
   $ export WSO2_APIM_CLIENT_SECRET=<client-secret-generated-above>
   $ export WSO2_APIM_USERNAME=admin
@@ -142,14 +158,53 @@ The quick start provides steps for installing WSO2 API Manager service broker on
   $ cf unbind-service spring-music wso2-apim
   ````
 
+## Installation Prerequisites
+
+The following prerequisites are needed to install CloudFoundry service broker for WSO2 API Manager:
+
+ - [Java Development Kit (JDK) 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+ - [WSO2 API Manager v2.1.0](http://wso2.com/api-management/) distribution
+ - [Ballerina](https://ballerinalang.org/) v0.89 tools distribution
+ - A CloudFoundry environment
+ - [Docker](http://docker.com/) runtime
+
 ## Installation
 
 The installation provides steps for installing WSO2 API Manager service broker on an existing CloudFoundry environment.
 
-- Clone this git repository:
+- Download Ballerina tools distribution from [ballerinalang.org](https://ballerinalang.org/) and add it's bin folder path to the PATH variable:
   
   ````
-  $ git clone https://github.com/imesh/wso2-apim-cf-service-broker.git
+  $ export BAL_HOME="/path/to/ballerina/ballerina-tools-<version>/"
+  $ export PATH=$BAL_HOME/bin:$PATH
+  ````
+
+- Download WSO2 API Manager 2.1.0 distribution from [wso2.com](http://wso2.com/api-management/), extract it and start the server:
+   
+  ````
+  $ unzip wso2am-2.1.0.zip
+  $ cd wso2am-2.1.0/
+  $ bin/wso2server.sh start
+  ````
+
+- Clone this git repository and checkout the latest release tag:
+  
+  ````
+  $ git clone https://github.com/wso2/cf-service-broker-apim.git
+  $ git checkout tags/<latest-release-tag>
+  ````
+
+- Execute the following command to register a client in WSO2 API Manager for invoking its admin REST API:
+
+  ````
+  $ curl -X POST -u <username>:<password> -H "Content-Type: application/json" -d '{
+    "callbackUrl": "https://localhost/callback",
+    "clientName": "wso2-apim-cf-service-broker",
+    "tokenScope": "Production",
+    "owner": "admin",
+    "grantType": "password refresh_token",
+    "saasApp": true
+}' http://<wso2-apim-hostname>:9763/client-registration/v0.11/register
   ````
 
 - Build broker service API using the following command:
@@ -159,10 +214,13 @@ The installation provides steps for installing WSO2 API Manager service broker o
   $ ballerina build service wso2apim/cf/servicebroker/
   ````
   
+- Create a Docker repository either in [Docker Hub](https://hub.docker.com/) or any other Docker registry that is not secured. 
+  Currently, [CloudFoundry does not support](https://docs.pivotal.io/pivotalcf/1-10/adminguide/docker.html) using Docker registries that require user credentials. Then, note down the repository name for the next step.
+
 - Create broker service API Docker image using the following command:
 
   ````
-  $ docker_image=<repository>/<image-name>:<version>
+  $ docker_image=<repository>/wso2-apim-cf-service-broker-api:1.0.0
   $ ballerina docker servicebroker.bsz -t ${docker_image} -y 
   ````
   
@@ -175,16 +233,10 @@ The installation provides steps for installing WSO2 API Manager service broker o
 - Push broker service API to CloudFoundry as an application:
 
   ````
-  $ cf push wso2-apim-service-broker-api --docker-image ${docker_image}
+  $ cf push wso2-apim-cf-service-broker-api --docker-image ${docker_image}
   ````
 
-- Update WSO2 API Manager hostname and credentials in the following script and execute it to register an API client:
-
-  ````
-  $ ./register-api-client.sh
-  ````
-
-- Login to PCF Dev web console and add following environment variables to the service broker API application:
+- Login to PCF Dev web console and add following environment variables to the above service broker API application:
 
   ````
   WSO2_APIM_TOKEN_ENDPOINT=https://<wso2-apim-hostname>:8243/token
@@ -255,7 +307,3 @@ The installation provides steps for installing WSO2 API Manager service broker o
   ````
   $ cf unbind-service spring-music wso2-apim
   ````
-  
-## License
-
-Apache 2.0
