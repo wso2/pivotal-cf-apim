@@ -1,4 +1,4 @@
-# CloudFoundry Service Broker for WSO2 API Manager
+# WSO2 API Manager Pivotal Cloud Foundry Service Broker
 
 This repository contains CloudFoundry (CF) service broker for WSO2 API Manager. The service broker API has been implemented using Ballerina and it can be run on CF as an application using Docker. The servce broker does not provision WSO2 API Manager, rather it points to an existing deployment.
 
