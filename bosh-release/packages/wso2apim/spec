@@ -1,0 +1,7 @@
+---
+name: wso2apim
+
+dependencies: []
+
+files:
+- wso2apim/wso2am-2.1.0.zip

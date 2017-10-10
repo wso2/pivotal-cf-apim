@@ -1,3 +1,6 @@
 *.bsz
 *.iml
 .idea/
+*.zip
+*.tar.gz
+dev_releases/

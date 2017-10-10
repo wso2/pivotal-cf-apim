@@ -1,0 +1,42 @@
+---
+name: wso2apim
+templates:
+  ctl.erb: bin/ctl
+
+
+packages:
+- oraclejdk
+- wso2apim
+- common
+properties:
+  wso2apim.listen_port:
+    description: "Listen Port of the Tomcat instance"
+    default: 8080
+  wso2apim.memory.min_heap:
+    description: "Min Heap in MB"
+    default: 2048
+  wso2apim.memory.max_heap:
+    description: "Max Heap in MB"
+    default: 2048
+  wso2apim.memory.max_permgen:
+    description: "Max permgen in MB"
+    default: 1024
+
+  wso2apim.password:
+    description: wso2apim password
+  wso2apim.username:
+    description: wso2apim username
+  wso2apim.address:
+    description: wso2apim address
+
+
+  cf.apps_domain:
+    description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
+  cf.nats.host:
+    description: Hostname/IP of NATS
+  cf.nats.port:
+    description: Port that NATS listens on
+  cf.nats.username:
+    description: The user to use when authenticating with NATS
+  cf.nats.password:
+    description: The password to use when authenticating with NATS
