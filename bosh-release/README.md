@@ -4,7 +4,9 @@ A BOSH release for deploying WSO2 API Manager 2.1.0 on BOSH Director:
 
 ## Quick Start Guide
 
-1. First get configuration files that specify BOSH environment in VirtualBox and run bosh create-env as following:
+1. Install BOSH CLI v2.x from [bosh.io](http://bosh.io/)
+
+2. Get configuration files that specify BOSH environment in VirtualBox and run bosh create-env as following:
 
     ```bash
     $ git clone https://github.com/cloudfoundry/bosh-deployment bosh-deployment
@@ -24,27 +26,27 @@ A BOSH release for deploying WSO2 API Manager 2.1.0 on BOSH Director:
     -v outbound_network_name=NatNetwork
     ```
 
-2. Once VM with BOSH Director is running, point your CLI to it, saving the environment with the alias vbox:
+3. Once VM with BOSH Director is running, point your CLI to it, saving the environment with the alias vbox:
 
     ```bash
     bosh -e 192.168.50.6 alias-env vbox --ca-cert <(bosh int vbox/creds.yml --path /director_ssl/ca)
     ```
 
-3. Obtain generated password to BOSH Director:
+4. Obtain generated password to BOSH Director:
 
     ```bash
     bosh int vbox/creds.yml --path /admin_password
     ```
 
-4. Log in using admin username and generated password:
+5. Log in using admin username and generated password:
 
     ```bash
     bosh -e vbox login
     ```
 
-5. Download Oracle JDK 1.8 from Oracle website and WSO2 API Manager 2.1.0 via WSO2 Update Manager (WUM).
+6. Download Oracle JDK 1.8 from Oracle website and WSO2 API Manager 2.1.0 via WSO2 Update Manager (WUM).
 
-6. Add above distributions as blobs:
+7. Add above distributions as blobs:
 
     ```bash
     bosh -e vbox add-blob jdk-8u144-linux-x64.tar.gz oraclejdk/jdk-8u144-linux-x64.tar.gz
@@ -52,32 +54,32 @@ A BOSH release for deploying WSO2 API Manager 2.1.0 on BOSH Director:
     bosh -e vbox -n upload-blobs
     ```
 
-7. Create the WSO2 API Manager bosh release:
+8. Create the WSO2 API Manager bosh release:
 
     ```bash
     bosh -e vbox create-release --force
     ```
 
-8. Upload the WSO2 API Manager bosh release to BOSH Director:
+9. Upload the WSO2 API Manager bosh release to BOSH Director:
 
     ```bash
     bosh -e vbox upload-release
     ```
 
-9. Download latest bosh-lite warden stemcell from bosh.io and upload it to BOSH Director:
+10. Download latest bosh-lite warden stemcell from bosh.io and upload it to BOSH Director:
     
     ```bash
     wget https://s3.amazonaws.com/bosh-core-stemcells/warden/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
     bosh -e vbox upload-stemcell bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
     ```
 
-10. Deploy the WSO2 API Manager bosh release manifest in BOSH Director:
+11. Deploy the WSO2 API Manager bosh release manifest in BOSH Director:
 
     ```bash
     bosh -e vbox -d wso2apim deploy wso2apim-manifest.yml
     ```
 
-11. Add route to VirtualBox network:
+12. Add route to VirtualBox network:
 
     ```
     sudo route add -net 10.244.0.0/16 192.168.50.6 # Mac OS X
@@ -85,7 +87,7 @@ A BOSH release for deploying WSO2 API Manager 2.1.0 on BOSH Director:
     route add 10.244.0.0/16 192.168.50.6 # Windows
     ```
 
-12. Find the VM IP address via the bosh CLI and access the WSO2 API Manager Store via a web browser:
+13. Find the VM IP address via the bosh CLI and access the WSO2 API Manager Store via a web browser:
 
     ```bash
     bosh -e vbox vms
