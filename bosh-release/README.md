@@ -4,18 +4,7 @@ A BOSH release for deploying WSO2 API Manager 2.1.0 on BOSH Director:
 
 ## Quick Start Guide
 
-1. Install dependency tools.
-
-  a) Install BOSH CLI v2.x from [bosh.io](http://bosh.io/)
-  
-  b) Install Ruby.
-
-      $ sudo apt install ruby 
-    
-  c) Install VirtualBox.
-
-      $ sudo apt install virtualbox
-    
+1. Install BOSH CLI v2.x from [bosh.io](http://bosh.io/), Ruby and VirtualBox.    
 
 2. Get configuration files that specify BOSH environment in VirtualBox and run bosh create-env as following:
 
@@ -57,9 +46,10 @@ A BOSH release for deploying WSO2 API Manager 2.1.0 on BOSH Director:
 
 6. Download Oracle JDK 1.8 from Oracle website and WSO2 API Manager 2.1.0 via WSO2 Update Manager (WUM).
 
-7. Add above distributions as blobs. Go inside `wso2-apim-bosh-release` and run below commands.
+7. Add above distributions as blobs. 
 
     ```bash
+    cd wso2-apim-bosh-release/
     bosh -e vbox add-blob jdk-8u144-linux-x64.tar.gz oraclejdk/jdk-8u144-linux-x64.tar.gz
     bosh -e vbox add-blob wso2am-2.1.0.zip wso2apim/wso2am-2.1.0.zip
     bosh -e vbox -n upload-blobs
@@ -84,7 +74,7 @@ A BOSH release for deploying WSO2 API Manager 2.1.0 on BOSH Director:
     bosh -e vbox upload-stemcell bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
     ```
 
-11. Deploy the WSO2 API Manager bosh release manifest in BOSH Director. Go inside `wso2-apim-bosh-release` and run below command.
+11. Deploy the WSO2 API Manager bosh release manifest in BOSH Director. Make sure you're inside `wso2-apim-bosh-release` and run below command.
 
     ```bash
     bosh -e vbox -d wso2apim deploy wso2apim-manifest.yml
