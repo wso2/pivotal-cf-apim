@@ -2,10 +2,15 @@
 name: wso2apim
 templates:
   ctl.erb: bin/ctl
-
+  config/registry.xml: config/registry.xml
+  config/api-manager.xml: config/api-manager.xml
+  config/datasources/master-datasources.xml: config/datasources/master-datasources.xml
+  config/log4j.properties: config/log4j.properties
+  config/user-mgt.xml: config/user-mgt.xml
 
 packages:
 - oraclejdk
+- mysqldriver
 - wso2apim
 - common
 properties:
@@ -40,3 +45,34 @@ properties:
     description: The user to use when authenticating with NATS
   cf.nats.password:
     description: The password to use when authenticating with NATS
+
+  wso2apim.mysql.hostname:
+    description: wso2apim mysql hostname
+    default: 192.168.50.1
+  wso2apim.mysql.username:
+    description: wso2apim mysql username
+    default: root
+  wso2apim.mysql.password:
+    description: wso2apim mysql password
+    default: root
+  wso2apim.mysql.am_db:
+    description: wso2apim mysql API Manager database name
+    default: am_db
+  wso2apim.mysql.um_db:
+    description: wso2apim mysql user management database name
+    default: um_db
+  wso2apim.mysql.reg_db:
+    description: wso2apim mysql registry database name
+    default: reg_db
+  wso2apim.mysql.stats_db:
+    description: wso2apim mysql statistics database name
+    default: stats_db
+  wso2apim.mysql.event_store_db:
+    description: wso2apim mysql event store database name
+    default: event_store_db
+  wso2apim.mysql.processed_data_db:
+    description: wso2apim mysql analytics processed data database name
+    default: processed_data_db
+  wso2apim.analytics.hostname:
+    description: wso2apim analytics hostname
+    default: 10.244.15.22

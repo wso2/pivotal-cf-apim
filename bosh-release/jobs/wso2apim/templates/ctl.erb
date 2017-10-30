@@ -71,7 +71,7 @@ case $1 in
     pushd ${JDK_HOME}
     archive=`ls jdk*gz`
     tar -zxvf $archive
-    export JAVA_HOME=`pwd`/jdk1.8.0_144/
+    export JAVA_HOME=`pwd`/jdk1.8.0_144
     export JAVA_BINARY=${JAVA_HOME}/bin/java
 
     log_debug "JAVA_HOME: ${JAVA_HOME}"
@@ -83,14 +83,11 @@ case $1 in
     cd wso2am*
     WSO2_APIM_HOME=`pwd`
 
-    # Here any config files your application needs for ex:
-    # conf_file=`ls $JOB_DIR/config/*.xml`
-    # cp ${conf_file} ${WSO2_APIM_HOME}/conf
+    # Here any config files your application needs:
+    cp -r $JOB_DIR/config/* ${WSO2_APIM_HOME}/repository/conf/
 
-    # Here add any database driver your application needs for ex:
-    # pushd ${POSTGRES_DRIVER_HOME}
-    # driver_file=`ls postgres*.jar`
-    # cp ${driver_file} ${WSO2_APIM_HOME}/lib
+    # Here add any libraries your application needs:
+    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/ 
 
     $WSO2_APIM_HOME/bin/wso2server.sh start
 

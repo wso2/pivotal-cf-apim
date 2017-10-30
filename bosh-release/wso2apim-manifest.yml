@@ -33,6 +33,13 @@ jobs:
   resource_pool: wso2apim-resource-pool
   templates:
   - name: wso2apim
+- instances: 1
+  name: wso2apim_analytics
+  networks:
+  - name: wso2apim_network
+  resource_pool: wso2apim_analytics-resource-pool
+  templates:
+  - name: wso2apim_analytics
 meta:
   director_uuid: <%= `bosh target > /dev/null 2>&1 && bosh status --uuid` %>
 name: wso2apim
@@ -64,12 +71,27 @@ properties:
       max_heap: 1024
       min_heap: 1024
 
+  wso2apim_analytics:
+    address: wso2apim_analytics
+    listen_port: 8080
+    username: admin
+    password: admin
+    memory:
+      max_heap: 1024
+      min_heap: 1024
+
 releases:
 - name: wso2apim-release
   version: latest
 resource_pools:
 - cloud_properties: {}
   name: wso2apim-resource-pool
+  network: wso2apim_network
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    version: latest
+- cloud_properties: {}
+  name: wso2apim_analytics-resource-pool
   network: wso2apim_network
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
