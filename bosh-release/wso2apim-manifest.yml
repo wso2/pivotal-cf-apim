@@ -30,6 +30,7 @@ jobs:
   name: wso2apim
   networks:
   - name: wso2apim_network
+    static_ips: [10.244.15.2]
   resource_pool: wso2apim-resource-pool
   templates:
   - name: wso2apim
@@ -37,6 +38,7 @@ jobs:
   name: wso2apim_analytics
   networks:
   - name: wso2apim_network
+    static_ips: [10.244.15.3]
   resource_pool: wso2apim_analytics-resource-pool
   templates:
   - name: wso2apim_analytics
@@ -70,6 +72,10 @@ properties:
     memory:
       max_heap: 1024
       min_heap: 1024
+    mysql:
+      hostname: 192.168.50.1
+    analytics:
+      hostname: 10.244.15.3
 
   wso2apim_analytics:
     address: wso2apim_analytics
