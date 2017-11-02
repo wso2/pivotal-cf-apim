@@ -4,104 +4,59 @@ A BOSH release for deploying WSO2 API Manager 2.1.0 on BOSH Director:
 
 ## Quick Start Guide
 
-1. Install BOSH CLI v2.x from [bosh.io](http://bosh.io/), Ruby and VirtualBox.    
+1. Install [bosh v2][1], ruby, VirtualBox, mysql client (5.7) and docker.
+2. Create a directory (say `apim`) and copy following binaries in to it. Make sure to have exact versions as they are used in the scripts.
 
-2. Get configuration files that specify BOSH environment in VirtualBox and run bosh create-env as following:
+ 	    jdk-8u144-linux-x64.tar.gz  
+        mysql-connector-java-5.1.24-bin.jar  
+        Wso2am-2.1.0.zip WUM Updated pack 
+        Wso2am-analytics-2.1.0.zip WUM Updated pack
 
-    ```bash
-    $ git clone https://github.com/cloudfoundry/bosh-deployment bosh-deployment
-    $ mkdir vbox
-    $ bosh create-env bosh-deployment/bosh.yml \
-    --state vbox/state.json \
-    -o bosh-deployment/virtualbox/cpi.yml \
-    -o bosh-deployment/virtualbox/outbound-network.yml \
-    -o bosh-deployment/bosh-lite.yml \
-    -o bosh-deployment/bosh-lite-runc.yml \
-    -o bosh-deployment/jumpbox-user.yml \
-    --vars-store vbox/creds.yml \
-    -v director_name="Bosh Lite Director" \
-    -v internal_ip=192.168.50.6 \
-    -v internal_gw=192.168.50.1 \
-    -v internal_cidr=192.168.50.0/24 \
-    -v outbound_network_name=NatNetwork
-    ```
 
-3. Once VM with BOSH Director is running, point your CLI to it, saving the environment with the alias vbox:
+3. Go inside that directory and clone [pivotal-cf-apim][2] repo.
 
-    ```bash
-    bosh -e 192.168.50.6 alias-env vbox --ca-cert <(bosh int vbox/creds.yml --path /director_ssl/ca)
-    ```
-
-4. Obtain generated password to BOSH Director:
-
-    ```bash
-    bosh int vbox/creds.yml --path /admin_password
-    ```
-
-5. Log in using admin username and generated password:
-
-    ```bash
-    bosh -e vbox login
-    ```
-
-6. Download Oracle JDK 1.8 from Oracle website and WSO2 API Manager 2.1.0 via WSO2 Update Manager (WUM).
-
-7. Add above distributions as blobs. 
-
-    ```bash
-    cd wso2-apim-bosh-release/
-    bosh -e vbox add-blob jdk-8u144-linux-x64.tar.gz oraclejdk/jdk-8u144-linux-x64.tar.gz
-    bosh -e vbox add-blob wso2am-2.1.0.zip wso2apim/wso2am-2.1.0.zip
-    bosh -e vbox -n upload-blobs
-    ```
-
-8. Create the WSO2 API Manager bosh release:
-
-    ```bash
-    bosh -e vbox create-release --force
-    ```
-
-9. Upload the WSO2 API Manager bosh release to BOSH Director:
-
-    ```bash
-    bosh -e vbox upload-release
-    ```
-
-10. Download latest bosh-lite warden stemcell from bosh.io and upload it to BOSH Director:
+        $ clone https://github.com/bhathiya/pivotal-cf-apim
+       
+    Then the folder structure should look like this.
     
-    ```bash
-    wget https://s3.amazonaws.com/bosh-core-stemcells/warden/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
-    bosh -e vbox upload-stemcell bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
-    ```
+        ├─ apim
+           ├── pivotal-cf-apim
+           ├── jdk-8u144-linux-x64.tar.gz
+           ├── mysql-connector-java-5.1.24-bin.jar
+           ├── wso2am-2.1.0.1508395562471.zip
+           └── wso2am-analytics-2.1.0.1508329260349.zip
+           
+4. Go inside **pivotal-cf-apim/bosh-release/** directory.          
 
-11. Deploy the WSO2 API Manager bosh release manifest in BOSH Director. Make sure you're inside `wso2-apim-bosh-release` and run below command.
+	    $ cd pivotal-cf-apim/bosh-release/
+        
+5. Run deploy-all.sh script. You will be asked for superuser password in the middle.
 
-    ```bash
-    bosh -e vbox -d wso2apim deploy wso2apim-manifest.yml
-    ```
+        $ ./deploy-all.sh
+        
+    If everything goes successful, you will see something like this at the end.
+    
+		Deployment 'wso2apim'
 
-12. Add route to VirtualBox network:
+        Instance                                                 Process State  AZ  IPs          VM CID                                VM Type  
+        wso2apim/06ade672-ecc8-425b-99a4-e72cf0210c59            running        -   10.244.15.2  4e25c655-f23d-47f7-6a68-98b0d3bd9843  wso2apim-resource-pool  
+        wso2apim_analytics/85eb9ace-7bd4-4075-9dd4-b1b5527bf533  running        -   10.244.15.3  7a8a9524-3649-491e-7427-d74f0949794b  wso2apim_analytics-resource-pool  
 
-    ```
-    sudo route add -net 10.244.0.0/16 192.168.50.6 # Mac OS X
-    sudo route add -net 10.244.0.0/16 gw 192.168.50.6 # Linux
-    route add 10.244.0.0/16 192.168.50.6 # Windows
-    ```
+        2 vms
+    
+    Now you can access APIM by following URLs.
+        
+    	https://10.244.15.2:9443/publisher
+        https://10.244.15.2:9443/store
+        https://10.244.15.2:9443/carbon
+        https://10.244.15.2:9443/admin
+        
 
-13. Find the VM IP address via the bosh CLI and access the WSO2 API Manager Store via a web browser:
+[1]: http://bosh.io
+[2]: https://github.com/bhathiya/pivotal-cf-apim
+[image]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
 
-    ```bash
-    bosh -e vbox vms
-    ...
 
-    Deployment 'wso2apim'
-
-    Instance                                       Process State  AZ  IPs           VM CID                                VM Type
-    wso2apim/08b2075d-c7e6-49f8-b223-12d989b734c2  running        -   10.244.15.21  84cac420-fd02-4884-5821-0fad60e3ce29  wso2apim-resource-pool
-    ...
-
-    # WSO2 API Manager Store URL: http://10.244.15.21:9763/store/
-    ```
 
 ## References
 
