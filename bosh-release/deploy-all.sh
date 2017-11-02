@@ -74,8 +74,8 @@ docker pull mysql/mysql-server:5.7
 
 if ! nc -z $mysql_apim_host 3306; then
     echo -e "\e[32m>> Starting MySQL docker container... \e[0m"
-    container_id = $(docker run -d --name mysql-5.7 -p 3306:3306 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=$mysql_apim_password mysql/mysql-server:5.7)
-    docker_ip = $(docker inspect $container_id | grep -w \"IPAddress\" | head -n 1 | cut -d '"' -f 4)
+    container_id=$(docker run -d --name mysql-5.7 -p 3306:3306 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=$mysql_apim_password mysql/mysql-server:5.7)
+    docker_ip=$(docker inspect $container_id | grep -w \"IPAddress\" | head -n 1 | cut -d '"' -f 4)
     mysql_analytics_host=$docker_ip
     mysql_apim_host=$docker_ip
     docker ps -a
