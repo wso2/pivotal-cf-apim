@@ -1,8 +1,10 @@
 # WSO2 API Manager BOSH Release
 
-A BOSH release for deploying WSO2 API Manager 2.1.0 with Analytics on BOSH Director.
+A BOSH release for deploying WSO2 API Manager 2.1.0 with Analytics on BOSH Director. 
 
 ## Quick Start Guide
+
+This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a docker container.
 
 1. Install [bosh v2][1], ruby, VirtualBox, git client, mysql client (5.7) and docker.
 2. Create a directory (say `apim`) and copy following binaries in to it. Make sure to have exact versions as they are used in the scripts.
@@ -123,6 +125,7 @@ A BOSH release for deploying WSO2 API Manager 2.1.0 with Analytics on BOSH Direc
         if ! nc -z $mysql_apim_host 3306; then
             echo -e "\e[32m>> Starting MySQL docker container... \e[0m"
             container_id=$(docker run -d --name mysql-5.7 -p 3306:3306 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=$mysql_apim_password mysql/mysql-server:5.7)
+	    #detects the docker ip
             docker_ip=$(docker inspect $container_id | grep -w \"IPAddress\" | head -n 1 | cut -d '"' -f 4)
             mysql_analytics_host=$docker_ip
             mysql_apim_host=$docker_ip
