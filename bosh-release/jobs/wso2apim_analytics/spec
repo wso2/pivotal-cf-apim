@@ -1,17 +1,16 @@
 ---
-name: wso2apim
+name: wso2apim_analytics
 templates:
   ctl.erb: bin/ctl
-  config/registry.xml: config/registry.xml
-  config/api-manager.xml: config/api-manager.xml
-  config/datasources/master-datasources.xml: config/datasources/master-datasources.xml
-  config/log4j.properties: config/log4j.properties
-  config/user-mgt.xml: config/user-mgt.xml
+  config/datasources/analytics-datasources.xml: config/datasources/analytics-datasources.xml
+  config/datasources/stats-datasources.xml: config/datasources/stats-datasources.xml
+  config/analytics/spark/spark-jdbc-config.xml: config/analytics/spark/spark-jdbc-config.xml 
+
 
 packages:
 - oraclejdk
 - mysqldriver
-- wso2apim
+- wso2apim_analytics
 - common
 properties:
   wso2apim.listen_port:
@@ -55,9 +54,6 @@ properties:
   wso2apim.mysql.password:
     description: wso2apim mysql password
     default: root
-  wso2apim.mysql.am_db:
-    description: wso2apim mysql API Manager database name
-    default: am_db
   wso2apim.mysql.um_db:
     description: wso2apim mysql user management database name
     default: um_db
@@ -73,6 +69,3 @@ properties:
   wso2apim.mysql.processed_data_db:
     description: wso2apim mysql analytics processed data database name
     default: processed_data_db
-  wso2apim.analytics.hostname:
-    description: wso2apim analytics hostname
-    default: 10.244.15.22

@@ -30,9 +30,18 @@ jobs:
   name: wso2apim
   networks:
   - name: wso2apim_network
+    static_ips: [10.244.15.2]
   resource_pool: wso2apim-resource-pool
   templates:
   - name: wso2apim
+- instances: 1
+  name: wso2apim_analytics
+  networks:
+  - name: wso2apim_network
+    static_ips: [10.244.15.3]
+  resource_pool: wso2apim_analytics-resource-pool
+  templates:
+  - name: wso2apim_analytics
 meta:
   director_uuid: <%= `bosh target > /dev/null 2>&1 && bosh status --uuid` %>
 name: wso2apim
@@ -63,6 +72,19 @@ properties:
     memory:
       max_heap: 1024
       min_heap: 1024
+    mysql:
+      hostname: 192.168.50.1
+    analytics:
+      hostname: 10.244.15.3
+
+  wso2apim_analytics:
+    address: wso2apim_analytics
+    listen_port: 8080
+    username: admin
+    password: admin
+    memory:
+      max_heap: 1024
+      min_heap: 1024
 
 releases:
 - name: wso2apim-release
@@ -70,6 +92,12 @@ releases:
 resource_pools:
 - cloud_properties: {}
   name: wso2apim-resource-pool
+  network: wso2apim_network
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    version: latest
+- cloud_properties: {}
+  name: wso2apim_analytics-resource-pool
   network: wso2apim_network
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent

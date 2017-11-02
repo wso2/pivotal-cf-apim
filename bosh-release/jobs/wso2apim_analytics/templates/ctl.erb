@@ -22,25 +22,25 @@ set -xv
 SCRIPT_DIR=$(dirname $0  )
 JOB_DIR=$SCRIPT_DIR/..
 
-RUN_DIR=/var/vcap/sys/run/wso2apim
-LOG_DIR=/var/vcap/sys/log/wso2apim
+RUN_DIR=/var/vcap/sys/run/wso2apim_analytics
+LOG_DIR=/var/vcap/sys/log/wso2apim_analytics
 PIDFILE=${RUN_DIR}/pid
 
 
 mkdir -p $RUN_DIR $LOG_DIR
 chown -R vcap:vcap $RUN_DIR $LOG_DIR
 
-mkdir -p /var/vcap/store/wso2apim/data
-export WSO2_APIM_DATA_DIR=/var/vcap/store/wso2apim/data/wso2apim
+mkdir -p /var/vcap/store/wso2apim_analytics/data
+export WSO2_APIM_ANALYTICS_DATA_DIR=/var/vcap/store/wso2apim_analytics/data/wso2apim_analytics
 
 export JDK_HOME=/var/vcap/packages/oraclejdk/
-export WSO2_APIM_PKG_HOME=/var/vcap/packages/wso2apim/
-export WSO2_APIM_SERVER_PACKAGE=/var/vcap/packages/wso2apim/
+export WSO2_APIM_ANALYTICS_PKG_HOME=/var/vcap/packages/wso2apim_analytics/
+export WSO2_APIM_ANALYTICS_SERVER_PACKAGE=/var/vcap/packages/wso2apim_analytics/
 
 # Not relying on network name to arrive at hostip
 # Set the ip to HOSTNAME to avoid listener getting bound to some internal only hostname
 export HOSTNAME=<%="#{my_ip}"%>
-export WSO2_APIM_HOST=<%="#{my_ip}"%>
+export WSO2_APIM_ANALYTICS_HOST=<%="#{my_ip}"%>
 
 # Here set any environment variables for your software
 export WSO2_APIM_SERVER_PORT=<%=properties.wso2apim.listen_port %>
@@ -50,7 +50,7 @@ export MAX_HEAP=<%=properties.wso2apim.memory.max_heap %>
 export MAX_PERMGEN=<%=properties.wso2apim.memory.max_permgen %>
 export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMGEN}m"
 
-export DEBUG_LOG=$LOG_DIR/wso2apim.log
+export DEBUG_LOG=$LOG_DIR/wso2apim_analytics.log
 
 touch $DEBUG_LOG
 chmod -R 755 /var/vcap/sys
@@ -77,19 +77,19 @@ case $1 in
     log_debug "JAVA_HOME: ${JAVA_HOME}"
     log_debug "JAVA_BINARY: ${JAVA_BINARY}"
 
-    pushd ${WSO2_APIM_PKG_HOME}
-    archive=`ls wso2am*zip`
+    pushd ${WSO2_APIM_ANALYTICS_PKG_HOME}
+    archive=`ls wso2am-analytics*zip`
     unzip $archive
-    cd wso2am*
-    WSO2_APIM_HOME=`pwd`
+    cd wso2am-analytics*
+    WSO2_APIM_ANALYTICS_HOME=`pwd`
 
     # Here any config files your application needs:
-    cp -r $JOB_DIR/config/* ${WSO2_APIM_HOME}/repository/conf/
+    cp -r $JOB_DIR/config/* ${WSO2_APIM_ANALYTICS_HOME}/repository/conf/
 
     # Here add any libraries your application needs:
-    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/ 
+    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_ANALYTICS_HOME}/repository/components/lib/
 
-    $WSO2_APIM_HOME/bin/wso2server.sh start
+    $WSO2_APIM_ANALYTICS_HOME/bin/wso2server.sh start
 
     # Sleep for a little while so the server comes up
     sleep 20
