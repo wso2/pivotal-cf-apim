@@ -17,7 +17,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
 
 3. Go inside the new directory and clone [pivotal-cf-apim][2] repo.
 
-        $ clone https://github.com/bhathiya/pivotal-cf-apim
+        $ clone https://github.com/wso2/pivotal-cf-apim
        
     Then the folder structure should look like this.
     
@@ -60,7 +60,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
         
 
 [1]: http://bosh.io
-[2]: https://github.com/bhathiya/pivotal-cf-apim
+[2]: https://github.com/wso2/pivotal-cf-apim
 [image]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
 
 <br />    
