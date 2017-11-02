@@ -32,7 +32,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
 
 	    $ cd pivotal-cf-apim/bosh-release/
         
-5. Run deploy-all.sh script. You will be asked for the superuser password in the middle.
+5. Run `deploy-all.sh` script. You will be asked for the superuser password in the middle.
 
         $ ./deploy-all.sh
         
@@ -54,7 +54,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
         https://10.244.15.2:9443/admin
         
 	
-> **Note**: If you want to stop and remove everything (i.e. MySQL container and entire Bosh Environment), run undeploy.sh script>
+> **Note**: If you want to stop and remove everything (i.e. MySQL container and entire Bosh Environment), run `undeploy.sh` script
 > 
 >        $ ./undeploy.sh
         
