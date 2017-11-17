@@ -54,7 +54,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
         https://10.244.15.2:9443/admin
         
 	
-> **Note**: If you want to stop and remove everything (i.e. MySQL container and entire Bosh Environment), run `undeploy.sh` script
+> **Note**: If you want to stop and remove everything (i.e. MySQL container and entire BOSH Environment), run `undeploy.sh` script
 > 
 >        $ ./undeploy.sh
         
@@ -141,7 +141,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
             echo -e "\e[32m>> MySQL is already running... \e[0m"
         fi
 
-5. Creat databases and tables on MySQL.
+5. Create databases and tables on MySQL.
 
         if [ ! -d wso2am-2.1.0 ]; then
             echo -e "\e[32m>> Extracting APIM 2.1.0 database scripts... \e[0m"
@@ -163,7 +163,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
             git clone https://github.com/cloudfoundry/bosh-deployment bosh-deployment
         fi
 
-7. Create bosh environment.
+7. Create BOSH environment.
 
         if [ ! -d vbox ]; then
             echo -e "\e[32m>> Creating envionment dir... \e[0m"
@@ -185,12 +185,12 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
             -v internal_cidr=192.168.50.0/24 \
             -v outbound_network_name=NatNetwork
 
-8. Once VM with BOSH Director is running, point Bosh CLI to it, saving the environment with the alias `vbox`.
+8. Once VM with BOSH Director is running, point BOSH CLI to it, saving the environment with the alias `vbox`.
 
         echo -e "\e[32m>> Setting alias for the environment... \e[0m"
         bosh -e 192.168.50.6 alias-env vbox --ca-cert <(bosh int vbox/creds.yml --path /director_ssl/ca)
 
-9. Login to Bosh Director using generated password
+9. Login to BOSH Director using generated password
 
         echo -e "\e[32m>> Loging in... \e[0m"
         bosh -e vbox login --client=admin --client-secret=$(bosh int vbox/creds.yml --path /admin_password
@@ -207,7 +207,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
         echo -e "\e[32m>> Uploading blobs... \e[0m"
         bosh -e vbox -n upload-blobs
 
-11. Create APIM Bosh release and upload it to BOSH Director.
+11. Create APIM BOSH release and upload it to BOSH Director.
 
         echo -e "\e[32m>> Creating bosh release... \e[0m"
         bosh -e vbox create-release --force
@@ -225,7 +225,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
         echo -e "\e[32m>> Uploading Stemcell... \e[0m"
         bosh -e vbox upload-stemcell bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
 
-13. Deploy the WSO2 API Manager bosh release manifest in BOSH Director.
+13. Deploy the WSO2 API Manager BOSH release manifest in BOSH Director.
 
         echo -e "\e[32m>> Deploying bosh release... \e[0m"
         yes | bosh -e vbox -d wso2apim deploy wso2apim-manifest.yml
