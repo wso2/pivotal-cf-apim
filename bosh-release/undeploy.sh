@@ -1,21 +1,21 @@
 #!/bin/bash
 
 if [ ! -x "$(command -v docker)" ]; then
-    echo -e "\e[32m>>  Please install Docker. \e[0m"
+    echo -e "---> Please install Docker."
     exit 1
 fi
 
 if [ ! -x "$(command -v bosh)" ]; then
-    echo -e "\e[32m>>  Please install Bosh CLI v2. \e[0m"
+    echo -e "---> Please install Bosh CLI v2."
     exit 1
 fi
 
-cd ../../
+pushd ../../
 
-echo -e "\e[32m>> Killing MySQL docker container... \e[0m"
-docker rm $(docker stop mysql-5.7) && docker ps -a
+echo -e "---> Killing MySQL docker container..."
+docker rm -f mysql-5.7 && docker ps -a
 
-echo -e "\e[32m>> Deleting existing environment... \e[0m"
+echo -e "---> Deleting existing environment..."
 bosh delete-env bosh-deployment/bosh.yml \
  --state vbox/state.json \
  -o bosh-deployment/virtualbox/cpi.yml \
@@ -31,4 +31,4 @@ bosh delete-env bosh-deployment/bosh.yml \
  -v outbound_network_name=NatNetwork
 
 rm -rf vbox
-cd pivotal-cf-apim/bosh-release/
+popd
