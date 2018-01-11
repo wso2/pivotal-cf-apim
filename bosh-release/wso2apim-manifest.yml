@@ -27,14 +27,6 @@ iaas_settings:
   watch_time: 10000-120000
 jobs:
 - instances: 1
-  name: wso2apim
-  networks:
-  - name: wso2apim_network
-    static_ips: [10.244.15.2]
-  resource_pool: wso2apim-resource-pool
-  templates:
-  - name: wso2apim
-- instances: 1
   name: wso2apim_analytics
   networks:
   - name: wso2apim_network
@@ -42,6 +34,14 @@ jobs:
   resource_pool: wso2apim_analytics-resource-pool
   templates:
   - name: wso2apim_analytics
+- instances: 1
+  name: wso2apim
+  networks:
+  - name: wso2apim_network
+    static_ips: [10.244.15.2]
+  resource_pool: wso2apim-resource-pool
+  templates:
+  - name: wso2apim
 meta:
   director_uuid: <%= `bosh target > /dev/null 2>&1 && bosh status --uuid` %>
 name: wso2apim
