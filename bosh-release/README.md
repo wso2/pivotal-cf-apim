@@ -32,7 +32,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
 
 	    $ cd pivotal-cf-apim/bosh-release/
         
-5. Run `deploy-all.sh` script. You will be asked for the superuser password in the middle.
+5. Run `deploy-all.sh` script. You will be asked for the superuser password, when adding a route to the VirtualBox network.
 
         $ ./deploy-all.sh
         
