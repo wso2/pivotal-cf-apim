@@ -179,13 +179,13 @@ bosh -e vbox create-release --force
 echo -e "---> Uploading bosh release..."
 bosh -e vbox upload-release
 
-if [ ! -f bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz ]; then
+if [ ! -f $DEPLOYMENT_FOLDER/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz ]; then
     echo -e "---> Stemcell does not exist! Downloading..."
-    wget https://s3.amazonaws.com/bosh-core-stemcells/warden/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
+    wget --directory-prefix=$DEPLOYMENT_FOLDER https://s3.amazonaws.com/bosh-core-stemcells/warden/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
 fi
 
 echo -e "---> Uploading Stemcell..."
-bosh -e vbox upload-stemcell bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
+bosh -e vbox upload-stemcell $DEPLOYMENT_FOLDER/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
 
 echo -e "---> Deploying bosh release..."
 yes | bosh -e vbox -d wso2apim deploy wso2apim-manifest.yml
