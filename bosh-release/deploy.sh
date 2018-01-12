@@ -3,6 +3,7 @@
 set -e
 
 # set variables
+os_name=`uname`
 
 # API-Manager MySQL database related variables
 mysql_apim_username="root"
@@ -85,12 +86,18 @@ fi
 if [ ! "$(docker ps -q -f name=mysql-5.7)" ]; then
     echo -e "---> Starting MySQL docker container..."
     container_id=$(docker run -d --name mysql-5.7 -p 3306:3306 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=$mysql_apim_password -v ${current_path}/wso2am-2.1.0/dbscripts/:/dbscripts/ mysql:5.7.19)
-    docker_host_ip=$(/sbin/ifconfig docker0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
 
-    echo -e "---> Waiting for MySQL service to start on 3306..."
-    while ! nc -z $docker_host_ip 3306; do
+    if [[ "$os_name" == 'Darwin' ]]; then
+        docker_host_ip=$(ipconfig getifaddr en0)
+    else
+        docker_host_ip=$(/sbin/ifconfig docker0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+    fi
+
+    echo -e "---> Waiting for MySQL service to start at ${docker_host_ip}:3306..."
+
+    while [ $(docker logs mysql-5.7 2>&1 | grep "mysqld: ready for connections" | wc -l) -ne "2" ]; do 
+        printf '.'
         sleep 1
-        printf "."
     done
     echo ""
     echo -e "---> MySQL service Started."
@@ -183,7 +190,6 @@ bosh -e vbox upload-stemcell bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-
 echo -e "---> Deploying bosh release..."
 yes | bosh -e vbox -d wso2apim deploy wso2apim-manifest.yml
 
-os_name=`uname`
 echo -e "---> Adding route to bosh lite VM..."
 if [[ "$os_name" == 'Darwin' ]]; then
     sudo route add -net 10.244.0.0/16 192.168.50.6 
