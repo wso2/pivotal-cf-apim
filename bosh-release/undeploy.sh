@@ -10,7 +10,7 @@ if [ ! -x "$(command -v bosh)" ]; then
     exit 1
 fi
 
-pushd ../../
+pushd deployment
 
 echo -e "---> Killing MySQL docker container..."
 docker rm -f mysql-5.7 && docker ps -a

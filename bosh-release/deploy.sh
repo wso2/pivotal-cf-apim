@@ -2,42 +2,50 @@
 
 set -e
 
-#APIM MySQL
+# set variables
+
+# API-Manager MySQL database related variables
 mysql_apim_username="root"
 mysql_apim_password="root"
 am_db="am_db"
 um_db="um_db"
 reg_db="reg_db"
+mysql_apim_host=localhost
 
-#Analytics MySQL
+# API-Manager Analytics MySQL database related variables
 mysql_analytics_username="root"
 mysql_analytics_password="root"
 event_store_db="event_store_db"
 processed_data_db="processed_data_db"
 stats_db="stats_db"
+mysql_analytics_host=localhost
+
+# variables related to product packs and distributions
 APIM_NAME=wso2am-2.1.0
 ANALYTICS_NAME=wso2am-analytics-2.1.0
 APIM_PACK=wso2am-2.1.0.*.zip
 ANALYTICS_PACK=wso2am-analytics-2.1.0.*.zip
 JDK=jdk-8u144-linux-x64.tar.gz
 MYSQL_DRIVER=mysql-connector-java-5.1.34-bin.jar
+DEPLOYMENT_FOLDER=deployment
 
-if [ ! -f ../../$APIM_PACK ]; then
+# check the availability of required utility software, product packs and distributions
+if [ ! -f $DEPLOYMENT_FOLDER/$APIM_PACK ]; then
     echo -e "---> APIM 2.1.0 pack not found!"
     exit 1
 fi
 
-if [ ! -f ../../$ANALYTICS_PACK ]; then
+if [ ! -f $DEPLOYMENT_FOLDER/$ANALYTICS_PACK ]; then
     echo -e "---> APIM Analytics 2.1.0 pack not found!"
     exit 1
 fi
 
-if [ ! -f ../../$JDK ]; then
+if [ ! -f $DEPLOYMENT_FOLDER/$JDK ]; then
     echo -e "---> JDK distribution (jdk-8u144-linux-x64.tar.gz) not found!"
     exit 1
 fi
 
-if [ ! -f ../../$MYSQL_DRIVER ]; then
+if [ ! -f $DEPLOYMENT_FOLDER/$MYSQL_DRIVER ]; then
     echo -e "---> MySQL Driver (mysql-connector-java-5.1.34-bin.jar) not found!"
     exit 1
 fi
@@ -57,8 +65,8 @@ if [ "$1" == "--force" ]; then
     docker rm $(docker stop mysql-5.7) && docker ps -a
 fi
 
-#going to parent directory
-cd ../../
+# move to the deployment directory
+cd $DEPLOYMENT_FOLDER
 
 APIM_PACK=$(ls wso2am-2.1.0.*.zip)
 ANALYTICS_PACK=$(ls wso2am-analytics-2.1.0.*.zip)
@@ -66,38 +74,39 @@ ANALYTICS_PACK=$(ls wso2am-analytics-2.1.0.*.zip)
 cp $APIM_PACK $APIM_NAME.zip
 cp $ANALYTICS_PACK $ANALYTICS_NAME.zip
 
-mysql_analytics_host=localhost
-mysql_apim_host=localhost
 current_path=`pwd`
 
-if [ ! "$(docker ps -q -f name=mysql-5.7)" ]; then
-    echo -e "---> Starting MySQL docker container..."
-    container_id=$(docker run -d --name mysql-5.7 -p 3306:3306 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=$mysql_apim_password -v ${current_path}/wso2am-2.1.0/dbscripts/:/dbscripts/ mysql:5.7.19)
-    echo $container_id
-
-    docker ps -a
-    echo -e "---> Waiting for MySQL to start on 3306..."
-    while ! nc -z $mysql_apim_host 3306; do
-        sleep 1
-        printf "."
-    done
-    echo ""
-    echo -e "---> MySQL Started."
-else
-    echo -e "---> MySQL is already running..."
-fi
-
+# extract the product database scripts
 if [ ! -d wso2am-2.1.0 ]; then
     echo -e "---> Extracting APIM 2.1.0 database scripts..."
     unzip -q $APIM_PACK
 fi
 
+if [ ! "$(docker ps -q -f name=mysql-5.7)" ]; then
+    echo -e "---> Starting MySQL docker container..."
+    container_id=$(docker run -d --name mysql-5.7 -p 3306:3306 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=$mysql_apim_password -v ${current_path}/wso2am-2.1.0/dbscripts/:/dbscripts/ mysql:5.7.19)
+    docker_host_ip=$(/sbin/ifconfig docker0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+
+    echo -e "---> Waiting for MySQL service to start on 3306..."
+    while ! nc -z $docker_host_ip 3306; do
+        sleep 1
+        printf "."
+    done
+    echo ""
+    echo -e "---> MySQL service Started."
+else
+    echo -e "---> MySQL service is already running..."
+fi
+
+# print out running Docker container information
+docker ps -a
+
 echo -e "---> Creating databases..."
-docker exec -it mysql-5.7 mysql -h $mysql_apim_host -u $mysql_apim_username -p$mysql_apim_password -e "DROP DATABASE IF EXISTS "$am_db"; DROP DATABASE IF EXISTS "$um_db"; DROP DATABASE IF EXISTS "$reg_db"; CREATE DATABASE "$am_db"; CREATE DATABASE "$um_db"; CREATE DATABASE "$reg_db";"
-docker exec -it mysql-5.7 mysql -h $mysql_analytics_host -u $mysql_analytics_username -p$mysql_analytics_password -e "DROP DATABASE IF EXISTS "$event_store_db"; DROP DATABASE IF EXISTS "$processed_data_db"; DROP DATABASE IF EXISTS "$stats_db"; CREATE DATABASE "$event_store_db"; CREATE DATABASE "$processed_data_db"; CREATE DATABASE "$stats_db";"
+docker exec -it mysql-5.7 mysql -h$mysql_apim_host -u$mysql_apim_username -p$mysql_apim_password -e "DROP DATABASE IF EXISTS "$am_db"; DROP DATABASE IF EXISTS "$um_db"; DROP DATABASE IF EXISTS "$reg_db"; CREATE DATABASE "$am_db"; CREATE DATABASE "$um_db"; CREATE DATABASE "$reg_db";"
+docker exec -it mysql-5.7 mysql -h$mysql_analytics_host -u$mysql_analytics_username -p$mysql_analytics_password -e "DROP DATABASE IF EXISTS "$event_store_db"; DROP DATABASE IF EXISTS "$processed_data_db"; DROP DATABASE IF EXISTS "$stats_db"; CREATE DATABASE "$event_store_db"; CREATE DATABASE "$processed_data_db"; CREATE DATABASE "$stats_db";"
 
 echo -e "---> Creating tables..."
-docker exec -it mysql-5.7 mysql -h $mysql_apim_host -u $mysql_apim_username -p$mysql_apim_password -e "USE "$am_db"; SOURCE /dbscripts/apimgt/mysql5.7.sql; USE "$um_db"; SOURCE /dbscripts/mysql5.7.sql; USE "$reg_db"; SOURCE /dbscripts/mysql5.7.sql;"
+docker exec -it mysql-5.7 mysql -h$mysql_apim_host -u$mysql_apim_username -p$mysql_apim_password -e "USE "$am_db"; SOURCE /dbscripts/apimgt/mysql5.7.sql; USE "$um_db"; SOURCE /dbscripts/mysql5.7.sql; USE "$reg_db"; SOURCE /dbscripts/mysql5.7.sql;"
 
 if [ ! -d bosh-deployment ]; then
     echo -e "---> Cloning https://github.com/cloudfoundry/bosh-deployment..."
@@ -105,7 +114,7 @@ if [ ! -d bosh-deployment ]; then
 fi
 
 if [ ! -d vbox ]; then
-    echo -e "---> Creating envionment dir..."
+    echo -e "---> Creating environment dir..."
     mkdir vbox
 fi
 
@@ -147,12 +156,12 @@ bosh -e 192.168.50.6 alias-env vbox --ca-cert <(bosh int vbox/creds.yml --path /
 echo -e "---> Loging in..."
 bosh -e vbox login --client=admin --client-secret=$(bosh int vbox/creds.yml --path /admin_password)
 
-cd pivotal-cf-apim/bosh-release/ 
+cd ..
 echo -e "---> Adding blobs..."
-bosh -e vbox add-blob ../../jdk-8u144-linux-x64.tar.gz oraclejdk/jdk-8u144-linux-x64.tar.gz
-bosh -e vbox add-blob ../../$MYSQL_DRIVER mysqldriver/$MYSQL_DRIVER
-bosh -e vbox add-blob ../../wso2am-2.1.0.zip wso2apim/wso2am-2.1.0.zip
-bosh -e vbox add-blob ../../wso2am-analytics-2.1.0.zip wso2apim_analytics/wso2am-analytics-2.1.0.zip
+bosh -e vbox add-blob $DEPLOYMENT_FOLDER/jdk-8u144-linux-x64.tar.gz oraclejdk/jdk-8u144-linux-x64.tar.gz
+bosh -e vbox add-blob $DEPLOYMENT_FOLDER/$MYSQL_DRIVER mysqldriver/$MYSQL_DRIVER
+bosh -e vbox add-blob $DEPLOYMENT_FOLDER/wso2am-2.1.0.zip wso2apim/wso2am-2.1.0.zip
+bosh -e vbox add-blob $DEPLOYMENT_FOLDER/wso2am-analytics-2.1.0.zip wso2apim_analytics/wso2am-analytics-2.1.0.zip
 
 echo -e "---> Uploading blobs..."
 bosh -e vbox -n upload-blobs

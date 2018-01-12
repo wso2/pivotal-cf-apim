@@ -32,7 +32,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
 
 	    $ cd pivotal-cf-apim/bosh-release/
         
-5. Run `deploy-all.sh` script. You will be asked for the superuser password in the middle.
+5. Run `deploy-all.sh` script. You will be asked for the superuser password, when adding a route to the VirtualBox network.
 
         $ ./deploy-all.sh
         
@@ -69,23 +69,23 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
    
 1. Check if required binaries are available.
 
-        if [ ! -f ../../$APIM_PACK ]; then
-            echo -e "\e[32m>> APIM 2.1.0 pack not found! \e[0m"
+        if [ ! -f $DEPLOYMENT_FOLDER/$APIM_PACK ]; then
+            echo -e "---> APIM 2.1.0 pack not found!"
             exit 1
         fi
 
-        if [ ! -f ../../$ANALYTICS_PACK ]; then
-            echo -e "\e[32m>> APIM Analytics 2.1.0 pack not found! \e[0m"
+        if [ ! -f $DEPLOYMENT_FOLDER/$ANALYTICS_PACK ]; then
+            echo -e "---> APIM Analytics 2.1.0 pack not found!"
             exit 1
         fi
 
-        if [ ! -f ../../$JDK ]; then
-            echo -e "\e[32m>> JDK distribution (jdk-8u144-linux-x64.tar.gz) not found! \e[0m"
+        if [ ! -f $DEPLOYMENT_FOLDER/$JDK ]; then
+            echo -e "---> JDK distribution (jdk-8u144-linux-x64.tar.gz) not found!"
             exit 1
         fi
 
-        if [ ! -f ../../$MYSQL_DRIVER ]; then
-            echo -e "\e[32m>> MySQL Driver (mysql-connector-java-5.1.24-bin.jar) not found! \e[0m"
+        if [ ! -f $DEPLOYMENT_FOLDER/$MYSQL_DRIVER ]; then
+            echo -e "---> MySQL Driver (mysql-connector-java-5.1.34-bin.jar) not found!"
             exit 1
         fi
 
@@ -119,41 +119,30 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
 
 4. Pull MySQL docker image and start it.
 
-        echo -e "\e[32m>> Pulling MySQL docker image... \e[0m"
-        docker pull mysql/mysql-server:5.7
-
-        if ! nc -z $mysql_apim_host 3306; then
-            echo -e "\e[32m>> Starting MySQL docker container... \e[0m"
-            container_id=$(docker run -d --name mysql-5.7 -p 3306:3306 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=$mysql_apim_password mysql/mysql-server:5.7)
-	    #detects the docker ip
-            docker_ip=$(docker inspect $container_id | grep -w \"IPAddress\" | head -n 1 | cut -d '"' -f 4)
-            mysql_analytics_host=$docker_ip
-            mysql_apim_host=$docker_ip
-            docker ps -a
-            echo -e "\e[32m>> Waiting for MySQL to start on 3306... \e[0m"
-            while ! nc -z $mysql_apim_host 3306; do
+        if [ ! "$(docker ps -q -f name=mysql-5.7)" ]; then
+            echo -e "---> Starting MySQL docker container..."
+            container_id=$(docker run -d --name mysql-5.7 -p 3306:3306 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=$mysql_apim_password -v ${current_path}/wso2am-2.1.0/dbscripts/:/dbscripts/ mysql:5.7.19)
+            docker_host_ip=$(/sbin/ifconfig docker0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+        
+            echo -e "---> Waiting for MySQL service to start on 3306..."
+            while ! nc -z $docker_host_ip 3306; do
                 sleep 1
                 printf "."
             done
             echo ""
-            echo -e "\e[32m>> MySQL Started. \e[0m"
+            echo -e "---> MySQL service Started."
         else
-            echo -e "\e[32m>> MySQL is already running... \e[0m"
+            echo -e "---> MySQL service is already running..."
         fi
 
 5. Create databases and tables on MySQL.
 
-        if [ ! -d wso2am-2.1.0 ]; then
-            echo -e "\e[32m>> Extracting APIM 2.1.0 database scripts... \e[0m"
-            unzip -q $APIM_PACK
-        fi
-
-        echo -e "\e[32m>> Creating databases... \e[0m"
-        mysql -h $mysql_apim_host -u $mysql_apim_username -p$mysql_apim_password -e "DROP DATABASE IF EXISTS "$am_db"; DROP DATABASE IF EXISTS "$um_db"; DROP DATABASE IF EXISTS "$reg_db"; CREATE DATABASE "$am_db"; CREATE DATABASE "$um_db"; CREATE DATABASE "$reg_db";"
-        mysql -h $mysql_analytics_host -u $mysql_analytics_username -p$mysql_analytics_password -e "DROP DATABASE IF EXISTS "$event_store_db"; DROP DATABASE IF EXISTS "$processed_data_db"; DROP DATABASE IF EXISTS "$stats_db"; CREATE DATABASE "$event_store_db"; CREATE DATABASE "$processed_data_db"; CREATE DATABASE "$stats_db";"
-
-        echo -e "\e[32m>> Creating tables... \e[0m"
-        mysql -h $mysql_apim_host -u $mysql_apim_username -p$mysql_apim_password -e "USE "$am_db"; SOURCE wso2am-2.1.0/dbscripts/apimgt/mysql5.7.sql; USE "$um_db"; SOURCE wso2am-2.1.0/dbscripts/mysql5.7.sql; USE "$reg_db"; SOURCE wso2am-2.1.0/dbscripts/mysql5.7.sql;"
+        echo -e "---> Creating databases..."
+        docker exec -it mysql-5.7 mysql -h$mysql_apim_host -u$mysql_apim_username -p$mysql_apim_password -e "DROP DATABASE IF EXISTS "$am_db"; DROP DATABASE IF EXISTS "$um_db"; DROP DATABASE IF EXISTS "$reg_db"; CREATE DATABASE "$am_db"; CREATE DATABASE "$um_db"; CREATE DATABASE "$reg_db";"
+        docker exec -it mysql-5.7 mysql -h$mysql_analytics_host -u$mysql_analytics_username -p$mysql_analytics_password -e "DROP DATABASE IF EXISTS "$event_store_db"; DROP DATABASE IF EXISTS "$processed_data_db"; DROP DATABASE IF EXISTS "$stats_db"; CREATE DATABASE "$event_store_db"; CREATE DATABASE "$processed_data_db"; CREATE DATABASE "$stats_db";"
+        
+        echo -e "---> Creating tables..."
+        docker exec -it mysql-5.7 mysql -h$mysql_apim_host -u$mysql_apim_username -p$mysql_apim_password -e "USE "$am_db"; SOURCE /dbscripts/apimgt/mysql5.7.sql; USE "$um_db"; SOURCE /dbscripts/mysql5.7.sql; USE "$reg_db"; SOURCE /dbscripts/mysql5.7.sql;"
 
 
 6. Clone [bosh-deployment][3] git repo.
