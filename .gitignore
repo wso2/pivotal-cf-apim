@@ -1,8 +1,12 @@
 *.bsz
 *.iml
 .idea/
-*.zip
-*.tar.gz
+
 dev_releases/
 tile/product/**/*
 tile/release/**/*
+
+# Package Files #
+*.jar
+*.zip
+*.tar.gz
