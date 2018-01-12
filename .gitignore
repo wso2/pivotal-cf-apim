@@ -1,9 +1,12 @@
 *.bsz
 *.iml
 .idea/
-*.zip
-*.tar.gz
+
 dev_releases/
 tile/product/**/*
 tile/release/**/*
-bosh-release/deployment/*
+
+# Package Files #
+*.jar
+*.zip
+*.tar.gz

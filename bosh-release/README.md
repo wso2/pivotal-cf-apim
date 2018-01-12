@@ -7,15 +7,8 @@ A BOSH release for deploying WSO2 API Manager 2.1.0 with Analytics on BOSH Direc
 This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a docker container.
 
 1. Install [bosh v2][1], ruby, VirtualBox, git client, mysql client (5.7) and docker.
-2. Create a directory (say `apim`) and copy following binaries in to it. Make sure to have exact versions as they are used in the scripts.
 
-		jdk-8u144-linux-x64.tar.gz  
-		mysql-connector-java-5.1.24-bin.jar  
-		Wso2am-2.1.0.zip WUM Updated pack 
-		Wso2am-analytics-2.1.0.zip WUM Updated pack
-
-
-3. Go inside the new directory and clone [pivotal-cf-apim][2] repo.
+2. Git clone [pivotal-cf-apim][2] repo.
 
         $ clone https://github.com/wso2/pivotal-cf-apim
        
@@ -28,13 +21,20 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
            ├── wso2am-2.1.0.1508395562471.zip
            └── wso2am-analytics-2.1.0.1508329260349.zip
            
-4. Go inside **pivotal-cf-apim/bosh-release/** directory.          
+3. Go inside **pivotal-cf-apim/bosh-release/** directory.
 
 	    $ cd pivotal-cf-apim/bosh-release/
-        
-5. Run `deploy-all.sh` script. You will be asked for the superuser password, when adding a route to the VirtualBox network.
+	    
+4. Add the following binaries in to the `deployment` folder. Make sure to have exact versions as they are used in the scripts.
 
-        $ ./deploy-all.sh
+		jdk-8u144-linux-x64.tar.gz  
+		mysql-connector-java-5.1.24-bin.jar  
+		wso2am-2.1.0.zip WUM Updated pack 
+		wso2am-analytics-2.1.0.zip WUM Updated pack
+        
+5. Run `deploy.sh` script. You will be asked for the superuser password, when adding a route to the VirtualBox network.
+
+        $ ./deploy.sh
         
     If everything goes successful, you will see something like this at the end.
     
@@ -65,7 +65,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
 
 <br />    
 
-## What happens inside deploy-all.sh:         
+## What happens inside deploy.sh:         
    
 1. Check if required binaries are available.
 
