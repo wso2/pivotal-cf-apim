@@ -1,12 +1,14 @@
-*.bsz
-*.iml
-.idea/
-
-dev_releases/
-tile/product/**/*
-tile/release/**/*
-
 # Package Files #
 *.jar
+*.war
+*.ear
 *.zip
 *.tar.gz
+*.rar
+
+.idea/
+**/.dev_builds/
+**/blobs/
+**/dev_releases/
+**/deployment/*
+**/dist/*
