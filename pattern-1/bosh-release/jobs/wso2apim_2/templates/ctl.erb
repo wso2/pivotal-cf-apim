@@ -25,27 +25,27 @@ set -xv
 script_dir=$(dirname $0)
 job_dir=${script_dir}/..
 
-run_dir=/var/vcap/sys/run/wso2apim_analytics
-log_dir=/var/vcap/sys/log/wso2apim_analytics
+run_dir=/var/vcap/sys/run/wso2apim
+log_dir=/var/vcap/sys/log/wso2apim
 pid_file=${run_dir}/pid
 
 mkdir -p ${run_dir} ${log_dir}
 chown -R vcap:vcap ${run_dir} ${log_dir}
 
-mkdir -p /var/vcap/store/wso2apim_analytics/data
-export WSO2_APIM_ANALYTICS_DATA_DIR=/var/vcap/store/wso2apim_analytics/data/wso2apim_analytics
+mkdir -p /var/vcap/store/wso2apim/data
+export WSO2_APIM_DATA_DIR=/var/vcap/store/wso2apim/data/wso2apim
 
 export JDK_HOME=/var/vcap/packages/oraclejdk/
-export WSO2_APIM_ANALYTICS_PKG_HOME=/var/vcap/packages/wso2apim_analytics/
-export WSO2_APIM_ANALYTICS_SERVER_PACKAGE=/var/vcap/packages/wso2apim_analytics/
+export WSO2_APIM_PKG_HOME=/var/vcap/packages/wso2apim/
+export WSO2_APIM_SERVER_PACKAGE=/var/vcap/packages/wso2apim/
 
 # set any environment variables for your software
-export MIN_HEAP=<%=properties.wso2apim_analytics.memory.min_heap %>
-export MAX_HEAP=<%=properties.wso2apim_analytics.memory.max_heap %>
-export MAX_PERMGEN=<%=properties.wso2apim_analytics.memory.max_permgen %>
+export MIN_HEAP=<%=properties.wso2apim.memory.min_heap %>
+export MAX_HEAP=<%=properties.wso2apim.memory.max_heap %>
+export MAX_PERMGEN=<%=properties.wso2apim.memory.max_permgen %>
 export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMGEN}m"
 
-export DEBUG_LOG=${log_dir}/wso2apim_analytics.log
+export DEBUG_LOG=${log_dir}/wso2apim.log
 
 touch $DEBUG_LOG
 chmod -R 755 /var/vcap/sys
@@ -60,7 +60,7 @@ log_debug "Kicking off ctl script as `whoami` with $1"
 case $1 in
 
   start)
-    # Kill the previously running instance if any
+    # kill the previously running instance if any
     kill -9 `cat ${pid_file}`
 
     pushd ${JDK_HOME}
@@ -72,19 +72,19 @@ case $1 in
     log_debug "JAVA_HOME: ${JAVA_HOME}"
     log_debug "JAVA_BINARY: ${JAVA_BINARY}"
 
-    pushd ${WSO2_APIM_ANALYTICS_PKG_HOME}
-    archive=`ls wso2am-analytics*zip`
+    pushd ${WSO2_APIM_PKG_HOME}
+    archive=`ls wso2am*zip`
     unzip $archive
-    cd wso2am-analytics*
-    WSO2_APIM_ANALYTICS_HOME=`pwd`
+    cd wso2am*
+    WSO2_APIM_HOME=`pwd`
 
     # Here any config files your application needs:
-    cp -r ${job_dir}/config/* ${WSO2_APIM_ANALYTICS_HOME}/repository/conf/
+    cp -r ${job_dir}/config/* ${WSO2_APIM_HOME}/repository/conf/
 
     # Here add any libraries your application needs:
-    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_ANALYTICS_HOME}/repository/components/lib/
+    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/ 
 
-    $WSO2_APIM_ANALYTICS_HOME/bin/wso2server.sh start
+    $WSO2_APIM_HOME/bin/wso2server.sh start
 
     # Sleep for a little while so the server comes up
     sleep 20

@@ -49,18 +49,26 @@ jobs:
   name: wso2apim_analytics
   networks:
   - name: wso2apim_network
-    static_ips: [10.244.15.3]
+    static_ips: [10.244.15.4]
   resource_pool: wso2apim_analytics-resource-pool
   templates:
   - name: wso2apim_analytics
 - instances: 1
-  name: wso2apim
+  name: wso2apim_1
   networks:
   - name: wso2apim_network
     static_ips: [10.244.15.2]
   resource_pool: wso2apim-resource-pool
   templates:
-  - name: wso2apim
+  - name: wso2apim_1
+- instances: 1
+  name: wso2apim_2
+  networks:
+  - name: wso2apim_network
+    static_ips: [10.244.15.3]
+  resource_pool: wso2apim-resource-pool
+  templates:
+  - name: wso2apim_2
 meta:
   director_uuid: <%= `bosh target > /dev/null 2>&1 && bosh status --uuid` %>
 name: wso2apim
@@ -84,21 +92,13 @@ properties:
     password: nats
 
   wso2apim:
-    address: wso2apim
-    listen_port: 8080
     username: admin
     password: admin
     memory:
       max_heap: 1024
       min_heap: 1024
-    mysql:
-      hostname: 192.168.50.1
-    analytics:
-      hostname: 10.244.15.3
 
   wso2apim_analytics:
-    address: wso2apim_analytics
-    listen_port: 8080
     username: admin
     password: admin
     memory:

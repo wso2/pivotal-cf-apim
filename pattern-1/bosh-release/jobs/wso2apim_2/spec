@@ -1,7 +1,8 @@
 ---
-name: wso2apim
+name: wso2apim_2
 templates:
   ctl.erb: bin/ctl
+  config/axis2/axis2.xml: config/axis2/axis2.xml
   config/registry.xml: config/registry.xml
   config/api-manager.xml: config/api-manager.xml
   config/datasources/master-datasources.xml: config/datasources/master-datasources.xml
@@ -13,10 +14,8 @@ packages:
 - mysqldriver
 - wso2apim
 - common
+
 properties:
-  wso2apim.listen_port:
-    description: "Listen Port of the Tomcat instance"
-    default: 8080
   wso2apim.memory.min_heap:
     description: "Min Heap in MB"
     default: 2048
@@ -34,6 +33,30 @@ properties:
   wso2apim.address:
     description: wso2apim address
 
+  wso2apim.mysql.hostname:
+    description: WSO2 APIM MySQL server hostname
+    default: 192.168.50.1
+  wso2apim.mysql.product_db:
+    description: WSO2 APIM MySQL database name
+    default: WSO2_AM_DB
+  wso2apim.mysql.username:
+    description: WSO2 APIM MySQL username
+    default: root
+  wso2apim.mysql.password:
+    description: WSO2 APIM MySQL password
+    default: root
+  wso2apim.mysql.stats_db:
+    description: wso2apim mysql statistics database name
+    default: STATS_DB
+  wso2apim.mysql.event_store_db:
+    description: wso2apim mysql event store database name
+    default: EVENT_STORE_DB
+  wso2apim.mysql.processed_data_db:
+    description: wso2apim mysql analytics processed data database name
+    default: PROCESSED_DATA_DB
+  wso2apim.analytics.hostname:
+    description: wso2apim analytics hostname
+    default: 10.244.15.4
 
   cf.apps_domain:
     description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
@@ -45,34 +68,3 @@ properties:
     description: The user to use when authenticating with NATS
   cf.nats.password:
     description: The password to use when authenticating with NATS
-
-  wso2apim.mysql.hostname:
-    description: wso2apim mysql hostname
-    default: 192.168.50.1
-  wso2apim.mysql.username:
-    description: wso2apim mysql username
-    default: root
-  wso2apim.mysql.password:
-    description: wso2apim mysql password
-    default: root
-  wso2apim.mysql.am_db:
-    description: wso2apim mysql API Manager database name
-    default: am_db
-  wso2apim.mysql.um_db:
-    description: wso2apim mysql user management database name
-    default: um_db
-  wso2apim.mysql.reg_db:
-    description: wso2apim mysql registry database name
-    default: reg_db
-  wso2apim.mysql.stats_db:
-    description: wso2apim mysql statistics database name
-    default: stats_db
-  wso2apim.mysql.event_store_db:
-    description: wso2apim mysql event store database name
-    default: event_store_db
-  wso2apim.mysql.processed_data_db:
-    description: wso2apim mysql analytics processed data database name
-    default: processed_data_db
-  wso2apim.analytics.hostname:
-    description: wso2apim analytics hostname
-    default: 10.244.15.22

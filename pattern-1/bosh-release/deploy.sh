@@ -24,197 +24,103 @@ set -e
 # set variables
 os_name=`uname`
 
-# API-Manager MySQL database related variables
-mysql_apim_username="root"
-mysql_apim_password="root"
-am_db="am_db"
-um_db="um_db"
-reg_db="reg_db"
-mysql_apim_host=localhost
+# deployment artifacts and versions
+export wso2_product="wso2am"
+export wso2_product_version="2.1.0"
+export wso2_product_pack_identifier="${wso2_product}-${wso2_product_version}"
+export wso2_product_distribution=${wso2_product_pack_identifier}"*.zip"
+export wso2_product_analytics_pack_identifier="${wso2_product}-analytics-${wso2_product_version}"
+export wso2_product_analytics_distribution=${wso2_product_analytics_pack_identifier}"*.zip"
+export jdk_distribution="jdk-8u*-linux-x64.tar.gz"
+export mysql_driver="mysql-connector-java-5.1.*-bin.jar"
 
-# API-Manager Analytics MySQL database related variables
-mysql_analytics_username="root"
-mysql_analytics_password="root"
-event_store_db="event_store_db"
-processed_data_db="processed_data_db"
-stats_db="stats_db"
-mysql_analytics_host=localhost
+# repository folder structure variables
+export distributions="dist"
+export deployment="deployment"
 
-# variables related to product packs and distributions
-APIM_NAME=wso2am-2.1.0
-ANALYTICS_NAME=wso2am-analytics-2.1.0
-APIM_PACK=wso2am-2.1.0.*.zip
-ANALYTICS_PACK=wso2am-analytics-2.1.0.*.zip
-JDK=jdk-8u144-linux-x64.tar.gz
-MYSQL_DRIVER=mysql-connector-java-5.1.34-bin.jar
-DEPLOYMENT_FOLDER=deployment
+# deployment variables
+mysql_docker_container="mysql-5.7"
 
-# check the availability of required utility software, product packs and distributions
-if [ ! -f $DEPLOYMENT_FOLDER/$APIM_PACK ]; then
-    echo -e "---> APIM 2.1.0 pack not found!"
-    exit 1
-fi
+# MySQL connection details
+mysql_root_username="root"
+mysql_root_password="root"
+mysql_host="127.0.0.1"
 
-if [ ! -f $DEPLOYMENT_FOLDER/$ANALYTICS_PACK ]; then
-    echo -e "---> APIM Analytics 2.1.0 pack not found!"
-    exit 1
-fi
+# MySQL databases
+product_db="WSO2_AM_DB"
+event_store_db="EVENT_STORE_DB"
+processed_data_db="PROCESSED_DATA_DB"
+stats_db="STATS_DB"
 
-if [ ! -f $DEPLOYMENT_FOLDER/$JDK ]; then
-    echo -e "---> JDK distribution (jdk-8u144-linux-x64.tar.gz) not found!"
-    exit 1
-fi
-
-if [ ! -f $DEPLOYMENT_FOLDER/$MYSQL_DRIVER ]; then
-    echo -e "---> MySQL Driver (mysql-connector-java-5.1.34-bin.jar) not found!"
-    exit 1
-fi
-
-if [ ! -x "$(command -v git)" ]; then
-    echo -e "---> Please install Git client."
-    exit 1
-fi
-
+# check if Docker has been installed
 if [ ! -x "$(command -v docker)" ]; then
     echo -e "---> Please install Docker."
     exit 1
 fi
 
-if [ "$1" == "--force" ]; then
-    echo -e "---> Killing MySQL docker container..."
-    docker rm $(docker stop mysql-5.7) && docker ps -a
-fi
+# start the MySQL Docker container service
+if [ ! "$(docker ps -q -f name=${mysql_docker_container})" ]; then
+    echo -e "---> Starting MySQL Docker container..."
+    container_id=$(docker run -d --name ${mysql_docker_container} -p 3306:3306 -e MYSQL_ROOT_PASSWORD=${mysql_root_password} -v ${PWD}/dbscripts/:/dbscripts/ mysql:5.7.19)
 
-# move to the deployment directory
-cd $DEPLOYMENT_FOLDER
-
-APIM_PACK=$(ls wso2am-2.1.0.*.zip)
-ANALYTICS_PACK=$(ls wso2am-analytics-2.1.0.*.zip)
-
-cp $APIM_PACK $APIM_NAME.zip
-cp $ANALYTICS_PACK $ANALYTICS_NAME.zip
-
-current_path=`pwd`
-
-# extract the product database scripts
-if [ ! -d wso2am-2.1.0 ]; then
-    echo -e "---> Extracting APIM 2.1.0 database scripts..."
-    unzip -q $APIM_PACK
-fi
-
-if [ ! "$(docker ps -q -f name=mysql-5.7)" ]; then
-    echo -e "---> Starting MySQL docker container..."
-    container_id=$(docker run -d --name mysql-5.7 -p 3306:3306 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=$mysql_apim_password -v ${current_path}/wso2am-2.1.0/dbscripts/:/dbscripts/ mysql:5.7.19)
-
-    if [[ "$os_name" == 'Darwin' ]]; then
+    if [[ "${os_name}" == 'Darwin' ]]; then
         docker_host_ip=$(ipconfig getifaddr en0)
     else
         docker_host_ip=$(/sbin/ifconfig docker0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
     fi
 
-    echo -e "---> Waiting for MySQL service to start at ${docker_host_ip}:3306..."
+    echo -e "---> Waiting for MySQL service to start on ${docker_host_ip}:3306..."
 
-    while [ $(docker logs mysql-5.7 2>&1 | grep "mysqld: ready for connections" | wc -l) -ne "2" ]; do 
+    while [ $(docker logs ${mysql_docker_container} 2>&1 | grep "mysqld: ready for connections" | wc -l) -ne 2 ]; do
         printf '.'
         sleep 1
     done
     echo ""
-    echo -e "---> MySQL service Started."
+    echo -e "---> MySQL service started."
 else
     echo -e "---> MySQL service is already running..."
 fi
 
-# print out running Docker container information
+# print out the information of the created Docker container
 docker ps -a
 
-echo -e "---> Creating databases..."
-docker exec -it mysql-5.7 mysql -h$mysql_apim_host -u$mysql_apim_username -p$mysql_apim_password -e "DROP DATABASE IF EXISTS "$am_db"; DROP DATABASE IF EXISTS "$um_db"; DROP DATABASE IF EXISTS "$reg_db"; CREATE DATABASE "$am_db"; CREATE DATABASE "$um_db"; CREATE DATABASE "$reg_db";"
-docker exec -it mysql-5.7 mysql -h$mysql_analytics_host -u$mysql_analytics_username -p$mysql_analytics_password -e "DROP DATABASE IF EXISTS "$event_store_db"; DROP DATABASE IF EXISTS "$processed_data_db"; DROP DATABASE IF EXISTS "$stats_db"; CREATE DATABASE "$event_store_db"; CREATE DATABASE "$processed_data_db"; CREATE DATABASE "$stats_db";"
+# create the product database
+echo "---> Creating databases..."
+docker exec -it ${mysql_docker_container} mysql -h${mysql_host} -u${mysql_root_username} -p${mysql_root_password} -e "DROP DATABASE IF EXISTS "${product_db}"; DROP DATABASE IF EXISTS "${event_store_db}"; DROP DATABASE IF EXISTS "${processed_data_db}"; DROP DATABASE IF EXISTS "${stats_db}"; CREATE DATABASE "${product_db}"; CREATE DATABASE "${event_store_db}"; CREATE DATABASE "${processed_data_db}"; CREATE DATABASE "${stats_db}";"
 
-echo -e "---> Creating tables..."
-docker exec -it mysql-5.7 mysql -h$mysql_apim_host -u$mysql_apim_username -p$mysql_apim_password -e "USE "$am_db"; SOURCE /dbscripts/apimgt/mysql5.7.sql; USE "$um_db"; SOURCE /dbscripts/mysql5.7.sql; USE "$reg_db"; SOURCE /dbscripts/mysql5.7.sql;"
+# create the database tables
+echo "---> Creating tables..."
+docker exec -it ${mysql_docker_container} mysql -h${mysql_host} -u${mysql_root_username} -p${mysql_root_password} -e "USE "${product_db}"; SOURCE /dbscripts/mysql.sql;"
 
-if [ ! -d bosh-deployment ]; then
-    echo -e "---> Cloning https://github.com/cloudfoundry/bosh-deployment..."
-    git clone https://github.com/cloudfoundry/bosh-deployment bosh-deployment
-fi
+# create the BOSH release
+./create.sh "$1"
 
-if [ ! -d vbox ]; then
-    echo -e "---> Creating environment dir..."
-    mkdir vbox
-fi
-
-if [ "$1" == "--force" ]; then
-    echo -e "---> Deleting existing environment..."
-    bosh delete-env bosh-deployment/bosh.yml \
-        --state vbox/state.json \
-        -o bosh-deployment/virtualbox/cpi.yml \
-        -o bosh-deployment/virtualbox/outbound-network.yml \
-        -o bosh-deployment/bosh-lite.yml \
-        -o bosh-deployment/bosh-lite-runc.yml \
-        -o bosh-deployment/jumpbox-user.yml \
-        --vars-store vbox/creds.yml \
-        -v director_name="Bosh Lite Director" \
-        -v internal_ip=192.168.50.6 \
-        -v internal_gw=192.168.50.1 \
-        -v internal_cidr=192.168.50.0/24 \
-        -v outbound_network_name=NatNetwork
-fi
-
-echo -e "---> Creating environment..."
-bosh create-env bosh-deployment/bosh.yml \
-    --state vbox/state.json \
-    -o bosh-deployment/virtualbox/cpi.yml \
-    -o bosh-deployment/virtualbox/outbound-network.yml \
-    -o bosh-deployment/bosh-lite.yml \
-    -o bosh-deployment/bosh-lite-runc.yml \
-    -o bosh-deployment/jumpbox-user.yml \
-    --vars-store vbox/creds.yml \
-    -v director_name="Bosh Lite Director" \
-    -v internal_ip=192.168.50.6 \
-    -v internal_gw=192.168.50.1 \
-    -v internal_cidr=192.168.50.0/24 \
-    -v outbound_network_name=NatNetwork
-
-echo -e "---> Setting alias for the environment..."
-bosh -e 192.168.50.6 alias-env vbox --ca-cert <(bosh int vbox/creds.yml --path /director_ssl/ca)
-
-echo -e "---> Loging in..."
-bosh -e vbox login --client=admin --client-secret=$(bosh int vbox/creds.yml --path /admin_password)
-
-cd ..
-echo -e "---> Adding blobs..."
-bosh -e vbox add-blob $DEPLOYMENT_FOLDER/jdk-8u144-linux-x64.tar.gz oraclejdk/jdk-8u144-linux-x64.tar.gz
-bosh -e vbox add-blob $DEPLOYMENT_FOLDER/$MYSQL_DRIVER mysqldriver/$MYSQL_DRIVER
-bosh -e vbox add-blob $DEPLOYMENT_FOLDER/wso2am-2.1.0.zip wso2apim/wso2am-2.1.0.zip
-bosh -e vbox add-blob $DEPLOYMENT_FOLDER/wso2am-analytics-2.1.0.zip wso2apim_analytics/wso2am-analytics-2.1.0.zip
-
-echo -e "---> Uploading blobs..."
-bosh -e vbox -n upload-blobs
-
-echo -e "---> Creating bosh release..."
-bosh -e vbox create-release --force
-
-echo -e "---> Uploading bosh release..."
+# upload the BOSH release to the BOSH Director
+echo "---> Uploading BOSH release..."
 bosh -e vbox upload-release
 
-if [ ! -f $DEPLOYMENT_FOLDER/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz ]; then
-    echo -e "---> Stemcell does not exist! Downloading..."
-    wget --directory-prefix=$DEPLOYMENT_FOLDER https://s3.amazonaws.com/bosh-core-stemcells/warden/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
+# check if the BOSH Stemcell is present and if not provided, download it
+if [ ! -f ${distributions}/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz ]; then
+    echo "---> Stemcell does not exist! Downloading..."
+    wget --directory-prefix=${distributions} https://s3.amazonaws.com/bosh-core-stemcells/warden/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
 fi
 
-echo -e "---> Uploading Stemcell..."
-bosh -e vbox upload-stemcell $DEPLOYMENT_FOLDER/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
+# upload the BOSH Stemcell to the BOSH Director
+echo "---> Uploading Stemcell..."
+bosh -e vbox upload-stemcell ${distributions}/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
 
-echo -e "---> Deploying bosh release..."
+# deploy the BOSH release
+echo "---> Deploying BOSH release..."
 yes | bosh -e vbox -d wso2apim deploy wso2apim-manifest.yml
 
-echo -e "---> Adding route to bosh lite VM..."
-if [[ "$os_name" == 'Darwin' ]]; then
-    sudo route add -net 10.244.0.0/16 192.168.50.6 
+# add a route to BOSH Lite VM created earlier
+echo "---> Adding route to BOSH Lite VM..."
+if [[ "${os_name}" == 'Darwin' ]]; then
+    sudo route add -net 10.244.0.0/16 192.168.50.6
 else
     sudo route add -net 10.244.0.0/16 gw 192.168.50.6
 fi
 
-echo -e "---> Listing VMs..."
+# list down the running VMs
+echo "---> Listing VMs..."
 bosh -e vbox vms

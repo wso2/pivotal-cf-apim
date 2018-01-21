@@ -7,7 +7,7 @@
     <datasources>
 
         <datasource>
-            <name>WSO2_CARBON_DB</name>
+            <name>WSO2_CARBON_DS</name>
             <description>The datasource used for registry and user manager</description>
             <jndiConfig>
                 <name>jdbc/WSO2CarbonDB</name>
@@ -28,14 +28,14 @@
         </datasource>
 
         <datasource>
-            <name>WSO2UM_DB</name>
+            <name>WSO2UM_DS</name>
             <description>The datasource used by user manager</description>
             <jndiConfig>
                 <name>jdbc/WSO2UM_DB</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2apim.mysql.hostname %>:3306/<%=properties.wso2apim.mysql.um_db %>?autoReconnect=true</url>
+                    <url>jdbc:mysql://<%=properties.wso2apim.mysql.hostname %>:3306/<%=properties.wso2apim.mysql.product_db %>?autoReconnect=true</url>
                     <username><%=properties.wso2apim.mysql.username %></username>
                     <password><%=properties.wso2apim.mysql.password %></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
@@ -49,14 +49,14 @@
         </datasource>
 
         <datasource>
-            <name>WSO2REG_DB</name>
+            <name>WSO2REG_DS</name>
             <description>The datasource used by the registry</description>
             <jndiConfig>
                 <name>jdbc/WSO2REG_DB</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2apim.mysql.hostname %>:3306/<%=properties.wso2apim.mysql.reg_db %>?autoReconnect=true</url>
+                    <url>jdbc:mysql://<%=properties.wso2apim.mysql.hostname %>:3306/<%=properties.wso2apim.mysql.product_db %>?autoReconnect=true</url>
                     <username><%=properties.wso2apim.mysql.username %></username>
                     <password><%=properties.wso2apim.mysql.password %></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
@@ -70,14 +70,14 @@
         </datasource>
 
         <datasource>
-            <name>WSO2AM_DB</name>
+            <name>WSO2AM_DS</name>
             <description>The datasource used for API Manager database</description>
             <jndiConfig>
                 <name>jdbc/WSO2AM_DB</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2apim.mysql.hostname %>:3306/<%=properties.wso2apim.mysql.am_db %>?autoReconnect=true</url>
+                    <url>jdbc:mysql://<%=properties.wso2apim.mysql.hostname %>:3306/<%=properties.wso2apim.mysql.product_db %>?autoReconnect=true</url>
                     <username><%=properties.wso2apim.mysql.username %></username>
                     <password><%=properties.wso2apim.mysql.password %></password>
                     <defaultAutoCommit>false</defaultAutoCommit>
@@ -92,7 +92,7 @@
         </datasource>
 
          <datasource>
-            <name>WSO2AM_STATS_DB</name>
+            <name>WSO2AM_STATS_DS</name>
             <description>The datasource used for getting statistics to API Manager</description>
             <jndiConfig>
                 <name>jdbc/WSO2AM_STATS_DB</name>
@@ -114,7 +114,7 @@
          </datasource>
 
         <datasource>
-            <name>WSO2_MB_STORE_DB</name>
+            <name>WSO2_MB_STORE_DS</name>
             <description>The datasource used for message broker database</description>
             <jndiConfig>
                 <name>WSO2MBStoreDB</name>

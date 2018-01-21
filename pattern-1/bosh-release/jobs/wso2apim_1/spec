@@ -1,59 +1,62 @@
 ---
-name: wso2apim_analytics
+name: wso2apim_1
 templates:
   ctl.erb: bin/ctl
+  config/axis2/axis2.xml: config/axis2/axis2.xml
   config/registry.xml: config/registry.xml
-  config/user-mgt.xml: config/user-mgt.xml
-  config/datasources/analytics-datasources.xml: config/datasources/analytics-datasources.xml
+  config/api-manager.xml: config/api-manager.xml
   config/datasources/master-datasources.xml: config/datasources/master-datasources.xml
-  config/datasources/stats-datasources.xml: config/datasources/stats-datasources.xml
-  config/analytics/spark/spark-jdbc-config.xml: config/analytics/spark/spark-jdbc-config.xml
+  config/log4j.properties: config/log4j.properties
+  config/user-mgt.xml: config/user-mgt.xml
 
 packages:
 - oraclejdk
 - mysqldriver
-- wso2apim_analytics
+- wso2apim
 - common
 
 properties:
-  wso2apim_analytics.memory.min_heap:
+  wso2apim.memory.min_heap:
     description: "Min Heap in MB"
     default: 2048
-  wso2apim_analytics.memory.max_heap:
+  wso2apim.memory.max_heap:
     description: "Max Heap in MB"
     default: 2048
-  wso2apim_analytics.memory.max_permgen:
+  wso2apim.memory.max_permgen:
     description: "Max permgen in MB"
     default: 1024
 
-  wso2apim_analytics.password:
+  wso2apim.password:
     description: wso2apim password
-  wso2apim_analytics.username:
+  wso2apim.username:
     description: wso2apim username
-  wso2apim_analytics.address:
+  wso2apim.address:
     description: wso2apim address
 
-  wso2apim_analytics.mysql.hostname:
+  wso2apim.mysql.hostname:
     description: WSO2 APIM MySQL server hostname
     default: 192.168.50.1
-  wso2apim_analytics.mysql.product_db:
+  wso2apim.mysql.product_db:
     description: WSO2 APIM MySQL database name
     default: WSO2_AM_DB
-  wso2apim_analytics.mysql.username:
+  wso2apim.mysql.username:
     description: WSO2 APIM MySQL username
     default: root
-  wso2apim_analytics.mysql.password:
+  wso2apim.mysql.password:
     description: WSO2 APIM MySQL password
     default: root
-  wso2apim_analytics.mysql.stats_db:
+  wso2apim.mysql.stats_db:
     description: wso2apim mysql statistics database name
     default: STATS_DB
-  wso2apim_analytics.mysql.event_store_db:
+  wso2apim.mysql.event_store_db:
     description: wso2apim mysql event store database name
     default: EVENT_STORE_DB
-  wso2apim_analytics.mysql.processed_data_db:
+  wso2apim.mysql.processed_data_db:
     description: wso2apim mysql analytics processed data database name
     default: PROCESSED_DATA_DB
+  wso2apim.analytics.hostname:
+    description: wso2apim analytics hostname
+    default: 10.244.15.4
 
   cf.apps_domain:
     description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
