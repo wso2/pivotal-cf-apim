@@ -25,7 +25,7 @@ This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a 
 
 	    $ cd pivotal-cf-apim/bosh-release/
 	    
-4. Add the following binaries in to the `deployment` folder. Make sure to have exact versions as they are used in the scripts.
+4. Add the following binaries in to the `dist` folder. Make sure to have exact versions as they are used in the scripts.
 
 		jdk-8u144-linux-x64.tar.gz  
 		mysql-connector-java-5.1.24-bin.jar  
