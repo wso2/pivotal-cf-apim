@@ -1,242 +1,96 @@
-# WSO2 API Manager BOSH Release
+# BOSH release for WSO2 API Manager deployment <br>pattern 1
 
-A BOSH release for deploying WSO2 API Manager 2.1.0 with Analytics on BOSH Director. 
+This repository includes a BOSH release that can be used to deploy WSO2 API Manager 2.1.0 deployment pattern 1
+configured to use a MySQL database on BOSH Director.
 
-## Quick Start Guide
+## Create and deploy the BOSH Release in BOSH Lite
 
-This deploys API Manager and Analytics on 2 seperate VMs, and starts MySQL as a docker container.
+### Prerequisites
 
-1. Install [bosh v2][1], ruby, VirtualBox, git client, mysql client (5.7) and docker.
+Install the following software:
 
-2. Git clone [pivotal-cf-apim][2] repo.
+1. [BOSH CLI](https://bosh.io/docs/cli-v2.html)
+2. [Docker](https://docs.docker.com/engine/installation/)
+3. [VirtualBox](https://www.virtualbox.org/manual/ch02.html)
+4. [WSO2 Update Manager](http://wso2.com/wum)
+5. [Git client](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-        $ clone https://github.com/wso2/pivotal-cf-apim
-       
-    Then the folder structure should look like this.
+### Quick Start Guide
+
+1. Clone this Git repository
+    ```
+    git clone https://github.com/wso2/pivotal-cf-apim.git
+    ```
     
-        ├─ apim
-           ├── pivotal-cf-apim
-           ├── jdk-8u144-linux-x64.tar.gz
-           ├── mysql-connector-java-5.1.24-bin.jar
-           ├── wso2am-2.1.0.1508395562471.zip
-           └── wso2am-analytics-2.1.0.1508329260349.zip
-           
-3. Go inside **pivotal-cf-apim/bosh-release/** directory.
+2. Navigate to `pivotal-cf-apim/pattern-1/bosh-release` directory.
 
-	    $ cd pivotal-cf-apim/bosh-release/
-	    
-4. Add the following binaries in to the `dist` folder. Make sure to have exact versions as they are used in the scripts.
+3. Add the following software distributions to the `dist` folder.
 
-		jdk-8u144-linux-x64.tar.gz  
-		mysql-connector-java-5.1.24-bin.jar  
-		wso2am-2.1.0.zip WUM Updated pack 
-		wso2am-analytics-2.1.0.zip WUM Updated pack
-        
-5. Run `deploy.sh` script. You will be asked for the superuser password, when adding a route to the VirtualBox network.
+- [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-        $ ./deploy.sh
-        
-    If everything goes successful, you will see something like this at the end.
+- [MySQL JDBC driver](https://dev.mysql.com/downloads/connector/j/5.1.html)
+
+- WSO2 API Manager WUM updated product distribution
+
+- WSO2 API Manager Analytics WUM updated product distribution
+
+4. Execute the deploy.sh script.
+   ```
+   ./deploy.sh
+   ```
+   Executing this script will setup MySQL, BOSH environment and will deploy WSO2 API Manager 2.1.0 deployment pattern 1 on BOSH director.
+
+5. Find the IP addresses of created VMs via the BOSH CLI and access the WSO2 API Manager Publisher, Store and Management Console via a web browser.
+    ```
+    bosh -e vbox vms
+    ...
     
-		Deployment 'wso2apim'
-
-        Instance                                                 Process State  AZ  IPs          VM CID                                VM Type  
-        wso2apim/06ade672-ecc8-425b-99a4-e72cf0210c59            running        -   10.244.15.2  4e25c655-f23d-47f7-6a68-98b0d3bd9843  wso2apim-resource-pool  
-        wso2apim_analytics/85eb9ace-7bd4-4075-9dd4-b1b5527bf533  running        -   10.244.15.3  7a8a9524-3649-491e-7427-d74f0949794b  wso2apim_analytics-resource-pool  
-
-        2 vms
+    Deployment 'wso2apim'
     
-    Now you can access APIM by following URLs.
-        
-    	https://10.244.15.2:9443/publisher
-        https://10.244.15.2:9443/store
-        https://10.244.15.2:9443/carbon
-        https://10.244.15.2:9443/admin
-        
-	
-> **Note**: If you want to stop and remove everything (i.e. MySQL container and entire BOSH Environment), run `undeploy.sh` script
-> 
->        $ ./undeploy.sh
-        
+    Instance                                                 Process State  AZ  IPs          VM CID                                VM Type  
+    wso2apim_1/da718160-7588-4594-a6fb-71aa73845a1b          running        -   10.244.15.2  45149778-a699-4030-7374-dd9613f43901  wso2apim-resource-pool  
+    wso2apim_2/25e4cbc3-061d-48c9-ba33-5d71edb74f29          running        -   10.244.15.3  cb0408a3-50ed-4d7d-66ed-2ef50c1a2dd0  wso2apim-resource-pool  
+    wso2apim_analytics/04d6fb22-82bd-42d6-9e93-a42ad5f6ec8d  running        -   10.244.15.4  f8bf7609-eeab-4700-4c08-70bf0edfd18a  wso2apim_analytics-resource-pool  
+    
+    3 vms
+    
+    Succeeded
+    ...
+    ```
+    To ssh to the instance
+    ```
+    bosh -e vbox -d wso2apim ssh <instance_id>
+    e.g. bosh -e vbox -d wso2apim ssh wso2apim_1/da718160-7588-4594-a6fb-71aa73845a1b
+    ```
+    Access the Publisher, Store and Management Console
+    ```
+    WSO2 API Manager Publisher: https://10.244.15.2:9443/publisher
+    WSO2 API Manager Store: https://10.244.15.2:9443/store
+    WSO2 API Manager Management Console: https://10.244.15.2:9443/carbon/
+    ```
 
-[1]: http://bosh.io
-[2]: https://github.com/wso2/pivotal-cf-apim
-[image]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
+# Additional Info
 
-<br />    
-
-## What happens inside deploy.sh:         
-   
-1. Check if required binaries are available.
-
-        if [ ! -f $DEPLOYMENT_FOLDER/$APIM_PACK ]; then
-            echo -e "---> APIM 2.1.0 pack not found!"
-            exit 1
-        fi
-
-        if [ ! -f $DEPLOYMENT_FOLDER/$ANALYTICS_PACK ]; then
-            echo -e "---> APIM Analytics 2.1.0 pack not found!"
-            exit 1
-        fi
-
-        if [ ! -f $DEPLOYMENT_FOLDER/$JDK ]; then
-            echo -e "---> JDK distribution (jdk-8u144-linux-x64.tar.gz) not found!"
-            exit 1
-        fi
-
-        if [ ! -f $DEPLOYMENT_FOLDER/$MYSQL_DRIVER ]; then
-            echo -e "---> MySQL Driver (mysql-connector-java-5.1.34-bin.jar) not found!"
-            exit 1
-        fi
-
-2. Check if required tools are installed.
-
-        if [ ! -x "$(command -v mysql)" ]; then
-            echo -e "\e[32m>> Please install MySQL client. \e[0m"
-            exit 1
-        fi
-
-        if [ ! -x "$(command -v git)" ]; then
-            echo -e "\e[32m>> Please install Git client. \e[0m"
-            exit 1
-        fi
-
-        if [ ! -x "$(command -v docker)" ]; then
-            echo -e "\e[32m>> Please install Docker. \e[0m"
-            exit 1
-        fi
-
-3. Go to parent directory and rename binaries.
-
-        #going to parent directory
-        cd ../../
-
-        APIM_PACK=$(ls wso2am-2.1.0.*.zip)
-        ANALYTICS_PACK=$(ls wso2am-analytics-2.1.0.*.zip)
-
-        cp $APIM_PACK $APIM_NAME.zip
-        cp $ANALYTICS_PACK $ANALYTICS_NAME.zip
-
-4. Pull MySQL docker image and start it.
-
-        if [ ! "$(docker ps -q -f name=mysql-5.7)" ]; then
-            echo -e "---> Starting MySQL docker container..."
-            container_id=$(docker run -d --name mysql-5.7 -p 3306:3306 -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=$mysql_apim_password -v ${current_path}/wso2am-2.1.0/dbscripts/:/dbscripts/ mysql:5.7.19)
-            docker_host_ip=$(/sbin/ifconfig docker0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
-        
-            echo -e "---> Waiting for MySQL service to start on 3306..."
-            while ! nc -z $docker_host_ip 3306; do
-                sleep 1
-                printf "."
-            done
-            echo ""
-            echo -e "---> MySQL service Started."
-        else
-            echo -e "---> MySQL service is already running..."
-        fi
-
-5. Create databases and tables on MySQL.
-
-        echo -e "---> Creating databases..."
-        docker exec -it mysql-5.7 mysql -h$mysql_apim_host -u$mysql_apim_username -p$mysql_apim_password -e "DROP DATABASE IF EXISTS "$am_db"; DROP DATABASE IF EXISTS "$um_db"; DROP DATABASE IF EXISTS "$reg_db"; CREATE DATABASE "$am_db"; CREATE DATABASE "$um_db"; CREATE DATABASE "$reg_db";"
-        docker exec -it mysql-5.7 mysql -h$mysql_analytics_host -u$mysql_analytics_username -p$mysql_analytics_password -e "DROP DATABASE IF EXISTS "$event_store_db"; DROP DATABASE IF EXISTS "$processed_data_db"; DROP DATABASE IF EXISTS "$stats_db"; CREATE DATABASE "$event_store_db"; CREATE DATABASE "$processed_data_db"; CREATE DATABASE "$stats_db";"
-        
-        echo -e "---> Creating tables..."
-        docker exec -it mysql-5.7 mysql -h$mysql_apim_host -u$mysql_apim_username -p$mysql_apim_password -e "USE "$am_db"; SOURCE /dbscripts/apimgt/mysql5.7.sql; USE "$um_db"; SOURCE /dbscripts/mysql5.7.sql; USE "$reg_db"; SOURCE /dbscripts/mysql5.7.sql;"
-
-
-6. Clone [bosh-deployment][3] git repo.
-
-        if [ ! -d bosh-deployment ]; then
-            echo -e "\e[32m>> Cloning https://github.com/cloudfoundry/bosh-deployment... \e[0m"
-            git clone https://github.com/cloudfoundry/bosh-deployment bosh-deployment
-        fi
-
-7. Create BOSH environment.
-
-        if [ ! -d vbox ]; then
-            echo -e "\e[32m>> Creating envionment dir... \e[0m"
-            mkdir vbox
-        fi
-        
-        echo -e "\e[32m>> Creating environment... \e[0m"
-        bosh create-env bosh-deployment/bosh.yml \
-            --state vbox/state.json \
-            -o bosh-deployment/virtualbox/cpi.yml \
-            -o bosh-deployment/virtualbox/outbound-network.yml \
-            -o bosh-deployment/bosh-lite.yml \
-            -o bosh-deployment/bosh-lite-runc.yml \
-            -o bosh-deployment/jumpbox-user.yml \
-            --vars-store vbox/creds.yml \
-            -v director_name="Bosh Lite Director" \
-            -v internal_ip=192.168.50.6 \
-            -v internal_gw=192.168.50.1 \
-            -v internal_cidr=192.168.50.0/24 \
-            -v outbound_network_name=NatNetwork
-
-8. Once VM with BOSH Director is running, point BOSH CLI to it, saving the environment with the alias `vbox`.
-
-        echo -e "\e[32m>> Setting alias for the environment... \e[0m"
-        bosh -e 192.168.50.6 alias-env vbox --ca-cert <(bosh int vbox/creds.yml --path /director_ssl/ca)
-
-9. Login to BOSH Director using generated password
-
-        echo -e "\e[32m>> Loging in... \e[0m"
-        bosh -e vbox login --client=admin --client-secret=$(bosh int vbox/creds.yml --path /admin_password
-
-10. Upload binaries as blobs.
-
-        cd pivotal-cf-apim/bosh-release/ 
-        echo -e "\e[32m>> Adding blobs... \e[0m"
-        bosh -e vbox add-blob ../../jdk-8u144-linux-x64.tar.gz oraclejdk/jdk-8u144-linux-x64.tar.gz
-        bosh -e vbox add-blob ../../mysql-connector-java-5.1.24-bin.jar mysqldriver/mysql-connector-java-5.1.24-bin.jar
-        bosh -e vbox add-blob ../../wso2am-2.1.0.zip wso2apim/wso2am-2.1.0.zip
-        bosh -e vbox add-blob ../../wso2am-analytics-2.1.0.zip wso2apim_analytics/wso2am-analytics-2.1.0.zip
-
-        echo -e "\e[32m>> Uploading blobs... \e[0m"
-        bosh -e vbox -n upload-blobs
-
-11. Create APIM BOSH release and upload it to BOSH Director.
-
-        echo -e "\e[32m>> Creating bosh release... \e[0m"
-        bosh -e vbox create-release --force
-
-        echo -e "\e[32m>> Uploading bosh release... \e[0m"
-        bosh -e vbox upload-release
-
-12. Download latest bosh-lite warden stemcell from bosh.io and upload it to BOSH Director.
-
-        if [ ! -f bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz ]; then
-            echo -e "\e[32m>> Stemcell does not exist! Downloading... \e[0m"
-            wget https://s3.amazonaws.com/bosh-core-stemcells/warden/bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
-        fi
-
-        echo -e "\e[32m>> Uploading Stemcell... \e[0m"
-        bosh -e vbox upload-stemcell bosh-stemcell-3445.7-warden-boshlite-ubuntu-trusty-go_agent.tgz
-
-13. Deploy the WSO2 API Manager BOSH release manifest in BOSH Director.
-
-        echo -e "\e[32m>> Deploying bosh release... \e[0m"
-        yes | bosh -e vbox -d wso2apim deploy wso2apim-manifest.yml
-
-14. Add route to VirtualBox network.
-
-        echo -e "\e[32m>> Adding route... \e[0m"
-        sudo route add -net 10.244.0.0/16 gw 192.168.50.6
-
-15. List VMs.
-
-        echo -e "\e[32m>> Listing VMs... \e[0m"
-        bosh -e vbox vms
-
-
-[1]: http://bosh.io
-[2]: https://github.com/bhathiya/pivotal-cf-apim
-[3]: https://github.com/cloudfoundry/bosh-deployment 
-
+Structure of the files of this repository will be as below :
+```
+└── bosh-release
+    ├── config
+    ├── dbscripts
+    ├── deployment
+    ├── dist
+    ├── jobs
+    ├── packages
+    ├── src
+    ├── create.sh
+    ├── deploy.sh
+    ├── export.sh
+    ├── README.md
+    ├── undeploy.sh
+    └── wso2apim-manifest.yml
+```
+To know more about BOSH CLI commands to create a BOSH environment, create a bosh release and upload, refer deploy.sh script.
 
 ## References
 
 * [A Guide to Using BOSH](http://mariash.github.io/learn-bosh/)
 * [BOSH Lite](https://bosh.io/docs/bosh-lite.html)
-
