@@ -12,3 +12,5 @@
 **/dev_releases/
 **/deployment/*
 **/dist/*
+**/.final_builds/*
+**/releases/*
