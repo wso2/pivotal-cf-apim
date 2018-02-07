@@ -136,13 +136,19 @@ service<http> serviceBroker {
         }
         string serviceEndpointPassword = strings:valueOf(parameters.serviceEndpointPassword);
 
+        if(parameters.apiDefinition == null) {
+            responseMessage = createErrorResponse("API definition not found in parameters");
+            reply responseMessage;
+        }
+        json apiDef = parameters.apiDefinition;
+
         string token = wso2apimclient:getAccessToken(tokenEndpoint, username, password, clientId, clientSecret);
         string reference = createReference(bindingId);
 
         string apiId = "";
         string error = "";
         apiId, error = wso2apimclient:createApi(publisherEndpoint, token, apiName, apiVersion, contextPath, serviceEndpoint,
-                                 serviceEndpointUsername, serviceEndpointPassword, reference);
+                                 serviceEndpointUsername, serviceEndpointPassword, reference, apiDef);
         if (apiId == "") {
             json payload = { "error": error };
             http:setStatusCode(responseMessage, 400);
