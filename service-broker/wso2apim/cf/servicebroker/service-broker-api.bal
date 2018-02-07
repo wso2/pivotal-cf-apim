@@ -93,50 +93,50 @@ service<http> serviceBroker {
         json parameters = request.parameters;
 
         message responseMessage = {};
-        if(parameters == null) {
+        if (parameters == null) {
             http:setStatusCode(responseMessage, 400);
             json error = { "error": "Parameters not found in request message" };
             messages:setJsonPayload(responseMessage, error);
             reply responseMessage;
         }
 
-        if(parameters.apiName == null) {
+        if (parameters.apiName == null) {
             responseMessage = createErrorResponse("API name not found in parameters");
             reply responseMessage;
         }
         string apiName = strings:valueOf(parameters.apiName);
 
-        if(parameters.apiVersion == null) {
+        if (parameters.apiVersion == null) {
             responseMessage = createErrorResponse("API version not found in parameters");
             reply responseMessage;
         }
         string apiVersion = strings:valueOf(parameters.apiVersion);
 
-        if(parameters.contextPath == null) {
+        if (parameters.contextPath == null) {
             responseMessage = createErrorResponse("Context path not found in parameters");
             reply responseMessage;
         }
         string contextPath = strings:valueOf(parameters.contextPath);
 
-        if(parameters.serviceEndpoint == null) {
+        if (parameters.serviceEndpoint == null) {
             responseMessage = createErrorResponse("Service endpoint not found in parameters");
             reply responseMessage;
         }
         string serviceEndpoint = strings:valueOf(parameters.serviceEndpoint);
 
-        if(parameters.serviceEndpointUsername == null) {
+        if (parameters.serviceEndpointUsername == null) {
             responseMessage = createErrorResponse("Service endpoint username not found in parameters");
             reply responseMessage;
         }
         string serviceEndpointUsername = strings:valueOf(parameters.serviceEndpointUsername);
 
-        if(parameters.serviceEndpointPassword == null) {
+        if (parameters.serviceEndpointPassword == null) {
             responseMessage = createErrorResponse("Service endpoint password not found in parameters");
             reply responseMessage;
         }
         string serviceEndpointPassword = strings:valueOf(parameters.serviceEndpointPassword);
 
-        if(parameters.apiDefinition == null) {
+        if (parameters.apiDefinition == null) {
             responseMessage = createErrorResponse("API definition not found in parameters");
             reply responseMessage;
         }
@@ -158,7 +158,7 @@ service<http> serviceBroker {
 
         boolean success;
         success, error = wso2apimclient:publishApi(publisherEndpoint, token, apiId, apiName);
-        if(!success) {
+        if (!success) {
             json payload = { "error": error };
             http:setStatusCode(responseMessage, 400);
             messages:setJsonPayload(responseMessage, payload);
@@ -187,13 +187,13 @@ service<http> serviceBroker {
 
         message responseMessage = {};
         apiId, apiName, error = wso2apimclient:getApiIdNameByReference(publisherEndpoint, token, reference);
-        if(apiId == "") {
+        if (apiId == "") {
             json payload = { "error": "Could not find API with binding id " + bindingId };
             http:setStatusCode(responseMessage, 404);
             messages:setJsonPayload(responseMessage, payload);
             reply responseMessage;
         }
-        if(error != "") {
+        if (error != "") {
             json payload = { "error": error };
             http:setStatusCode(responseMessage, 400);
             messages:setJsonPayload(responseMessage, payload);
@@ -202,7 +202,7 @@ service<http> serviceBroker {
 
         boolean success = false;
         success, error = wso2apimclient:deleteApi(publisherEndpoint, token, apiId, apiName);
-        if(!success) {
+        if (!success) {
             json payload = { "error": error };
             http:setStatusCode(responseMessage, 400);
             messages:setJsonPayload(responseMessage, payload);
