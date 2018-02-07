@@ -11,7 +11,7 @@ service<http> serviceBroker {
 
     string apiPublisherUiUrl = system:getEnv("WSO2_APIM_PUBLISHER_UI_URL");
     string tokenEndpoint = system:getEnv("WSO2_APIM_TOKEN_ENDPOINT");
-    string username = system:getEnv("WSP2_APIM_USERNAME");
+    string username = system:getEnv("WSO2_APIM_USERNAME");
     string password = system:getEnv("WSO2_APIM_PASSWORD");
     string clientId = system:getEnv("WSO2_APIM_CLIENT_ID");
     string clientSecret = system:getEnv("WSO2_APIM_CLIENT_SECRET");
