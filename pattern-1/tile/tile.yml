@@ -21,6 +21,23 @@ icon_file: resources/wso2-logo.png
 label: WSO2 API Manager 2.1.0
 description: PCF Tile for WSO2 API Manager 2.1.0
 
+packages:
+- name: wso2-apim
+  type: bosh-release
+  path: wso2am-2.1.0.tgz
+  jobs:
+  - name: wso2apim_1
+    templates:
+    - name: wso2apim_1
+      release: wso2apim-release
+    memory: 4096
+    ephemeral_disk: 4096
+    persistent_disk: 16384
+    cpu: 2
+    static_ip: 1
+    max_in_flight: 1
+    properties: {}
+
 forms:
 - name: Database connection information
   label: Test Tile
@@ -38,20 +55,3 @@ forms:
   - name: db_password
     type: secret
     label: Password
-
-packages:
-- name: wso2-apim
-  type: bosh-release
-  path: wso2am-2.1.0.tgz
-  jobs:
-  - name: wso2apim_1
-    templates:
-    - name: wso2apim_1
-      release: wso2apim-release
-    memory: 4096
-    ephemeral_disk: 4096
-    persistent_disk: 16384
-    cpu: 2
-    static_ip: 1
-    max_in_flight: 1
-    properties: {}
