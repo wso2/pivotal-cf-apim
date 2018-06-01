@@ -35,9 +35,9 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%= p("DB_HOSTNAME") %>:3306/<%= p("DB_NAME") %>?autoReconnect=true</url>
-                    <username><%= p("DB_USERNAME") %></username>
-                    <password><%= p("DB_PASSWORD") %></password>
+                    <url>jdbc:mysql://<%= p("db_hostname") %>:3306/<%= p("db_name") %>?autoReconnect=true</url>
+                    <username><%= p("db_username") %></username>
+                    <password><%= p("db_password") %></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
