@@ -21,6 +21,11 @@ icon_file: resources/wso2-logo.png
 label: WSO2 API Manager 2.1.0
 description: PCF Tile for WSO2 API Manager 2.1.0
 
+stemcell_criteria:
+  os: ubuntu-trusty
+  requires_cpi: false
+  version: '3541'
+
 packages:
 - name: wso2-apim
   type: bosh-release
@@ -40,7 +45,7 @@ packages:
 
 forms:
 - name: Database connection information
-  label: Test Tile
+  label: Database connection information
   description: WSO2 API Manager Database connection informatio
   properties:
   - name: db_hostname

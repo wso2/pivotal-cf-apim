@@ -35,9 +35,9 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%= ENV["DB_HOSTNAME"] %>:3306/<%= ENV["DB_NAME"] %?autoReconnect=true</url>
-                    <username><%= ENV["DB_USERNAME"] %</username>
-                    <password><%= ENV["DB_PASSWORD"] %</password>
+                    <url>jdbc:mysql://<%= p("DB_HOSTNAME") %>:3306/<%= p("DB_NAME") %?autoReconnect=true</url>
+                    <username><%= p("DB_USERNAME") %</username>
+                    <password><%= p("DB_PASSWORD") %</password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
@@ -56,9 +56,9 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.db_hostname %>:3306/<%=properties.db_name %>?autoReconnect=true</url>
-                    <username><%=properties.db_username %></username>
-                    <password><%=properties.db_password %></password>
+                    <url>jdbc:mysql://<%= p("db_hostname") %>:3306/<%= p("db_name") %>?autoReconnect=true</url>
+                    <username><%= p("db_username") %></username>
+                    <password><%= p("db_password") %></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
@@ -77,9 +77,9 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2apim.mysql.hostname %>:3306/<%=properties.wso2apim.mysql.product_db %>?autoReconnect=true</url>
-                    <username><%=properties.wso2apim.mysql.username %></username>
-                    <password><%=properties.wso2apim.mysql.password %></password>
+                    <url>jdbc:mysql://<%= p("db_hostname") %>:3306/<%= p("db_name") %>?autoReconnect=true</url>
+                    <username><%= p("db_username") %></username>
+                    <password><%= p("db_password") %></password>
                     <defaultAutoCommit>false</defaultAutoCommit>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
                     <maxActive>50</maxActive>
