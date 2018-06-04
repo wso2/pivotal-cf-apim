@@ -48,15 +48,15 @@ forms:
   label: Database connection information
   description: WSO2 API Manager Database connection informatio
   properties:
-  - name: db_hostname
+  - name: wso2apim.mysql.hostname
     type: string
     label: Hostname
-  - name: db_name
+  - name: wso2apim.mysql.product_db
     type: string
     label: Database Name
-  - name: db_username
+  - name: wso2apim.mysql.username
     type: string
     label: Username
-  - name: db_password
+  - name: wso2apim.mysql.password
     type: secret
     label: Password
