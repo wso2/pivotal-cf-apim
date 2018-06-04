@@ -26,6 +26,24 @@ stemcell_criteria:
   requires_cpi: false
   version: '3541'
 
+forms:
+- name: mysql_db
+  label: Database connection information
+  description: WSO2 API Manager Database connection informatio
+  properties:
+  - name: hostname
+    type: string
+    label: Hostname
+  - name: product_db
+    type: string
+    label: Database Name
+  - name: username
+    type: string
+    label: Username
+  - name: password
+    type: secret
+    label: Password
+
 packages:
 - name: wso2-apim
   type: bosh-release
@@ -41,22 +59,9 @@ packages:
     cpu: 2
     static_ip: 1
     max_in_flight: 1
-    properties: {}
-
-forms:
-- name: Database connection information
-  label: Database connection information
-  description: WSO2 API Manager Database connection informatio
-  properties:
-  - name: wso2apim.mysql.hostname
-    type: string
-    label: Hostname
-  - name: wso2apim.mysql.product_db
-    type: string
-    label: Database Name
-  - name: wso2apim.mysql.username
-    type: string
-    label: Username
-  - name: wso2apim.mysql.password
-    type: secret
-    label: Password
+    properties:
+      mysql_db:
+        hostname: (( .properties.mysql_db.hostname.value ))
+        product_db: (( .properties.mysql_db.product_db.value ))
+        username: (( .properties.mysql_db.username.value ))
+        password: (( .properties.mysql_db.password.value ))
