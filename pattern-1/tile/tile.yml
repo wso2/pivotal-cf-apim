@@ -29,7 +29,7 @@ stemcell_criteria:
 forms:
 - name: mysql_db
   label: Database connection information
-  description: WSO2 API Manager Database connection informatio
+  description: WSO2 API Manager Database connection information
   properties:
   - name: hostname
     type: string
@@ -62,7 +62,7 @@ packages:
     properties:
       wso2apim:
         mysql:
-          hostname: (( .properties.mysql_db.hostname.value ))
-          product_db: (( .properties.mysql_db.product_db.value ))
-          username: (( .properties.mysql_db.username.value ))
-          password: (( .properties.mysql_db.password.value ))
+          hostname: (( .properties.hostname.value ))
+          product_db: (( .properties.product_db.value ))
+          username: (( .properties.username.value ))
+          password: (( .properties.password.value ))
