@@ -60,8 +60,9 @@ packages:
     static_ip: 1
     max_in_flight: 1
     properties:
-      mysql_db:
-        hostname: (( .properties.mysql_db.hostname.value ))
-        product_db: (( .properties.mysql_db.product_db.value ))
-        username: (( .properties.mysql_db.username.value ))
-        password: (( .properties.mysql_db.password.value ))
+      wso2apim:
+        mysql:
+          hostname: (( .properties.mysql_db.hostname.value ))
+          product_db: (( .properties.mysql_db.product_db.value ))
+          username: (( .properties.mysql_db.username.value ))
+          password: (( .properties.mysql_db.password.value ))

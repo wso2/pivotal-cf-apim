@@ -35,9 +35,9 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%= p("mysql_db.hostname") %>:3306/<%= p("mysql_db.product_db") %>?autoReconnect=true</url>
-                    <username><%= p("mysql_db.username") %></username>
-                    <password><%= p("mysql_db.password") %></password>
+                    <url>jdbc:mysql://<%= p("wso2apim.mysql.hostname") %>:3306/<%= p("wso2apim.mysql.product_db") %>?autoReconnect=true</url>
+                    <username><%= p("wso2apim.mysql.username") %></username>
+                    <password><%= p("wso2apim.mysql.password") %></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
@@ -56,9 +56,9 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%= p("mysql_db.hostname") %>:3306/<%= p("mysql_db.product_db") %>?autoReconnect=true</url>
-                    <username><%= p("mysql_db.username") %></username>
-                    <password><%= p("mysql_db.password") %></password>
+                    <url>jdbc:mysql://<%= p("wso2apim.mysql.hostname") %>:3306/<%= p("wso2apim.mysql.product_db") %>?autoReconnect=true</url>
+                    <username><%= p("wso2apim.mysql.username") %></username>
+                    <password><%= p("wso2apim.mysql.password") %></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
@@ -77,9 +77,9 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%= p("mysql_db.hostname") %>:3306/<%= p("mysql_db.product_db") %>?autoReconnect=true</url>
-                    <username><%= p("mysql_db.username") %></username>
-                    <password><%= p("mysql_db.password") %></password>
+                    <url>jdbc:mysql://<%= p("wso2apim.mysql.hostname") %>:3306/<%= p("wso2apim.mysql.product_db") %>?autoReconnect=true</url>
+                    <username><%= p("wso2apim.mysql.username") %></username>
+                    <password><%= p("wso2apim.mysql.password") %></password>
                     <defaultAutoCommit>false</defaultAutoCommit>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
                     <maxActive>50</maxActive>
