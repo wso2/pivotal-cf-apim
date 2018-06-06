@@ -45,6 +45,10 @@ forms:
     label: Password
 
 packages:
+- name: routing-release
+  type: bosh-release
+  path: routing-0.178.0.tgz
+
 - name: wso2-apim
   type: bosh-release
   path: wso2am-2.1.0.tgz
@@ -53,6 +57,12 @@ packages:
     templates:
     - name: wso2apim_1
       release: wso2apim-release
+    - name: route_registrar
+      release: routing
+      consumes: |
+        nats:
+          from: nats
+          deployment: (( ..cf.deployment_name ))
     memory: 4096
     ephemeral_disk: 4096
     persistent_disk: 16384
@@ -66,3 +76,10 @@ packages:
           product_db: (( .properties.product_db.value ))
           username: (( .properties.username.value ))
           password: (( .properties.password.value ))
+      route_registrar:
+        routes:
+        - name: wso2apim
+          port: 9443
+          registration_interval: 20s
+          uris:
+          - wso2apim.(( ..cf.cloud_controller.system_domain.value ))
