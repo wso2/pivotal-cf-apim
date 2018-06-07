@@ -79,7 +79,14 @@ packages:
       route_registrar:
         routes:
         - name: wso2apim
-          port: 9443
+          port: 9763
+          tls_port: 9443
           registration_interval: 20s
           uris:
           - wso2apim.(( ..cf.cloud_controller.system_domain.value ))
+        - name: wso2apim-gw
+          port: 8280
+          tls_port: 8243
+          registration_interval: 20s
+          uris:
+          - wso2apim-gw.(( ..cf.cloud_controller.system_domain.value ))
