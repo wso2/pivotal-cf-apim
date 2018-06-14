@@ -15,6 +15,10 @@ packages:
 - wso2apim
 - common
 
+consumes:
+- name: apim-analytics
+  type: analytics_node
+
 properties:
   wso2apim.memory.min_heap:
     description: "Min Heap in MB"

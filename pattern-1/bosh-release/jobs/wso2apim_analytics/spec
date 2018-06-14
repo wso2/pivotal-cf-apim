@@ -2,11 +2,11 @@
 name: wso2apim_analytics
 templates:
   ctl.erb: bin/ctl
-  config/registry.xml: config/registry.xml
-  config/user-mgt.xml: config/user-mgt.xml
-  config/datasources/analytics-datasources.xml: config/datasources/analytics-datasources.xml
-  config/datasources/master-datasources.xml: config/datasources/master-datasources.xml
-  config/datasources/stats-datasources.xml: config/datasources/stats-datasources.xml
+#  config/registry.xml: config/registry.xml
+#  config/user-mgt.xml: config/user-mgt.xml
+#  config/datasources/analytics-datasources.xml: config/datasources/analytics-datasources.xml
+#  config/datasources/master-datasources.xml: config/datasources/master-datasources.xml
+#  config/datasources/stats-datasources.xml: config/datasources/stats-datasources.xml
   config/analytics/spark/spark-jdbc-config.xml: config/analytics/spark/spark-jdbc-config.xml
 
 packages:
@@ -14,6 +14,10 @@ packages:
 - mysqldriver
 - wso2apim_analytics
 - common
+
+provides:
+- name: apim-analytics
+  type: analytics_node
 
 properties:
   wso2apim_analytics.memory.min_heap:
