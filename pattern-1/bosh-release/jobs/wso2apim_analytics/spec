@@ -37,16 +37,16 @@ properties:
   wso2apim_analytics.address:
     description: wso2apim address
 
-  wso2apim_analytics.mysql.hostname:
+  wso2apim.mysql.hostname:
     description: WSO2 APIM MySQL server hostname
     default: 192.168.50.1
-  wso2apim_analytics.mysql.product_db:
+  wso2apim.mysql.product_db:
     description: WSO2 APIM MySQL database name
     default: WSO2_AM_DB
-  wso2apim_analytics.mysql.username:
+  wso2apim.mysql.username:
     description: WSO2 APIM MySQL username
     default: root
-  wso2apim_analytics.mysql.password:
+  wso2apim.mysql.password:
     description: WSO2 APIM MySQL password
     default: root
   wso2apim_analytics.mysql.stats_db:
