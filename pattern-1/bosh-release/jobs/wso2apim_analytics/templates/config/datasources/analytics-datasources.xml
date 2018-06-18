@@ -13,10 +13,10 @@
             <description>The datasource used for analytics record store</description>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2apim_analytics.mysql.hostname %>:3306/<%=properties.wso2apim_analytics.mysql.event_store_db %>?autoReconnect=true&amp;relaxAutoCommit=true</url>
-                    <username><%=properties.wso2apim_analytics.mysql.username %></username>
-                    <password><%=properties.wso2apim_analytics.mysql.password %></password>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <url>jdbc:h2:repository/database/ANALYTICS_EVENT_STORE;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
+                    <username>wso2carbon</username>
+                    <password>wso2carbon</password>
+                    <driverClassName>org.h2.Driver</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
@@ -32,10 +32,10 @@
             <description>The datasource used for analytics record store</description>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2apim_analytics.mysql.hostname %>:3306/<%=properties.wso2apim_analytics.mysql.processed_data_db %>?autoReconnect=true&amp;relaxAutoCommit=true</url>
-                    <username><%=properties.wso2apim_analytics.mysql.username %></username>
-                    <password><%=properties.wso2apim_analytics.mysql.password %></password>
-                    <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                    <url>jdbc:h2:repository/database/ANALYTICS_PROCESSED_DATA_STORE;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
+                    <username>wso2carbon</username>
+                    <password>wso2carbon</password>
+                    <driverClassName>org.h2.Driver</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
