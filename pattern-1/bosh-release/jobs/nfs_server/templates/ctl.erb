@@ -70,6 +70,9 @@ case $1 in
 
     service nfs-kernel-server start
 
+    nfs_pid = ps aux | grep -w nfsd | grep -v grep | awk '{print$2}'
+    echo $nfs_pid > $pid_file
+
     ;;
 
   stop)

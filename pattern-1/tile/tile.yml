@@ -53,6 +53,15 @@ packages:
   type: bosh-release
   path: wso2am-2.1.0.tgz
   jobs:
+  - name: nfs_server
+    templates:
+    - name: nfs_server
+      release: wso2apim-release
+    memory: 4096
+    ephemeral_disk: 4096
+    persistent_disk: 16384
+    cpu: 2
+    static_ip: 1
   - name: wso2apim_analytics
     templates:
     - name: wso2apim_analytics
@@ -107,34 +116,34 @@ packages:
           registration_interval: 20s
           uris:
           - wso2apim-gw.(( ..cf.cloud_controller.system_domain.value ))
-#  - name: wso2apim_2
-#    templates:
-#    - name: wso2apim_1
-#      release: wso2apim-release
-#    - name: route_registrar
-#      release: routing
-#      consumes:
-#        nats:
-#          from: nats
-#          deployment: (( ..cf.deployment_name ))
-#    memory: 4096
-#    ephemeral_disk: 4096
-#    persistent_disk: 16384
-#    cpu: 2
-#    static_ip: 1
-#    max_in_flight: 1
-#    properties:
-#      wso2apim:
-#        mysql:
-#          hostname: (( .properties.hostname.value ))
-#          product_db: (( .properties.product_db.value ))
-#          username: (( .properties.username.value ))
-#          password: (( .properties.password.value ))
-#      route_registrar:
-#        routes:
-#        - name: wso2apim-gw
-#          port: 8280
-#          tls_port: 8243
-#          registration_interval: 20s
-#          uris:
-#          - wso2apim-gw.(( ..cf.cloud_controller.system_domain.value ))
+  - name: wso2apim_2
+    templates:
+    - name: wso2apim_1
+      release: wso2apim-release
+    - name: route_registrar
+      release: routing
+      consumes:
+        nats:
+          from: nats
+          deployment: (( ..cf.deployment_name ))
+    memory: 4096
+    ephemeral_disk: 4096
+    persistent_disk: 16384
+    cpu: 2
+    static_ip: 1
+    max_in_flight: 1
+    properties:
+      wso2apim:
+        mysql:
+          hostname: (( .properties.hostname.value ))
+          product_db: (( .properties.product_db.value ))
+          username: (( .properties.username.value ))
+          password: (( .properties.password.value ))
+      route_registrar:
+        routes:
+        - name: wso2apim-gw
+          port: 8280
+          tls_port: 8243
+          registration_interval: 20s
+          uris:
+          - wso2apim-gw.(( ..cf.cloud_controller.system_domain.value ))
