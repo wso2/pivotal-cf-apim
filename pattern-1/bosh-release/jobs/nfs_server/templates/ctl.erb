@@ -53,11 +53,8 @@ mkdir /var/nfsshare
 
 chown nobody:nogroup /var/nfsshare
 
-echo '/var/nfsshare    *(rw,sync,no_subtree_check)' >> /etc/exports
+echo '/var/nfsshare    *(rw,sync,no_subtree_check)' > /etc/exports
 echo '/home    *(rw,sync,no_subtree_check)' >> /etc/exports
-
-/var/nfsshare    192.168.0.101(rw,sync,no_subtree_check)
-/home            192.168.0.101(rw,sync,no_root_squash,no_subtree_check)
 
 exportfs -a
 
@@ -72,8 +69,8 @@ case $1 in
 
     sleep 20
 
-    nfs_pid = `ps aux | grep -w nfsd | grep -v grep | awk '{print$2}'`
-    echo $nfs_pid > $pid_file
+    nfs_pid=`ps aux | grep -w nfsd | grep -v grep | awk '{print$2}'`
+    echo $nfs_pid > ${pid_file}
 
     ;;
 
