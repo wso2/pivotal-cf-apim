@@ -17,7 +17,7 @@ packages:
 
 provides:
 - name: apim-analytics
-  type: analytics_node
+  type: analytics-node
 
 properties:
   wso2apim_analytics.memory.min_heap:

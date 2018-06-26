@@ -49,12 +49,17 @@ log_debug "Kicking off ctl script as `whoami` with $1"
 apt-get update
 apt-get install nfs-kernel-server
 
-mkdir /var/nfsshare
+# create the share directory and set permission
 
-chown nobody:nogroup /var/nfsshare
+mkdir -p /mnt/nfs-export/wso2am/deployment-server
+mkdir -p /mnt/nfs-export/wso2am/deployment-tenants
 
-echo '/var/nfsshare    *(rw,sync,no_subtree_check)' > /etc/exports
-echo '/home    *(rw,sync,no_subtree_check)' >> /etc/exports
+chown nobody:nogroup /mnt/nfs_export/wso2am/deployment-server
+chown nobody:nogroup /mnt/nfs_export/wso2am/deployment-tenants
+
+# configure the exports
+echo '/mnt/nfs_export/wso2am/deployment-server    *(rw,sync,no_subtree_check)' >> /etc/exports
+echo '/mnt/nfs_export/wso2am/deployment-tenants    *(rw,sync,no_subtree_check)' >> /etc/exports
 
 exportfs -a
 

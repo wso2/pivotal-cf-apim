@@ -57,6 +57,16 @@ function log_debug() {
 
 log_debug "Kicking off ctl script as `whoami` with $1"
 
+dpkg -s xnfs-common >/dev/null 2>&1
+if [ $? -ne 0 ] ; then
+  log_debug "Installing NFS Client"
+  sudo apt-get update
+  sudo apt-get install nfs-common
+fi
+
+mkdir -p /mnt/nfs-share/wso2am/deployment-server
+mkdir -p /mnt/nfs-share/wso2am/deployment-tenants
+
 case $1 in
 
   start)
@@ -82,7 +92,18 @@ case $1 in
     cp -r ${job_dir}/config/* ${WSO2_APIM_HOME}/repository/conf/
 
     # Here add any libraries your application needs:
-    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/ 
+    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/
+
+    cp -r $WSO2_APIM_HOME/repository/deployment/server/ /tmp/deployment-server
+    rm -rf $WSO2_APIM_HOME/repository/deployment/server/
+
+    mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs_export/wso2am/deployment-server /mnt/nfs-share/wso2am/deployment-server
+    mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs_export/wso2am/deployment-tenants /mnt/nfs-share/wso2am/deployment-tenants
+
+    if [ -z "$(ls -A /Users/shariq/work/pcf/sample-bosh/jobs/sample-job/templates)" ]; then
+      cp -r /tmp/deployment-server/* /mnt/nfs-share/wso2am/deployment-server
+      ln -s /mnt/nfs-share/wso2am/deployment-server $WSO2_APIM_HOME/repository/deployment/server/
+    fi
 
     $WSO2_APIM_HOME/bin/wso2server.sh start
 
