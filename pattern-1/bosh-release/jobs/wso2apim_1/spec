@@ -19,7 +19,7 @@ consumes:
 - name: apim-analytics
   type: analytics-node
 - name: nfs-server
-  type: nfs-share
+  type: nfs
 
 properties:
   wso2apim.memory.min_heap:
