@@ -100,7 +100,7 @@ case $1 in
     mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs_export/wso2am/deployment-server /mnt/nfs-share/wso2am/deployment-server
     mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs_export/wso2am/deployment-tenants /mnt/nfs-share/wso2am/deployment-tenants
 
-    if [ -z "$(ls -A /Users/shariq/work/pcf/sample-bosh/jobs/sample-job/templates)" ]; then
+    if [ -z "$(ls -A $WSO2_APIM_HOME/repository/deployment/server/)" ]; then
       cp -r /tmp/deployment-server/* /mnt/nfs-share/wso2am/deployment-server
       ln -s /mnt/nfs-share/wso2am/deployment-server $WSO2_APIM_HOME/repository/deployment/server/
     fi
