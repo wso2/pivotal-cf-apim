@@ -57,15 +57,15 @@ function log_debug() {
 
 log_debug "Kicking off ctl script as `whoami` with $1"
 
-dpkg -s xnfs-common >/dev/null 2>&1
+dpkg -s nfs-common >/dev/null 2>&1
 if [ $? -ne 0 ] ; then
   log_debug "Installing NFS Client"
   sudo apt-get update
   sudo apt-get install nfs-common
 fi
 
-mkdir -p /mnt/nfs-share/wso2am/deployment-server
-mkdir -p /mnt/nfs-share/wso2am/deployment-tenants
+mkdir -p /mnt/nfs-share/wso2am/repository/deployment/server
+mkdir -p /mnt/nfs-share/wso2am/repository/deployment/tenants
 
 case $1 in
 
@@ -97,8 +97,8 @@ case $1 in
     cp -r $WSO2_APIM_HOME/repository/deployment/server/ /tmp/deployment-server
     rm -rf $WSO2_APIM_HOME/repository/deployment/server/
 
-    mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs_export/wso2am/deployment-server /mnt/nfs-share/wso2am/deployment-server
-    mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs_export/wso2am/deployment-tenants /mnt/nfs-share/wso2am/deployment-tenants
+    mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs-export/wso2am/deployment-server /mnt/nfs-share/wso2am/repository/deployment/server
+    mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs-export/wso2am/deployment-tenants /mnt/nfs-share/wso2am/repository/deployment/server
 
     if [ -z "$(ls -A $WSO2_APIM_HOME/repository/deployment/server/)" ]; then
       cp -r /tmp/deployment-server/* /mnt/nfs-share/wso2am/deployment-server
