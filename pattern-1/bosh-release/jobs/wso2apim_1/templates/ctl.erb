@@ -98,11 +98,11 @@ case $1 in
     rm -rf $WSO2_APIM_HOME/repository/deployment/server/
 
     mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs-export/wso2am/deployment-server /mnt/nfs-share/wso2am/repository/deployment/server
-    mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs-export/wso2am/deployment-tenants /mnt/nfs-share/wso2am/repository/deployment/server
+    mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs-export/wso2am/deployment-tenants /mnt/nfs-share/wso2am/repository/deployment/tenants
 
     if [ -z "$(ls -A $WSO2_APIM_HOME/repository/deployment/server/)" ]; then
-      cp -r /tmp/deployment-server/* /mnt/nfs-share/wso2am/deployment-server
-      ln -s /mnt/nfs-share/wso2am/deployment-server $WSO2_APIM_HOME/repository/deployment/server/
+      cp -r /tmp/deployment-server/* /mnt/nfs-share/wso2am/repository/deployment/server
+      ln -s /mnt/nfs-share/wso2am/repository/deployment/server $WSO2_APIM_HOME/repository/deployment/server/
     fi
 
     $WSO2_APIM_HOME/bin/wso2server.sh start
