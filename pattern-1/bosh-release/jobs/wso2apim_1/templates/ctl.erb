@@ -94,16 +94,17 @@ case $1 in
     # Here add any libraries your application needs:
     cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/
 
-    cp -r $WSO2_APIM_HOME/repository/deployment/server/ /tmp/deployment-server
-    rm -rf $WSO2_APIM_HOME/repository/deployment/server/
+    mkdir /tmp/wso2am
+    mv $WSO2_APIM_HOME/repository/deployment/server/ /tmp/wso2am
 
     mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs-export/wso2am/deployment-server /mnt/nfs-share/wso2am/repository/deployment/server
     mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs-export/wso2am/deployment-tenants /mnt/nfs-share/wso2am/repository/deployment/tenants
 
-    if [ -z "$(ls -A $WSO2_APIM_HOME/repository/deployment/server/)" ]; then
-      cp -r /tmp/deployment-server/* /mnt/nfs-share/wso2am/repository/deployment/server
-      ln -s /mnt/nfs-share/wso2am/repository/deployment/server $WSO2_APIM_HOME/repository/deployment/
+    if [ -z "$(ls -A /mnt/nfs-share/wso2am/repository/deployment/server)" ]; then
+      cp -r /tmp/wsos2am/server/. /mnt/nfs-share/wso2am/repository/deployment/server
     fi
+
+    ln -s /mnt/nfs-share/wso2am/repository/deployment/server $WSO2_APIM_HOME/repository/deployment/
 
     $WSO2_APIM_HOME/bin/wso2server.sh start
 
