@@ -66,8 +66,8 @@ chown nobody:nogroup ${NFS_EXPORT_TENANTS_DIR}
 # configure the exports
 
 if [ -z "$(cat /etc/exports | grep wso2am )" ]; then
-  echo '$NFS_EXPORT_SERVER_DIR    *(rw,sync,no_subtree_check)' >> /etc/exports
-  echo '$NFS_EXPORT_TENANTS_DIR   *(rw,sync,no_subtree_check)' >> /etc/exports
+  echo "${NFS_EXPORT_SERVER_DIR}    *(rw,sync,no_subtree_check)" >> /etc/exports
+  echo "${NFS_EXPORT_TENANTS_DIR}   *(rw,sync,no_subtree_check)" >> /etc/exports
 fi
 
 exportfs -a
