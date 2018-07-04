@@ -101,7 +101,7 @@ case $1 in
     mount -t nfs <%= link("nfs-server").instances[0].address %>:/mnt/nfs-export/wso2am/deployment-tenants /mnt/nfs-share/wso2am/repository/deployment/tenants
 
     if [ -z "$(ls -A /mnt/nfs-share/wso2am/repository/deployment/server)" ]; then
-      cp -r /tmp/wsos2am/server/* /mnt/nfs-share/wso2am/repository/deployment/server
+      cp -r /tmp/wso2am/server/* /mnt/nfs-share/wso2am/repository/deployment/server
     fi
 
     ln -s /mnt/nfs-share/wso2am/repository/deployment/server $WSO2_APIM_HOME/repository/deployment/
