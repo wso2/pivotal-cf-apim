@@ -93,7 +93,7 @@
                 <!-- Admin password for the API gateway.-->
                 <Password>${admin.password}</Password>
                 <!-- Endpoint URLs for the APIs hosted in this API gateway.-->
-                <GatewayEndpoint>http://${carbon.local.ip}:${http.nio.port},https://${carbon.local.ip}:${https.nio.port}</GatewayEndpoint>
+                <GatewayEndpoint>http://<%= p('route_registrar.routes')[1]['uris'][0] %>:${http.nio.port},https://<%= p('route_registrar.routes')[1]['uris'][0] %>:${https.nio.port}</GatewayEndpoint>
             </Environment>
         </Environments>
     </APIGateway>
