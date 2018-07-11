@@ -41,28 +41,20 @@ properties:
 
   wso2apim.mysql.hostname:
     description: WSO2 APIM MySQL server hostname
-    default: 192.168.50.1
   wso2apim.mysql.product_db:
     description: WSO2 APIM MySQL database name
-    default: WSO2_AM_DB
   wso2apim.mysql.username:
     description: WSO2 APIM MySQL username
-    default: root
   wso2apim.mysql.password:
     description: WSO2 APIM MySQL password
-    default: root
   wso2apim.mysql.stats_db:
     description: wso2apim mysql statistics database name
-    default: STATS_DB
   wso2apim.mysql.event_store_db:
     description: wso2apim mysql event store database name
-    default: EVENT_STORE_DB
   wso2apim.mysql.processed_data_db:
     description: wso2apim mysql analytics processed data database name
-    default: PROCESSED_DATA_DB
   wso2apim.analytics.hostname:
     description: wso2apim analytics hostname
-    default: 10.244.15.4
 
   cf.apps_domain:
     description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
