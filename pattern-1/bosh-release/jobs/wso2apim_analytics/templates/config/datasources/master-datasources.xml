@@ -36,9 +36,9 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2apim_analytics.mysql.hostname %>:3306/<%=properties.wso2apim_analytics.mysql.product_db %>?autoReconnect=true</url>
-                    <username><%=properties.wso2apim_analytics.mysql.username %></username>
-                    <password><%=properties.wso2apim_analytics.mysql.password %></password>
+                    <url>jdbc:mysql://<%= p("wso2apim.mysql.hostname") %>:3306/<%= p("wso2apim.mysql.product_db") %>?autoReconnect=true</url>
+                    <username><%= p("wso2apim.mysql.username") %></username>
+                    <password><%= p("wso2apim.mysql.password") %></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
@@ -57,9 +57,9 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%=properties.wso2apim_analytics.mysql.hostname %>:3306/<%=properties.wso2apim_analytics.mysql.product_db %>?autoReconnect=true</url>
-                    <username><%=properties.wso2apim_analytics.mysql.username %></username>
-                    <password><%=properties.wso2apim_analytics.mysql.password %></password>
+                    <url>jdbc:mysql://<%= p("wso2apim.mysql.hostname") %>:3306/<%= p("wso2apim.mysql.product_db") %>?autoReconnect=true</url>
+                    <username><%= p("wso2apim.mysql.username") %></username>
+                    <password><%= p("wso2apim.mysql.password") %></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>

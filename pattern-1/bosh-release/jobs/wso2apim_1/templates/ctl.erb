@@ -47,6 +47,13 @@ export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMG
 
 export DEBUG_LOG=${log_dir}/wso2apim.log
 
+export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/wso2am/deployment-server
+export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/wso2am/tenants
+
+export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/wso2am/repository/deployment/server
+export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/wso2am/repository/tenants
+
+
 touch $DEBUG_LOG
 chmod -R 755 /var/vcap/sys
 chmod 777 $DEBUG_LOG
@@ -56,6 +63,16 @@ function log_debug() {
 }
 
 log_debug "Kicking off ctl script as `whoami` with $1"
+
+dpkg -s nfs-common >/dev/null 2>&1
+if [ $? -ne 0 ] ; then
+  log_debug "Installing NFS Client"
+  sudo apt-get update
+  sudo apt-get install nfs-common
+fi
+
+mkdir -p ${NFS_SHARE_SERVER_DIR}
+mkdir -p ${NFS_SHARE_TENANTS_DIR}
 
 case $1 in
 
@@ -82,7 +99,20 @@ case $1 in
     cp -r ${job_dir}/config/* ${WSO2_APIM_HOME}/repository/conf/
 
     # Here add any libraries your application needs:
-    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/ 
+    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/
+
+    mkdir /tmp/wso2am
+    mv $WSO2_APIM_HOME/repository/deployment/server/ /tmp/wso2am
+
+    mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_SERVER_DIR} ${NFS_SHARE_SERVER_DIR}
+    mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_TENANTS_DIR} ${NFS_SHARE_TENANTS_DIR}
+
+    if [ -z "$(ls -A ${NFS_SHARE_SERVER_DIR})" ]; then
+      cp -r /tmp/wso2am/server/* ${NFS_SHARE_SERVER_DIR}
+    fi
+
+    ln -s ${NFS_SHARE_SERVER_DIR} $WSO2_APIM_HOME/repository/deployment/
+    ln -s ${NFS_SHARE_TENANTS_DIR} $WSO2_APIM_HOME/repository/tenants
 
     $WSO2_APIM_HOME/bin/wso2server.sh start
 
@@ -97,6 +127,10 @@ case $1 in
 
     kill -9 `cat ${pid_file}`
     rm -f ${pid_file}
+    sleep 10
+    umount ${NFS_SHARE_SERVER_DIR}
+    umount ${NFS_SHARE_TENANTS_DIR}
+
     ;;
 
   *)
