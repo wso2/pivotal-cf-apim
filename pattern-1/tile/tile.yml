@@ -27,20 +27,36 @@ stemcell_criteria:
   version: '3541'
 
 forms:
-- name: mysql_db
-  label: Database connection information
-  description: WSO2 API Manager Database connection information
+- name: carbon_db
+  label: Carbon DB connection information
+  description: WSO2 API Manager - Carbon Database connection information
   properties:
-  - name: hostname
+  - name: carbon_db.hostname
     type: string
     label: Hostname
-  - name: product_db
+  - name: carbon_db.db_name
     type: string
     label: Database Name
-  - name: username
+  - name: carbon_db.username
     type: string
     label: Username
-  - name: password
+  - name: carbon_db.password
+    type: secret
+    label: Password
+- name: am_db
+  label: AM DB connection information
+  description: WSO2 API Manager Database connection information
+  properties:
+  - name: am_db.hostname
+    type: string
+    label: Hostname
+  - name: am_db.db_name
+    type: string
+    label: Database Name
+  - name: am_db.username
+    type: string
+    label: Username
+  - name: am_db.password
     type: secret
     label: Password
 
@@ -74,11 +90,11 @@ packages:
     max_in_flight: 1
     properties:
       wso2apim:
-        mysql:
-          hostname: (( .properties.hostname.value ))
-          product_db: (( .properties.product_db.value ))
-          username: (( .properties.username.value ))
-          password: (( .properties.password.value ))
+        carbon_db:
+          hostname: (( .properties.carbon_db.hostname.value ))
+          db_name: (( .properties.carbon_db.db_name.value ))
+          username: (( .properties.carbon_db.username.value ))
+          password: (( .properties.carbon_db.password.value ))
   - name: wso2apim_1
     templates:
     - name: wso2apim_1
@@ -97,11 +113,16 @@ packages:
     max_in_flight: 1
     properties:
       wso2apim:
-        mysql:
-          hostname: (( .properties.hostname.value ))
-          product_db: (( .properties.product_db.value ))
-          username: (( .properties.username.value ))
-          password: (( .properties.password.value ))
+        carbon_db:
+          hostname: (( .properties.carbon_db.hostname.value ))
+          product_db: (( .properties.carbon_db.db_name.value ))
+          username: (( .properties.carbon_db.username.value ))
+          password: (( .properties.carbon_db.password.value ))
+        am_db:
+          hostname: (( .properties.am_db.hostname.value ))
+          db_name: (( .properties.am_db.db_name.value ))
+          username: (( .properties.am_db.username.value ))
+          password: (( .properties.am_db.password.value ))
       route_registrar:
         routes:
         - name: wso2apim
