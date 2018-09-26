@@ -46,6 +46,15 @@ properties:
   wso2apim.carbon_db.password:
     description: WSO2 APIM MySQL password
 
+  wso2apim.am_db.hostname:
+    description: WSO2 APIM database server hostname
+  wso2apim.am_db.db_name:
+    description: WSO2 APIM database database name
+  wso2apim.am_db.username:
+    description: WSO2 APIM database username
+  wso2apim.am_db.password:
+    description: WSO2 APIM database password
+
   wso2apim_analytics.mysql.stats_db:
     description: wso2apim mysql statistics database name
   wso2apim_analytics.mysql.event_store_db:
