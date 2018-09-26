@@ -95,6 +95,11 @@ packages:
           db_name: (( .properties.carbon_db_name.value ))
           username: (( .properties.carbon_db_username.value ))
           password: (( .properties.carbon_db_password.value ))
+        am_db:
+          hostname: (( .properties.am_db_hostname.value ))
+          db_name: (( .properties.am_db_name.value ))
+          username: (( .properties.am_db_username.value ))
+          password: (( .properties.am_db_password.value ))
   - name: wso2apim_1
     templates:
     - name: wso2apim_1
@@ -115,7 +120,7 @@ packages:
       wso2apim:
         carbon_db:
           hostname: (( .properties.carbon_db_hostname.value ))
-          product_db: (( .properties.carbon_db_name.value ))
+          db_name: (( .properties.carbon_db_name.value ))
           username: (( .properties.carbon_db_username.value ))
           password: (( .properties.carbon_db_password.value ))
         am_db:
@@ -157,7 +162,7 @@ packages:
       wso2apim:
         carbon_db:
           hostname: (( .properties.carbon_db_hostname.value ))
-          product_db: (( .properties.carbon_db_name.value ))
+          db_name: (( .properties.carbon_db_name.value ))
           username: (( .properties.carbon_db_username.value ))
           password: (( .properties.carbon_db_password.value ))
         am_db:
