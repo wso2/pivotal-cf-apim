@@ -4,4 +4,4 @@ name: wso2apim
 dependencies: []
 
 files:
-- wso2am/wso2am-2.1.0.zip
+- wso2am/wso2am-2.6.0.zip

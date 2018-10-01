@@ -67,7 +67,7 @@ packages:
 
 - name: wso2-apim
   type: bosh-release
-  path: wso2am-2.1.0-bosh-release.tgz
+  path: wso2am-2.6.0-bosh-release.tgz
   jobs:
   - name: nfs_server
     templates:

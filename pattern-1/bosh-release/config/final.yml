@@ -22,4 +22,4 @@ blobstore:
   provider: local
   options:
     blobstore_path: /tmp/wso2apim-release-blobs
-final_name: wso2apim-release
+final_name: wso2am-2.6.0-release
