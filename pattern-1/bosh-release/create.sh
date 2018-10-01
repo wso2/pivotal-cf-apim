@@ -24,7 +24,7 @@ set -e
 
 # deployment artifacts and versions (if they aren't set)
 : ${wso2_product:="wso2am"}
-: ${wso2_product_version:="2.1.0"}
+: ${wso2_product_version:="2.6.0"}
 : ${wso2_product_pack_identifier:="${wso2_product}-${wso2_product_version}"}
 : ${wso2_product_distribution:=${wso2_product_pack_identifier}"*.zip"}
 : ${wso2_product_analytics_pack_identifier:="${wso2_product}-analytics-${wso2_product_version}"}

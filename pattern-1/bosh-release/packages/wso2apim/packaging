@@ -1,7 +1,7 @@
 # abort script on any command that exit with a non zero value
 set -e
 
-archive=`echo wso2am/wso2am-2.1.0.zip`
+archive=`echo wso2am/wso2am-2.6.0.zip`
 
 if [[ -f $archive ]] ; then
   echo "WSO2 API Manager archive found"
