@@ -72,7 +72,7 @@ packages:
   - name: nfs_server
     templates:
     - name: nfs_server
-      release: wso2apim-release
+      release: wso2am-release
     memory: 4096
     ephemeral_disk: 4096
     persistent_disk: 16384
@@ -81,7 +81,7 @@ packages:
   - name: wso2apim_analytics
     templates:
     - name: wso2apim_analytics
-      release: wso2apim-release
+      release: wso2am-release
     - name: route_registrar
       release: routing
       consumes:
@@ -117,7 +117,7 @@ packages:
   - name: wso2apim_1
     templates:
     - name: wso2apim_1
-      release: wso2apim-release
+      release: wso2am-release
     - name: route_registrar
       release: routing
       consumes:
@@ -159,7 +159,7 @@ packages:
   - name: wso2apim_2
     templates:
     - name: wso2apim_1
-      release: wso2apim-release
+      release: wso2am-release
     - name: route_registrar
       release: routing
       consumes:
