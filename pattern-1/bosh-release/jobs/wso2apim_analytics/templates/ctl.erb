@@ -82,9 +82,9 @@ case $1 in
     cp -r ${job_dir}/config/* ${WSO2_APIM_ANALYTICS_HOME}/repository/conf/
 
     # Here add any libraries your application needs:
-    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_ANALYTICS_HOME}/repository/components/lib/
+    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_ANALYTICS_HOME}/lib/
 
-    $WSO2_APIM_ANALYTICS_HOME/bin/wso2server.sh start
+    $WSO2_APIM_ANALYTICS_HOME/bin/worker.sh start
 
     # Sleep for a little while so the server comes up
     sleep 20
