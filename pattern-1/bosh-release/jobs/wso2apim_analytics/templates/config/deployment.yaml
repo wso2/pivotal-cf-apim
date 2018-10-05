@@ -441,6 +441,23 @@ wso2.datasources:
           validationTimeout: 30000
           isAutoCommit: false
 
+    - name: SP_CLUSTER_DB
+      description: "The datasource used for APIM MGW analytics data."
+      jndiConfig:
+        name: jdbc/SP_CLUSTER_DB
+      definition:
+        type: RDBMS
+        configuration:
+          jdbcUrl: 'jdbc:mysql://<%= p("wso2apim.am_db.hostname") %>:3306/<%= p("wso2apim.am_db.db_name") %>?autoReconnect=true&amp;useSSL=false'
+          username: <%= p("wso2apim.am_db.username") %>
+          password: <%= p("wso2apim.am_db.password") %>
+          driverClassName: com.mysql.jdbc.Driver
+          maxPoolSize: 50
+          idleTimeout: 60000
+          connectionTestQuery: SELECT 1
+          validationTimeout: 30000
+          isAutoCommit: false
+
 siddhi:
   extensions:
     -
@@ -464,13 +481,13 @@ siddhi:
           isPersistInDatabase: true
           datasource: GEO_LOCATION_DATA
 
-  # Cluster Configuration
+# Cluster Configuration
 cluster.config:
-  enabled: false
-  groupId:  sp
+  enabled: true
+  groupId:  sp-worker
   coordinationStrategyClass: org.wso2.carbon.cluster.coordinator.rdbms.RDBMSCoordinationStrategy
   strategyConfig:
-    datasource: WSO2_CARBON_DB
+    datasource: SP_CLUSTER_DB
     heartbeatInterval: 1000
     heartbeatMaxRetry: 2
     eventPollingInterval: 1000
