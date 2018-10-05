@@ -479,9 +479,9 @@ cluster.config:
 deployment.config:
   type: ha
   eventSyncServer:
-    host: <%= p("spec.ip") %>
+    host: <%= spec.ip %>
     port: 9893
-    advertisedHost: <%= p("spec.ip") %>
+    advertisedHost: <%= spec.ip %>
     advertisedPort: 9893
     bossThreads: 10
     workerThreads: 10
