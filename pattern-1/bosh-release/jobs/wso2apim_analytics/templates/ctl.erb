@@ -79,7 +79,7 @@ case $1 in
     WSO2_APIM_ANALYTICS_HOME=`pwd`
 
     # Here any config files your application needs:
-    cp -r ${job_dir}/config/* ${WSO2_APIM_ANALYTICS_HOME}/repository/conf/
+    cp -r ${job_dir}/config/* ${WSO2_APIM_ANALYTICS_HOME}/conf/worker/
 
     # Here add any libraries your application needs:
     cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_ANALYTICS_HOME}/lib/
