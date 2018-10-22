@@ -78,7 +78,8 @@ packages:
     persistent_disk: 16384
     cpu: 2
     static_ip: 1
-  - name: wso2apim_analytics_1
+  - name: wso2apim_analytics
+    instances: 2
     templates:
     - name: wso2apim_analytics
       release: wso2am-release
@@ -114,42 +115,6 @@ packages:
             registration_interval: 20s
             uris:
               - wso2apim-analytics.(( ..cf.cloud_controller.system_domain.value ))
-  - name: wso2apim_analytics_2
-    templates:
-    - name: wso2apim_analytics
-      release: wso2am-release
-    - name: route_registrar
-      release: routing
-      consumes:
-        nats:
-          from: nats
-          deployment: (( ..cf.deployment_name ))
-    memory: 4096
-    ephemeral_disk: 4096
-    persistent_disk: 16384
-    cpu: 2
-    static_ip: 1
-    max_in_flight: 1
-    properties:
-      wso2apim:
-        carbon_db:
-          hostname: (( .properties.carbon_db_hostname.value ))
-          db_name: (( .properties.carbon_db_name.value ))
-          username: (( .properties.carbon_db_username.value ))
-          password: (( .properties.carbon_db_password.value ))
-        am_db:
-          hostname: (( .properties.am_db_hostname.value ))
-          db_name: (( .properties.am_db_name.value ))
-          username: (( .properties.am_db_username.value ))
-          password: (( .properties.am_db_password.value ))
-      route_registrar:
-        routes:
-        - name: wso2apim-analytics
-          port: 9764
-          tls_port: 9444
-          registration_interval: 20s
-          uris:
-          - wso2apim-analytics.(( ..cf.cloud_controller.system_domain.value ))
   - name: wso2apim_1
     templates:
     - name: wso2apim_1
