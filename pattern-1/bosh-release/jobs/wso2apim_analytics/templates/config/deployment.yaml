@@ -18,7 +18,7 @@
 wso2.carbon:
   type: wso2-apim-analytics
     # value to uniquely identify a server
-  id: wso2-am-analytics
+  id: <%= spec.ip %>
     # server name
   name: WSO2 API Manager Analytics Server
     # ports used by this server
