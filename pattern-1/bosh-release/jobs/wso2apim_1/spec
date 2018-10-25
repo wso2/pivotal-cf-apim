@@ -3,6 +3,7 @@ name: wso2apim_1
 templates:
   ctl.erb: bin/ctl
   config/axis2/axis2.xml: config/axis2/axis2.xml
+  config/carbon.xml: config/carbon.xml
   config/registry.xml: config/registry.xml
   config/api-manager.xml: config/api-manager.xml
   config/datasources/master-datasources.xml: config/datasources/master-datasources.xml
