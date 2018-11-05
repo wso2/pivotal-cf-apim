@@ -448,9 +448,9 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: 'jdbc:mysql://<%= p("wso2apim.am_db.hostname") %>:3306/<%= p("wso2apim.am_db.db_name") %>?autoReconnect=true&useSSL=false'
-          username: <%= p("wso2apim.am_db.username") %>
-          password: <%= p("wso2apim.am_db.password") %>
+          jdbcUrl: 'jdbc:mysql://<%= p("wso2apim.sp_cluster_db.hostname") %>:3306/<%= p("wso2apim.sp_cluster_db.db_name") %>?autoReconnect=true&useSSL=false'
+          username: <%= p("wso2apim.sp_cluster_db.username") %>
+          password: <%= p("wso2apim.sp_cluster_db.password") %>
           driverClassName: com.mysql.jdbc.Driver
           maxPoolSize: 50
           idleTimeout: 60000
