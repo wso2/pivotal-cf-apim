@@ -59,6 +59,22 @@ forms:
   - name: am_db_password
     type: secret
     label: Password
+- name: sp_cluster_db
+  label: AM Analytics Cluster DB connection information
+  description: WSO2 API Manager - Analytics Clustering Database connection information
+  properties:
+  - name: sp_db_hostname
+    type: string
+    label: Hostname
+  - name: sp_db_name
+    type: string
+    label: Database Name
+  - name: sp_db_username
+    type: string
+    label: Username
+  - name: sp_db_password
+    type: secret
+    label: Password
 
 packages:
 - name: routing-release
@@ -79,7 +95,7 @@ packages:
     cpu: 2
     static_ip: 1
   - name: wso2apim_analytics
-    instances: 2
+    instances: 1
     templates:
     - name: wso2apim_analytics
       release: wso2am-release
@@ -107,6 +123,11 @@ packages:
           db_name: (( .properties.am_db_name.value ))
           username: (( .properties.am_db_username.value ))
           password: (( .properties.am_db_password.value ))
+        sp_cluster_db:
+          hostname: (( .properties.sp_db_hostname.value ))
+          db_name: (( .properties.sp_db_name.value ))
+          username: (( .properties.sp_db_username.value ))
+          password: (( .properties.sp_db_password.value ))
       route_registrar:
         routes:
           - name: wso2apim-analytics
