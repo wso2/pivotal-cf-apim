@@ -9,6 +9,7 @@ templates:
   config/datasources/master-datasources.xml: config/datasources/master-datasources.xml
   config/log4j.properties: config/log4j.properties
   config/user-mgt.xml: config/user-mgt.xml
+  config/tomcat/catalina-server.xml: config/tomcat/catalina-server.xml
   jaggeryapps/store/site.json: jaggeryapps/store/site.json
   jaggeryapps/publisher/site.json: jaggeryapps/publisher/site.json
 
