@@ -7,7 +7,7 @@
     <datasources>
 
         <datasource>
-            <name>WSO2_CARBON_DS</name>
+            <name>WSO2_CARBON_DB</name>
             <description>The datasource used for registry and user manager</description>
             <jndiConfig>
                 <name>jdbc/WSO2CarbonDB</name>
@@ -23,6 +23,7 @@
                     <testOnBorrow>true</testOnBorrow>
                     <validationQuery>SELECT 1</validationQuery>
                     <validationInterval>30000</validationInterval>
+                    <defaultAutoCommit>true</defaultAutoCommit>
                 </configuration>
             </definition>
         </datasource>
@@ -35,7 +36,7 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%= p("wso2apim.carbon_db.hostname") %>:3306/<%= p("wso2apim.carbon_db.db_name") %>?autoReconnect=true</url>
+                    <url>jdbc:mysql://<%= p("wso2apim.carbon_db.hostname") %>:3306/<%= p("wso2apim.carbon_db.db_name") %>?autoReconnect=true&amp;useSSL=false</url>
                     <username><%= p("wso2apim.carbon_db.username") %></username>
                     <password><%= p("wso2apim.carbon_db.password") %></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
@@ -56,7 +57,7 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%= p("wso2apim.carbon_db.hostname") %>:3306/<%= p("wso2apim.carbon_db.db_name") %>?autoReconnect=true</url>
+                    <url>jdbc:mysql://<%= p("wso2apim.carbon_db.hostname") %>:3306/<%= p("wso2apim.carbon_db.db_name") %>?autoReconnect=true&amp;useSSL=false</url>
                     <username><%= p("wso2apim.carbon_db.username") %></username>
                     <password><%= p("wso2apim.carbon_db.password") %></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
@@ -70,14 +71,14 @@
         </datasource>
 
         <datasource>
-            <name>WSO2AM_DS</name>
+            <name>WSO2AM_DB</name>
             <description>The datasource used for API Manager database</description>
             <jndiConfig>
                 <name>jdbc/WSO2AM_DB</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%= p("wso2apim.am_db.hostname") %>:3306/<%= p("wso2apim.am_db.db_name") %>?autoReconnect=true</url>
+                    <url>jdbc:mysql://<%= p("wso2apim.am_db.hostname") %>:3306/<%= p("wso2apim.am_db.db_name") %>?autoReconnect=true&amp;useSSL=false</url>
                     <username><%= p("wso2apim.am_db.username") %></username>
                     <password><%= p("wso2apim.am_db.password") %></password>
                     <defaultAutoCommit>false</defaultAutoCommit>
@@ -92,14 +93,14 @@
         </datasource>
 
          <datasource>
-            <name>WSO2AM_STATS_DS</name>
+            <name>WSO2AM_STATS_DB</name>
             <description>The datasource used for getting statistics to API Manager</description>
             <jndiConfig>
                 <name>jdbc/WSO2AM_STATS_DB</name>
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://<%= p("wso2apim.am_db.hostname") %>:3306/<%= p("wso2apim.am_db.db_name") %>?autoReconnect=true</url>
+                    <url>jdbc:mysql://<%= p("wso2apim.am_db.hostname") %>:3306/<%= p("wso2apim.am_db.db_name") %>?autoReconnect=true&amp;useSSL=false</url>
                     <username><%= p("wso2apim.am_db.username") %></username>
                     <password><%= p("wso2apim.am_db.password") %></password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
@@ -108,13 +109,12 @@
                     <testOnBorrow>true</testOnBorrow>
                     <validationQuery>SELECT 1</validationQuery>
                     <validationInterval>30000</validationInterval>
-                    <defaultAutoCommit>false</defaultAutoCommit>
                 </configuration>
             </definition>
          </datasource>
 
         <datasource>
-            <name>WSO2_MB_STORE_DS</name>
+            <name>WSO2_MB_STORE_DB</name>
             <description>The datasource used for message broker database</description>
             <jndiConfig>
                 <name>WSO2MBStoreDB</name>
@@ -134,6 +134,41 @@
                 </configuration>
             </definition>
         </datasource>
+
+        <!-- For an explanation of the properties, see: http://people.apache.org/~fhanik/jdbc-pool/jdbc-pool.html -->
+        <!--datasource>
+            <name>SAMPLE_DATA_SOURCE</name>
+            <jndiConfig>
+                <name></name>
+                <properties>
+                    <property name="java.naming.factory.initial"></property>
+                    <property name="java.naming.provider.url"></property>
+                </properties>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+
+                    <defaultAutoCommit></defaultAutoCommit>
+                    <defaultReadOnly></defaultReadOnly>
+                    <defaultTransactionIsolation>NONE|READ_COMMITTED|READ_UNCOMMITTED|REPEATABLE_READ|SERIALIZABLE</defaultTransactionIsolation>
+                    <defaultCatalog></defaultCatalog>
+                    <username></username>
+                    <password svns:secretAlias="WSO2.DB.Password"></password>
+                    <maxActive></maxActive>
+                    <maxIdle></maxIdle>
+                    <initialSize></initialSize>
+                    <maxWait></maxWait>
+
+                    <dataSourceClassName>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</dataSourceClassName>
+                    <dataSourceProps>
+                        <property name="url">jdbc:mysql://localhost:3306/Test1</property>
+                        <property name="user">root</property>
+                        <property name="password">123</property>
+                    </dataSourceProps>
+
+                </configuration>
+            </definition>
+        </datasource-->
 
     </datasources>
 

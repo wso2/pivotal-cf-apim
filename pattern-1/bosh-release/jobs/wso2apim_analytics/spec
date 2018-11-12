@@ -2,12 +2,7 @@
 name: wso2apim_analytics
 templates:
   ctl.erb: bin/ctl
-  config/registry.xml: config/registry.xml
-  config/user-mgt.xml: config/user-mgt.xml
-  config/datasources/analytics-datasources.xml: config/datasources/analytics-datasources.xml
-  config/datasources/master-datasources.xml: config/datasources/master-datasources.xml
-  config/datasources/stats-datasources.xml: config/datasources/stats-datasources.xml
-  config/analytics/spark/spark-jdbc-config.xml: config/analytics/spark/spark-jdbc-config.xml
+  config/deployment.yaml: config/deployment.yaml
 
 packages:
 - oraclejdk
@@ -54,6 +49,15 @@ properties:
     description: WSO2 APIM database username
   wso2apim.am_db.password:
     description: WSO2 APIM database password
+
+  wso2apim.sp_cluster_db.hostname:
+    description: WSO2 APIM Analytics cluster database server hostname
+  wso2apim.sp_cluster_db.db_name:
+    description: WSO2 APIM Analytics cluster database database name
+  wso2apim.sp_cluster_db.username:
+    description: WSO2 APIM Analytics cluster database username
+  wso2apim.sp_cluster_db.password:
+    description: WSO2 APIM Analytics cluster database password
 
   wso2apim_analytics.mysql.stats_db:
     description: wso2apim mysql statistics database name
