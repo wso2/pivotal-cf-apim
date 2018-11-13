@@ -26,7 +26,7 @@ os_name=`uname`
 
 # deployment artifacts and versions
 export wso2_product="wso2am"
-export wso2_product_version="2.1.0"
+export wso2_product_version="2.6.0"
 export wso2_product_pack_identifier="${wso2_product}-${wso2_product_version}"
 export wso2_product_distribution=${wso2_product_pack_identifier}"*.zip"
 export wso2_product_analytics_pack_identifier="${wso2_product}-analytics-${wso2_product_version}"
