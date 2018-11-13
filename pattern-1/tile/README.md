@@ -1,6 +1,6 @@
 # WSO2 API Manager Pivotal Cloud Foundry Tile
 
-This repository includes a Cloud Foundry Tile for deploying WSO2 API Manager 2.1.0 on BOSH via Pivotal Ops Manager. 
+This repository includes a Cloud Foundry Tile for deploying WSO2 API Manager 2.6.0 on BOSH via Pivotal Ops Manager. 
 
 ## Quick Start
 
@@ -14,7 +14,7 @@ This repository includes a Cloud Foundry Tile for deploying WSO2 API Manager 2.1
 2. Copy WSO2 API Manager BOSH release tar.gz file to the root folder of this tile project.
 
 3. Build the tile using the below command:
-   
+
    ```
    tile build --cache cache/
    ```
