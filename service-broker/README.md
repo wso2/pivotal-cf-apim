@@ -15,7 +15,7 @@ The following prerequisites are needed for the quick start:
 
  - [PCF Dev v1.10](https://pivotal.io/platform/pcf-tutorials/getting-started-with-pivotal-cloud-foundry-dev/install-pcf-dev)
  - [Java Development Kit (JDK) 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
- - [WSO2 API Manager v2.1.0](http://wso2.com/api-management/) distribution
+ - [WSO2 API Manager v2.6.0](http://wso2.com/api-management/) distribution
  - [Ballerina v0.89](https://ballerinalang.org/) runtime distribution
 
 ## Quick Start Guide
@@ -25,28 +25,28 @@ The quick start provides steps for installing WSO2 API Manager service broker on
 - Download and install PCF Dev by following [this PCF tutorial](https://pivotal.io/platform/pcf-tutorials/getting-started-with-pivotal-cloud-foundry-dev/install-pcf-dev).
 
 - Start PCF Dev instance:
-  
+
   ```bash
   $ cf dev start
   ```
 
 - Download Ballerina tools distribution v0.89 from [ballerinalang.org](https://ballerinalang.org/) and add it's bin folder path to the PATH variable:
-  
+
   ````bash
   $ export BAL_HOME="/path/to/ballerina/ballerina-tools-<version>/"
   $ export PATH=$BAL_HOME/bin:$PATH
   ````
 
-- Download WSO2 API Manager 2.1.0 distribution from [wso2.com](http://wso2.com/api-management/), extract it and start the server:
-   
+- Download WSO2 API Manager 2.6.0 distribution from [wso2.com](http://wso2.com/api-management/), extract it and start the server:
+
   ````bash
-  $ unzip wso2am-2.1.0.zip
-  $ cd wso2am-2.1.0/ # refer this as WSO2_APIM_HOME
+  $ unzip wso2am-2.6.0.zip
+  $ cd wso2am-2.6.0/ # refer this as WSO2_APIM_HOME
   $ bin/wso2server.sh start
   ````
 
 - Clone this git repository:
-  
+
   ````bash
   $ git clone https://github.com/wso2/cf-service-broker-apim.git
   ````
@@ -77,7 +77,7 @@ The quick start provides steps for installing WSO2 API Manager service broker on
   ````
 
 - Start the service broker API using Ballerina:
-   
+
   ````bash
   $ cd /path/to/wso2-apim-service-broker/
   $ ballerina run service wso2apim/cf/servicebroker/
@@ -106,26 +106,26 @@ The quick start provides steps for installing WSO2 API Manager service broker on
   ````bash
   $ cf create-service-broker wso2-apim <broker-service-api-username> <broker-service-api-password> http://<service-broker-ip>:9090 --space-scoped
   ````
-  
+
 - Find WSO2 API-M service name and plan name using the following command:
 
   ````bash
   $ cf marketplace
   Getting services from marketplace in org pcfdev-org / space pcfdev-space as admin...
   OK
-  
+
   service                     plans             description
   wso2-apim                   default           WSO2 API-M service broker for Pivotal CloudFoundry
   local-volume                free-local-disk   Local service docs: https://github.com/cloudfoundry-incubator/local-volume-release/
   p-mysql                     512mb, 1gb        MySQL databases on demand
   p-rabbitmq                  standard          RabbitMQ is a robust and scalable high-performance multi-protocol messaging broker.
   p-redis                     shared-vm         Redis service to provide a key-value store
-  
+
   TIP:  Use 'cf marketplace -s SERVICE' to view descriptions of individual plans of a given service.
   ````
-  
+
 - Create a WSO2 API-M service instance using the following command:
- 
+
   ````bash
   $ cf create-service wso2-apim default wso2-apim
   Creating service instance wso2-apim in org pcfdev-org / space pcfdev-space as admin...
@@ -160,7 +160,7 @@ The quick start provides steps for installing WSO2 API Manager service broker on
   ````
 
 - Create an API definition JSON file with the following content:
-  
+
   ````json
   {
     "apiName": "HelloAPI",
@@ -250,7 +250,7 @@ The quick start provides steps for installing WSO2 API Manager service broker on
   ````
 
 - Stop the WSO2 API-M server using the following command:
-   
+
   ````bash
   cd $WSO2_APIM_HOME/bin
   ./wso2server.sh stop
