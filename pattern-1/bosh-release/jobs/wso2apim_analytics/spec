@@ -5,7 +5,7 @@ templates:
   config/deployment.yaml: config/deployment.yaml
 
 packages:
-- oraclejdk
+- openjdk
 - mysqldriver
 - wso2apim_analytics
 - common

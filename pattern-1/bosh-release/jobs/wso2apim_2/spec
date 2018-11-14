@@ -10,7 +10,7 @@ templates:
   config/user-mgt.xml: config/user-mgt.xml
 
 packages:
-- oraclejdk
+- openjdk
 - mysqldriver
 - wso2apim
 - common

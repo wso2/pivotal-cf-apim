@@ -69,14 +69,6 @@ jobs:
   resource_pool: wso2apim-resource-pool
   templates:
   - name: wso2apim_2
-- instances: 1
-  name: nfs_server
-  networks:
-  - name: wso2apim_network
-    static_ips: [10.244.15.5]
-  resource_pool: wso2apim-resource-pool
-  templates:
-  - name: nfs_server
 meta:
   director_uuid: <%= `bosh target > /dev/null 2>&1 && bosh status --uuid` %>
 name: wso2apim

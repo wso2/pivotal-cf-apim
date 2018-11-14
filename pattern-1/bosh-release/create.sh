@@ -29,7 +29,7 @@ set -e
 : ${wso2_product_distribution:=${wso2_product_pack_identifier}"*.zip"}
 : ${wso2_product_analytics_pack_identifier:="${wso2_product}-analytics-${wso2_product_version}"}
 : ${wso2_product_analytics_distribution:=${wso2_product_analytics_pack_identifier}"*.zip"}
-: ${jdk_distribution:="jdk-8u*-linux-x64.tar.gz"}
+: ${jdk_distribution:="jdk-8u*linux-x64*.tar.gz"}
 : ${mysql_driver:="mysql-connector-java-5.1.*-bin.jar"}
 
 # repository folder structure variables
@@ -150,7 +150,7 @@ cd ..
 # add the locally available WSO2 product distribution(s) and dependencies as blobs to the BOSH Director
 echo "---> Adding blobs..."
 
-bosh -e vbox add-blob ${distributions}/${jdk_distribution} oraclejdk/${jdk_distribution}
+bosh -e vbox add-blob ${distributions}/${jdk_distribution} openjdk/${jdk_distribution}
 bosh -e vbox add-blob ${distributions}/${mysql_driver} mysqldriver/${mysql_driver}
 bosh -e vbox add-blob ${distributions}/${wso2_product_pack_identifier}.zip ${wso2_product}/${wso2_product_pack_identifier}.zip
 bosh -e vbox add-blob ${distributions}/${wso2_product_analytics_pack_identifier}.zip ${wso2_product}_analytics/${wso2_product_analytics_pack_identifier}.zip

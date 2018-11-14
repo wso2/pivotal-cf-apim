@@ -17,7 +17,11 @@
 **/releases/*
 
 **/tile/product/
+**/tile/cache/
+!**/tile/product/.gitkeep
 **/tile/release/
 **/tile/routing-0.178.0.tgz
-**/tile/wso2am-2.6.0.tgz
+**/tile/wso2am-2.6.0*
 **/tile/tile-history.yml
+
+**/bosh-release/wso2*
