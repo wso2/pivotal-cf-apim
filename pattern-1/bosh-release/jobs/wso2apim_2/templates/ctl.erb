@@ -35,7 +35,7 @@ chown -R vcap:vcap ${run_dir} ${log_dir}
 mkdir -p /var/vcap/store/wso2apim/data
 export WSO2_APIM_DATA_DIR=/var/vcap/store/wso2apim/data/wso2apim
 
-export JDK_HOME=/var/vcap/packages/oraclejdk/
+export JDK_HOME=/var/vcap/packages/openjdk/
 export WSO2_APIM_PKG_HOME=/var/vcap/packages/wso2apim/
 export WSO2_APIM_SERVER_PACKAGE=/var/vcap/packages/wso2apim/
 
@@ -66,7 +66,7 @@ case $1 in
     pushd ${JDK_HOME}
     archive=`ls jdk*gz`
     tar -zxvf $archive
-    export JAVA_HOME=`pwd`/jdk1.8.0_144
+    export JAVA_HOME=`pwd`/jdk1.8.0_202
     export JAVA_BINARY=${JAVA_HOME}/bin/java
 
     log_debug "JAVA_HOME: ${JAVA_HOME}"
@@ -82,7 +82,7 @@ case $1 in
     cp -r ${job_dir}/config/* ${WSO2_APIM_HOME}/repository/conf/
 
     # Here add any libraries your application needs:
-    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/ 
+    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/
 
     $WSO2_APIM_HOME/bin/wso2server.sh start
 
