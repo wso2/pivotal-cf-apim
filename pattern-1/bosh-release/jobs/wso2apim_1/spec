@@ -14,7 +14,7 @@ templates:
   jaggeryapps/publisher/site.json: jaggeryapps/publisher/site.json
 
 packages:
-- oraclejdk
+- openjdk
 - mysqldriver
 - wso2apim
 - common
