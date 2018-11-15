@@ -1,0 +1,78 @@
+---
+name: wso2apim_analytics
+templates:
+  ctl.erb: bin/ctl
+  config/deployment.yaml: config/deployment.yaml
+
+packages:
+- openjdk
+- mysqldriver
+- wso2apim_analytics
+- common
+
+provides:
+- name: apim-analytics
+  type: analytics-node
+
+properties:
+  wso2apim_analytics.memory.min_heap:
+    description: "Min Heap in MB"
+    default: 2048
+  wso2apim_analytics.memory.max_heap:
+    description: "Max Heap in MB"
+    default: 2048
+  wso2apim_analytics.memory.max_permgen:
+    description: "Max permgen in MB"
+    default: 1024
+
+  wso2apim_analytics.password:
+    description: wso2apim password
+  wso2apim_analytics.username:
+    description: wso2apim username
+  wso2apim_analytics.address:
+    description: wso2apim address
+
+  wso2apim.carbon_db.hostname:
+    description: WSO2 APIM MySQL server hostname
+  wso2apim.carbon_db.db_name:
+    description: WSO2 APIM MySQL database name
+  wso2apim.carbon_db.username:
+    description: WSO2 APIM MySQL username
+  wso2apim.carbon_db.password:
+    description: WSO2 APIM MySQL password
+
+  wso2apim.am_db.hostname:
+    description: WSO2 APIM database server hostname
+  wso2apim.am_db.db_name:
+    description: WSO2 APIM database database name
+  wso2apim.am_db.username:
+    description: WSO2 APIM database username
+  wso2apim.am_db.password:
+    description: WSO2 APIM database password
+
+  wso2apim.sp_cluster_db.hostname:
+    description: WSO2 APIM Analytics cluster database server hostname
+  wso2apim.sp_cluster_db.db_name:
+    description: WSO2 APIM Analytics cluster database database name
+  wso2apim.sp_cluster_db.username:
+    description: WSO2 APIM Analytics cluster database username
+  wso2apim.sp_cluster_db.password:
+    description: WSO2 APIM Analytics cluster database password
+
+  wso2apim_analytics.mysql.stats_db:
+    description: wso2apim mysql statistics database name
+  wso2apim_analytics.mysql.event_store_db:
+    description: wso2apim mysql event store database name
+  wso2apim_analytics.mysql.processed_data_db:
+    description: wso2apim mysql analytics processed data database name
+
+  cf.apps_domain:
+    description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
+  cf.nats.host:
+    description: Hostname/IP of NATS
+  cf.nats.port:
+    description: Port that NATS listens on
+  cf.nats.username:
+    description: The user to use when authenticating with NATS
+  cf.nats.password:
+    description: The password to use when authenticating with NATS

@@ -1,0 +1,181 @@
+# ------------------------------------------------------------------------
+#
+# Copyright 2017 WSO2, Inc. (http://wso2.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License
+#
+# ------------------------------------------------------------------------
+---
+name: wso2apim-tile
+icon_file: resources/wso2-logo.png
+label: WSO2 API Manager 2.6.0
+description: PCF Tile for WSO2 API Manager 2.6.0
+
+stemcell_criteria:
+  os: ubuntu-trusty
+  requires_cpi: false
+  version: '3541'
+
+forms:
+- name: carbon_db
+  label: Carbon DB connection information
+  description: WSO2 API Manager - Carbon Database connection information
+  properties:
+  - name: carbon_db_hostname
+    type: string
+    label: Hostname
+  - name: carbon_db_name
+    type: string
+    label: Database Name
+  - name: carbon_db_username
+    type: string
+    label: Username
+  - name: carbon_db_password
+    type: secret
+    label: Password
+- name: am_db
+  label: AM DB connection information
+  description: WSO2 API Manager Database connection information
+  properties:
+  - name: am_db_hostname
+    type: string
+    label: Hostname
+  - name: am_db_name
+    type: string
+    label: Database Name
+  - name: am_db_username
+    type: string
+    label: Username
+  - name: am_db_password
+    type: secret
+    label: Password
+- name: sp_cluster_db
+  label: AM Analytics Cluster DB connection information
+  description: WSO2 API Manager - Analytics Clustering Database connection information
+  properties:
+  - name: sp_db_hostname
+    type: string
+    label: Hostname
+  - name: sp_db_name
+    type: string
+    label: Database Name
+  - name: sp_db_username
+    type: string
+    label: Username
+  - name: sp_db_password
+    type: secret
+    label: Password
+
+packages:
+- name: routing-release
+  type: bosh-release
+  path: routing-0.178.0.tgz
+
+- name: wso2-apim
+  type: bosh-release
+  path: wso2am-2.6.0-bosh-release.tgz
+  jobs:
+  - name: nfs_server
+    templates:
+    - name: nfs_server
+      release: wso2am-release
+    memory: 4096
+    ephemeral_disk: 4096
+    persistent_disk: 16384
+    cpu: 2
+    static_ip: 1
+  - name: wso2apim_analytics
+    instances: 1
+    templates:
+    - name: wso2apim_analytics
+      release: wso2am-release
+    - name: route_registrar
+      release: routing
+      consumes:
+        nats:
+          from: nats
+          deployment: (( ..cf.deployment_name ))
+    memory: 4096
+    ephemeral_disk: 4096
+    persistent_disk: 16384
+    cpu: 2
+    static_ip: 1
+    max_in_flight: 1
+    properties:
+      wso2apim:
+        carbon_db:
+          hostname: (( .properties.carbon_db_hostname.value ))
+          db_name: (( .properties.carbon_db_name.value ))
+          username: (( .properties.carbon_db_username.value ))
+          password: (( .properties.carbon_db_password.value ))
+        am_db:
+          hostname: (( .properties.am_db_hostname.value ))
+          db_name: (( .properties.am_db_name.value ))
+          username: (( .properties.am_db_username.value ))
+          password: (( .properties.am_db_password.value ))
+        sp_cluster_db:
+          hostname: (( .properties.sp_db_hostname.value ))
+          db_name: (( .properties.sp_db_name.value ))
+          username: (( .properties.sp_db_username.value ))
+          password: (( .properties.sp_db_password.value ))
+      route_registrar:
+        routes:
+          - name: wso2apim-analytics
+            port: 9764
+            tls_port: 9444
+            registration_interval: 20s
+            uris:
+              - wso2apim-analytics.(( ..cf.cloud_controller.system_domain.value ))
+  - name: wso2apim
+    instances: 2
+    templates:
+    - name: wso2apim
+      release: wso2am-release
+    - name: route_registrar
+      release: routing
+      consumes:
+        nats:
+          from: nats
+          deployment: (( ..cf.deployment_name ))
+    memory: 4096
+    ephemeral_disk: 4096
+    persistent_disk: 16384
+    cpu: 2
+    static_ip: 1
+    max_in_flight: 1
+    properties:
+      wso2apim:
+        carbon_db:
+          hostname: (( .properties.carbon_db_hostname.value ))
+          db_name: (( .properties.carbon_db_name.value ))
+          username: (( .properties.carbon_db_username.value ))
+          password: (( .properties.carbon_db_password.value ))
+        am_db:
+          hostname: (( .properties.am_db_hostname.value ))
+          db_name: (( .properties.am_db_name.value ))
+          username: (( .properties.am_db_username.value ))
+          password: (( .properties.am_db_password.value ))
+      route_registrar:
+        routes:
+        - name: wso2apim
+          port: 9763
+          tls_port: 9443
+          registration_interval: 20s
+          uris:
+          - wso2apim.(( ..cf.cloud_controller.system_domain.value ))
+        - name: wso2apim-gw
+          port: 8280
+          tls_port: 8243
+          registration_interval: 20s
+          uris:
+          - wso2apim-gw.(( ..cf.cloud_controller.system_domain.value ))
