@@ -19,20 +19,31 @@ packages:
 - wso2apim
 - common
 
+provides:
+- name: keymanager
+  type: keymanager-node
+  properties:
+  - route_registrar.routes
+
 consumes:
 - name: apim-analytics
-  type: analytics-node
+  type: analytics-nodes
+- name: gateway
+  type: gateway-node
 - name: nfs-server
   type: nfs
 
 properties:
-  wso2apim.memory.min_heap:
+  route_registrar.routes:
+    description: "route_registrar"
+
+  keymanager.memory.min_heap:
     description: "Min Heap in MB"
     default: 2048
-  wso2apim.memory.max_heap:
+  keymanager.memory.max_heap:
     description: "Max Heap in MB"
     default: 2048
-  wso2apim.memory.max_permgen:
+  keymanager.memory.max_permgen:
     description: "Max permgen in MB"
     default: 1024
 
