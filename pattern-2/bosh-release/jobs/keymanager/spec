@@ -27,16 +27,11 @@ provides:
 
 consumes:
 - name: apim-analytics
-  type: analytics-nodes
-- name: gateway
-  type: gateway-node
+  type: analytics-node
 - name: nfs-server
   type: nfs
 
 properties:
-  route_registrar.routes:
-    description: "route_registrar"
-
   keymanager.memory.min_heap:
     description: "Min Heap in MB"
     default: 2048
