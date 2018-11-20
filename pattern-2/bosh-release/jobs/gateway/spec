@@ -1,5 +1,5 @@
 ---
-name: wso2apim
+name: gateway
 templates:
   ctl.erb: bin/ctl
   config/axis2/axis2.xml: config/axis2/axis2.xml
@@ -19,25 +19,28 @@ packages:
 - wso2apim
 - common
 
+provides:
+- name: gateway
+  type: gateway-node
+  properties:
+  - route_registrar.routes
+
 consumes:
 - name: apim-analytics
   type: analytics-node
-- name: gateway
-  type: gateway-node
 - name: keymanager
   type: keymanager-node
 - name: nfs-server
   type: nfs
 
 properties:
-
-  wso2apim.memory.min_heap:
+  gateway.memory.min_heap:
     description: "Min Heap in MB"
     default: 2048
-  wso2apim.memory.max_heap:
+  gateway.memory.max_heap:
     description: "Max Heap in MB"
     default: 2048
-  wso2apim.memory.max_permgen:
+  gateway.memory.max_permgen:
     description: "Max permgen in MB"
     default: 1024
 
