@@ -29,8 +29,13 @@ consumes:
 - name: nfs-server
   type: nfs
 
-properties:
+provides:
+- name: wso2apim
+  type: wso2apim-node
+  properties:
+  - route_registrar.routes
 
+properties:
   wso2apim.memory.min_heap:
     description: "Min Heap in MB"
     default: 2048

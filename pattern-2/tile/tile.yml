@@ -172,7 +172,7 @@ packages:
           tls_port: 9443
           registration_interval: 20s
           uris:
-          - keymanager.(( ..cf.cloud_controller.system_domain.value ))              
+          - keymanager.(( ..cf.cloud_controller.system_domain.value ))
   - name: wso2apim
     instances: 2
     templates:

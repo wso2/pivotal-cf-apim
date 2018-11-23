@@ -28,6 +28,10 @@ provides:
 consumes:
 - name: apim-analytics
   type: analytics-node
+- name: wso2apim
+  type: wso2apim-node
+- name: gateway
+  type: gateway-node
 - name: nfs-server
   type: nfs
 

@@ -25,8 +25,8 @@ set -xv
 script_dir=$(dirname $0)
 job_dir=${script_dir}/..
 
-run_dir=/var/vcap/sys/run/wso2apim
-log_dir=/var/vcap/sys/log/wso2apim
+run_dir=/var/vcap/sys/run/gateway
+log_dir=/var/vcap/sys/log/gateway
 pid_file=${run_dir}/pid
 
 mkdir -p ${run_dir} ${log_dir}
@@ -40,9 +40,9 @@ export WSO2_APIM_PKG_HOME=/var/vcap/packages/wso2apim/
 export WSO2_APIM_SERVER_PACKAGE=/var/vcap/packages/wso2apim/
 
 # set any environment variables for your software
-export MIN_HEAP=<%=properties.gateway.memory.min_heap %>
-export MAX_HEAP=<%=properties.gateway.memory.max_heap %>
-export MAX_PERMGEN=<%=properties.gateway.memory.max_permgen %>
+export MIN_HEAP=<%= properties.gateway.memory.min_heap %>
+export MAX_HEAP=<%= properties.gateway.memory.max_heap %>
+export MAX_PERMGEN=<%= properties.gateway.memory.max_permgen %>
 export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMGEN}m"
 
 export DEBUG_LOG=${log_dir}/wso2apim.log

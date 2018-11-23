@@ -30,6 +30,8 @@ consumes:
   type: analytics-node
 - name: keymanager
   type: keymanager-node
+- name: wso2apim
+  type: wso2apim-node
 - name: nfs-server
   type: nfs
 
