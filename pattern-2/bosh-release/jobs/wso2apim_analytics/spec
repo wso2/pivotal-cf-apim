@@ -3,6 +3,8 @@ name: wso2apim_analytics
 templates:
   ctl.erb: bin/ctl
   config/deployment.yaml: config/deployment.yaml
+  resources/security/client-truststore.jks: resources/security/client-truststore.jks
+  resources/security/wso2carbon.jks: resources/security/wso2carbon.jks
 
 packages:
 - openjdk

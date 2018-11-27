@@ -99,6 +99,7 @@ case $1 in
     cp -r ${job_dir}/config/* ${WSO2_APIM_HOME}/repository/conf/
     cp -r ${job_dir}/jaggeryapps/store/site.json ${WSO2_APIM_HOME}/repository/deployment/server/jaggeryapps/store/site/conf/
     cp -r ${job_dir}/jaggeryapps/publisher/site.json ${WSO2_APIM_HOME}/repository/deployment/server/jaggeryapps/publisher/site/conf/
+    cp -Tr ${job_dir}/repository/ ${WSO2_APIM_HOME}/repository/
 
     # Here add any libraries your application needs:
     cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/

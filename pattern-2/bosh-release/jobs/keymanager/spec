@@ -12,6 +12,8 @@ templates:
   config/tomcat/catalina-server.xml: config/tomcat/catalina-server.xml
   jaggeryapps/store/site.json: jaggeryapps/store/site.json
   jaggeryapps/publisher/site.json: jaggeryapps/publisher/site.json
+  repository/resources/security/client-truststore.jks: repository/resources/security/client-truststore.jks
+  repository/resources/security/wso2carbon.jks: repository/resources/security/wso2carbon.jks
 
 packages:
 - openjdk
