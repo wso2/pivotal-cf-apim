@@ -16,7 +16,7 @@
          logic relies on this. -->
     <AuthManager>
         <!-- Server URL of the Authentication service -->
-        <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
+        <ServerURL>https://<%= link("keymanager").p('route_registrar.routes')[0]['uris'][0] %>${carbon.context}services/</ServerURL>
         <!-- Admin username for the Authentication manager. -->
         <Username>${admin.username}</Username>
         <!-- Admin password for the Authentication manager. -->
@@ -93,7 +93,7 @@
                 <!-- Endpoint URLs for the APIs hosted in this API gateway.-->
                 <GatewayEndpoint>http://<%= link("gateway").p('route_registrar.routes')[0]['uris'][0] %>,https://<%= link("gateway").p('route_registrar.routes')[0]['uris'][0] %></GatewayEndpoint>
                 <!-- Endpoint of the Websocket APIs hosted in this API Gateway -->
-                <GatewayWSEndpoint>ws://${carbon.local.ip}:9099</GatewayWSEndpoint>
+                <!-- <GatewayWSEndpoint>ws://${carbon.local.ip}:9099</GatewayWSEndpoint> -->
             </Environment>
         </Environments>
     </APIGateway>
@@ -227,11 +227,11 @@
              -If you need to start two API Manager instances in the same machine, you need to give different ports to "ThriftServerPort" value in two nodes.
              -ThriftServerHost - Allows to configure a hostname for the thrift server. It uses the carbon hostname by default.
 	         -The Gateway uses this parameter to connect to the key validation thrift service. -->
-        <KeyValidatorClientType>ThriftClient</KeyValidatorClientType>
+        <KeyValidatorClientType>WSClient</KeyValidatorClientType>
         <ThriftClientConnectionTimeOut>10000</ThriftClientConnectionTimeOut>
         <!--ThriftClientPort>10397</ThriftClientPort-->
 
-        <EnableThriftServer>true</EnableThriftServer>
+        <EnableThriftServer>false</EnableThriftServer>
         <ThriftServerHost>localhost</ThriftServerHost>
         <!--ThriftServerPort>10397</ThriftServerPort-->
 

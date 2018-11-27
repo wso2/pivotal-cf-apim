@@ -80,6 +80,7 @@ case $1 in
 
     # Here any config files your application needs:
     cp -r ${job_dir}/config/* ${WSO2_APIM_ANALYTICS_HOME}/conf/worker/
+    cp -Tr ${job_dir}/resources/ ${WSO2_APIM_ANALYTICS_HOME}/resources/
 
     # Here add any libraries your application needs:
     cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_ANALYTICS_HOME}/lib/
