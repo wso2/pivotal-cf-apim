@@ -40,9 +40,9 @@ export WSO2_APIM_PKG_HOME=/var/vcap/packages/wso2apim/
 export WSO2_APIM_SERVER_PACKAGE=/var/vcap/packages/wso2apim/
 
 # set any environment variables for your software
-export MIN_HEAP=<%=properties.wso2apim.memory.min_heap %>
-export MAX_HEAP=<%=properties.wso2apim.memory.max_heap %>
-export MAX_PERMGEN=<%=properties.wso2apim.memory.max_permgen %>
+export MIN_HEAP=<%= properties.wso2apim.memory.min_heap %>
+export MAX_HEAP=<%= properties.wso2apim.memory.max_heap %>
+export MAX_PERMGEN=<%= properties.wso2apim.memory.max_permgen %>
 export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMGEN}m"
 
 export DEBUG_LOG=${log_dir}/wso2apim.log
@@ -52,7 +52,6 @@ export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/wso2am/tenants
 
 export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/wso2am/repository/deployment/server
 export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/wso2am/repository/tenants
-
 
 touch $DEBUG_LOG
 chmod -R 755 /var/vcap/sys
