@@ -49,7 +49,7 @@
     <!--
     Host name to be used for the Carbon management console
     -->
-    <!--MgtHostName>mgt.wso2.org</MgtHostName-->
+    <MgtHostName><%= p('route_registrar.routes')[0]['uris'][0] %></MgtHostName>
 
     <!--
         The URL of the back end server. This is where the admin services are hosted and
