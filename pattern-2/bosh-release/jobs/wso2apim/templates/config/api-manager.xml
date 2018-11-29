@@ -16,7 +16,7 @@
          logic relies on this. -->
     <AuthManager>
         <!-- Server URL of the Authentication service -->
-        <ServerURL>https://<%= link("keymanager").p('route_registrar.routes')[0]['uris'][0] %>${carbon.context}services/</ServerURL>
+        <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
         <!-- Admin username for the Authentication manager. -->
         <Username>${admin.username}</Username>
         <!-- Admin password for the Authentication manager. -->
@@ -302,10 +302,10 @@
         <!--This property is used to indicate how we do user name comparision for token generation https://wso2.org/jira/browse/APIMANAGER-2225-->
         <CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
-        <URL>https://localhost:${mgt.transport.https.port}/store</URL>
+        <URL>https://<%= p('route_registrar.routes')[0]['uris'][0] %>/store</URL>
 
         <!-- Server URL of the API Store. -->
-        <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
+        <ServerURL>https://<%= p('route_registrar.routes')[0]['uris'][0] %>${carbon.context}services/</ServerURL>
         <!-- Admin username for API Store. -->
         <Username>${admin.username}</Username>
 
@@ -341,7 +341,7 @@
 
     <APIPublisher>
         <DisplayURL>false</DisplayURL>
-        <URL>https://localhost:${mgt.transport.https.port}/publisher</URL>
+        <URL>https://<%= p('route_registrar.routes')[0]['uris'][0] %>/publisher</URL>
         <!-- This parameter specifies enabling the capability of setting API documentation level granular visibility levels.
              By default any document associate with an API will have the same permissions set as the API.With enabling below
              property,it will show two additional permission levels as visible only to all registered users in a particular

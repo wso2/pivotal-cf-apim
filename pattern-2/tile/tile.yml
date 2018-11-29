@@ -248,7 +248,7 @@ packages:
           uris:
           - gateway.(( ..cf.cloud_controller.system_domain.value ))
         - name: gateway-admin
-          port: 9443
+          port: 9763
           tls_port: 9443
           registration_interval: 20s
           uris:
