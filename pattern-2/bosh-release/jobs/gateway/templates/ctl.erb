@@ -47,11 +47,11 @@ export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMG
 
 export DEBUG_LOG=${log_dir}/wso2apim.log
 
-export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/wso2am/deployment-server
-export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/wso2am/tenants
+export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/gateway/deployment/server
+export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/gateway/tenants
 
-export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/wso2am/repository/deployment/server
-export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/wso2am/repository/tenants
+export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/gateway/repository/deployment/server
+export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/gateway/repository/tenants
 
 touch $DEBUG_LOG
 chmod -R 755 /var/vcap/sys
@@ -95,25 +95,22 @@ case $1 in
     WSO2_APIM_HOME=`pwd`
 
     # Here any config files your application needs:
-    cp -r ${job_dir}/config/* ${WSO2_APIM_HOME}/repository/conf/
-    cp -r ${job_dir}/jaggeryapps/store/site.json ${WSO2_APIM_HOME}/repository/deployment/server/jaggeryapps/store/site/conf/
-    cp -r ${job_dir}/jaggeryapps/publisher/site.json ${WSO2_APIM_HOME}/repository/deployment/server/jaggeryapps/publisher/site/conf/
     cp -Tr ${job_dir}/repository/ ${WSO2_APIM_HOME}/repository/
 
     # Here add any libraries your application needs:
     cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/
 
-    mkdir /tmp/wso2am
-    mv $WSO2_APIM_HOME/repository/deployment/server/ /tmp/wso2am
+    mkdir /tmp/gateway
+    mv $WSO2_APIM_HOME/repository/deployment/server/synapse-configs/ /tmp/gateway
 
     mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_SERVER_DIR} ${NFS_SHARE_SERVER_DIR}
     mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_TENANTS_DIR} ${NFS_SHARE_TENANTS_DIR}
 
     if [ -z "$(ls -A ${NFS_SHARE_SERVER_DIR})" ]; then
-      cp -r /tmp/wso2am/server/* ${NFS_SHARE_SERVER_DIR}
+      cp -Tr /tmp/gateway/repository/deployment/server/ ${NFS_SHARE_SERVER_DIR}/
     fi
 
-    ln -s ${NFS_SHARE_SERVER_DIR} $WSO2_APIM_HOME/repository/deployment/
+    ln -s ${NFS_SHARE_SERVER_DIR} $WSO2_APIM_HOME/repository/deployment/server/synapse-configs/
     ln -s ${NFS_SHARE_TENANTS_DIR} $WSO2_APIM_HOME/repository/tenants
 
     $WSO2_APIM_HOME/bin/wso2server.sh start

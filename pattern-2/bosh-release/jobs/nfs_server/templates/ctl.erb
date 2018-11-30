@@ -32,7 +32,7 @@ pid_file=${run_dir}/pid
 mkdir -p ${run_dir} ${log_dir}
 chown -R vcap:vcap ${run_dir} ${log_dir}
 
-export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/wso2am/deployment-server
+export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/wso2am/deployment/server
 export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/wso2am/tenants
 
 export DEBUG_LOG=${log_dir}/nfs_server.log
@@ -58,6 +58,7 @@ fi
 # create the share directory and set permission
 
 mkdir -p ${NFS_EXPORT_SERVER_DIR}
+mkdir -p ${NFS_EXPORT_SERVER_DIR}/jaggeryapps
 mkdir -p ${NFS_EXPORT_TENANTS_DIR}
 
 chown nobody:nogroup ${NFS_EXPORT_SERVER_DIR}

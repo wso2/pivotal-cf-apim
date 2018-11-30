@@ -10,7 +10,7 @@
 **/.dev_builds/
 **/blobs/
 **/dev_releases/
-**/deployment/*
+pattern-*/bosh-release/deployment/*
 **/dist/*
 !**/dist/.gitkeep
 **/.final_builds/*
