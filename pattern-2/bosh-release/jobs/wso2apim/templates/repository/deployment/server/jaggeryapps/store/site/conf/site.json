@@ -60,7 +60,6 @@
     "resourceIdentifier" : "common"
   },
 
-
   "reverseProxy" : {
     "enabled" : true,    // values true , false , "auto" - will look for  X-Forwarded-* headers
     "host" : "<%= p('route_registrar.routes')[0]['uris'][0] %>", // If reverse proxy do not have a domain name use IP
