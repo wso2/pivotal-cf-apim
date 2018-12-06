@@ -106,7 +106,7 @@ case $1 in
       cp -Tr /tmp/wso2am/repository/deployment/server/jaggeryapps/ ${NFS_SHARE_SERVER_DIR}/
     fi
 
-    ln -s ${NFS_SHARE_SERVER_DIR} $WSO2_APIM_HOME/repository/deployment/server/jaggeryapps
+#    ln -s ${NFS_SHARE_SERVER_DIR} $WSO2_APIM_HOME/repository/deployment/server/jaggeryapps
 
     $WSO2_APIM_HOME/bin/wso2server.sh start
 

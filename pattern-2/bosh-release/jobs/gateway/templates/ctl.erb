@@ -110,8 +110,8 @@ case $1 in
       cp -Tr /tmp/gateway/repository/deployment/server/ ${NFS_SHARE_SERVER_DIR}/
     fi
 
-    ln -s ${NFS_SHARE_SERVER_DIR} $WSO2_APIM_HOME/repository/deployment/server/synapse-configs/
-    ln -s ${NFS_SHARE_TENANTS_DIR} $WSO2_APIM_HOME/repository/tenants
+#    ln -s ${NFS_SHARE_SERVER_DIR} $WSO2_APIM_HOME/repository/deployment/server/synapse-configs/
+#    ln -s ${NFS_SHARE_TENANTS_DIR} $WSO2_APIM_HOME/repository/tenants
 
     $WSO2_APIM_HOME/bin/wso2server.sh start
 
