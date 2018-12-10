@@ -10,6 +10,7 @@ templates:
   repository/conf/log4j.properties: repository/conf/log4j.properties
   repository/conf/user-mgt.xml: repository/conf/user-mgt.xml
   repository/conf/tomcat/catalina-server.xml: repository/conf/tomcat/catalina-server.xml
+  repository/deployment/server/jaggeryapps/admin/site/conf/site.json: repository/deployment/server/jaggeryapps/admin/site/conf/site.json
   repository/deployment/server/jaggeryapps/store/site/conf/site.json: repository/deployment/server/jaggeryapps/store/site/conf/site.json
   repository/deployment/server/jaggeryapps/publisher/site/conf/site.json: repository/deployment/server/jaggeryapps/publisher/site/conf/site.json
   repository/resources/security/client-truststore.jks: repository/resources/security/client-truststore.jks
