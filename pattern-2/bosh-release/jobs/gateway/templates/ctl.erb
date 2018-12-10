@@ -47,11 +47,11 @@ export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMG
 
 export DEBUG_LOG=${log_dir}/wso2apim.log
 
-export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/gateway/deployment/server
-export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/gateway/tenants
+export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/gateway/repository/deployment
+export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/gateway/repository
 
-export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/gateway/repository/deployment/server
-export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/gateway/repository/tenants
+export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/gateway/repository/deployment
+export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/gateway/repository
 
 touch $DEBUG_LOG
 chmod -R 755 /var/vcap/sys
@@ -71,7 +71,7 @@ if [ $? -ne 0 ] ; then
 fi
 
 mkdir -p ${NFS_SHARE_SERVER_DIR}
-mkdir -p ${NFS_SHARE_TENANTS_DIR}
+mkdir -p ${NFS_SHARE_TENANTS_DIR}/tenants
 
 case $1 in
 
@@ -101,17 +101,17 @@ case $1 in
     cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/
 
     mkdir /tmp/gateway
-    mv $WSO2_APIM_HOME/repository/deployment/server/synapse-configs/ /tmp/gateway
+    mv $WSO2_APIM_HOME/repository/deployment/server/ /tmp/gateway/
 
     mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_SERVER_DIR} ${NFS_SHARE_SERVER_DIR}
     mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_TENANTS_DIR} ${NFS_SHARE_TENANTS_DIR}
 
     if [ -z "$(ls -A ${NFS_SHARE_SERVER_DIR})" ]; then
-      cp -Tr /tmp/gateway/repository/deployment/server/ ${NFS_SHARE_SERVER_DIR}/
+      cp -r /tmp/gateway/* ${NFS_SHARE_SERVER_DIR}/
     fi
 
-#    ln -s ${NFS_SHARE_SERVER_DIR} $WSO2_APIM_HOME/repository/deployment/server/synapse-configs/
-#    ln -s ${NFS_SHARE_TENANTS_DIR} $WSO2_APIM_HOME/repository/tenants
+    ln -s ${NFS_SHARE_SERVER_DIR}/server $WSO2_APIM_HOME/repository/deployment
+    ln -s ${NFS_SHARE_TENANTS_DIR}/tenants $WSO2_APIM_HOME/repository
 
     $WSO2_APIM_HOME/bin/wso2server.sh start
 
