@@ -47,9 +47,9 @@ export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMG
 
 export DEBUG_LOG=${log_dir}/wso2apim.log
 
-export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/wso2am/repository/deployment/server
+export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/wso2am/deployment-server
 
-export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/wso2am/repository/deployment/server/jaggeryapps
+export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/wso2am/repository/deployment/server
 
 touch $DEBUG_LOG
 chmod -R 755 /var/vcap/sys
@@ -98,15 +98,15 @@ case $1 in
     cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/
 
     mkdir /tmp/wso2am
-    mv $WSO2_APIM_HOME/repository/deployment/server/jaggeryapps/ /tmp/wso2am
+    mv $WSO2_APIM_HOME/repository/deployment/server/ /tmp/wso2am
 
-    mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_SERVER_DIR}/jaggeryapps ${NFS_SHARE_SERVER_DIR}
+    mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_SERVER_DIR} ${NFS_SHARE_SERVER_DIR}
 
     if [ -z "$(ls -A ${NFS_SHARE_SERVER_DIR})" ]; then
-      cp -Tr /tmp/wso2am/repository/deployment/server/jaggeryapps/ ${NFS_SHARE_SERVER_DIR}/
+      cp -r /tmp/wso2am/server/* ${NFS_SHARE_SERVER_DIR}
     fi
 
-    ln -s ${NFS_SHARE_SERVER_DIR} $WSO2_APIM_HOME/repository/deployment/server/jaggeryapps
+    ln -s ${NFS_SHARE_SERVER_DIR} $WSO2_APIM_HOME/repository/deployment/
 
     $WSO2_APIM_HOME/bin/wso2server.sh start
 
