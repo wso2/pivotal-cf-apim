@@ -29,7 +29,7 @@
         </datasource>
 
         <datasource>
-            <name>WSO2UM_DS</name>
+            <name>WSO2UM_DB</name>
             <description>The datasource used by user manager</description>
             <jndiConfig>
                 <name>jdbc/WSO2UM_DB</name>
