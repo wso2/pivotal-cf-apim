@@ -1,0 +1,95 @@
+---
+name: wso2is_km
+templates:
+  ctl.erb: bin/ctl
+  repository/conf/axis2/axis2.xml: repository/conf/axis2/axis2.xml
+  repository/conf/carbon.xml: repository/conf/carbon.xml
+  repository/conf/registry.xml: repository/conf/registry.xml
+  repository/conf/api-manager.xml: repository/conf/api-manager.xml
+  repository/conf/datasources/master-datasources.xml: repository/conf/datasources/master-datasources.xml
+  repository/conf/log4j.properties: repository/conf/log4j.properties
+  repository/conf/user-mgt.xml: repository/conf/user-mgt.xml
+  repository/conf/tomcat/catalina-server.xml: repository/conf/tomcat/catalina-server.xml
+  repository/resources/security/client-truststore.jks: repository/resources/security/client-truststore.jks
+  repository/resources/security/wso2carbon.jks: repository/resources/security/wso2carbon.jks
+
+packages:
+- openjdk
+- mysqldriver
+- wso2is_km
+- common
+
+provides:
+- name: keymanager
+  type: keymanager-node
+  properties:
+  - route_registrar.routes
+
+consumes:
+- name: apim-analytics
+  type: analytics-node
+- name: wso2apim
+  type: wso2apim-node
+- name: gateway
+  type: gateway-node
+- name: nfs-server
+  type: nfs
+
+properties:
+  keymanager.memory.min_heap:
+    description: "Min Heap in MB"
+    default: 2048
+  keymanager.memory.max_heap:
+    description: "Max Heap in MB"
+    default: 2048
+  keymanager.memory.max_permgen:
+    description: "Max permgen in MB"
+    default: 1024
+
+  wso2apim.password:
+    description: wso2apim password
+  wso2apim.username:
+    description: wso2apim username
+  wso2apim.address:
+    description: wso2apim address
+
+  wso2apim.carbon_db.hostname:
+    description: WSO2 Carbon database server hostname
+  wso2apim.carbon_db.db_name:
+    description: WSO2 Carbon database database name
+  wso2apim.carbon_db.username:
+    description: WSO2 Carbon database username
+  wso2apim.carbon_db.password:
+    description: WSO2 Carbon database password
+
+  wso2apim.am_db.hostname:
+    description: WSO2 APIM database server hostname
+  wso2apim.am_db.db_name:
+    description: WSO2 APIM database database name
+  wso2apim.am_db.username:
+    description: WSO2 APIM database username
+  wso2apim.am_db.password:
+    description: WSO2 APIM database password
+
+  wso2apim.mysql.stats_db:
+    description: wso2apim mysql statistics database name
+  wso2apim.mysql.event_store_db:
+    description: wso2apim mysql event store database name
+  wso2apim.mysql.processed_data_db:
+    description: wso2apim mysql analytics processed data database name
+  wso2apim.analytics.hostname:
+    description: wso2apim analytics hostname
+
+  route_registrar.routes:
+    description: routes registered for WSO2 APIM apps and gateway
+
+  cf.apps_domain:
+    description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
+  cf.nats.host:
+    description: Hostname/IP of NATS
+  cf.nats.port:
+    description: Port that NATS listens on
+  cf.nats.username:
+    description: The user to use when authenticating with NATS
+  cf.nats.password:
+    description: The password to use when authenticating with NATS

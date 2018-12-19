@@ -27,6 +27,8 @@ set -e
 : ${wso2_product_version:="2.6.0"}
 : ${wso2_product_pack_identifier:="${wso2_product}-${wso2_product_version}"}
 : ${wso2_product_distribution:=${wso2_product_pack_identifier}"*.zip"}
+: ${wso2_product_keymanager_pack_identifier:="wso2is-km-5.7.0"}
+: ${wso2_product_keymanager_distribution:=${wso2_product_keymanager_pack_identifier}"*.zip"}
 : ${wso2_product_analytics_pack_identifier:="${wso2_product}-analytics-${wso2_product_version}"}
 : ${wso2_product_analytics_distribution:=${wso2_product_analytics_pack_identifier}"*.zip"}
 : ${jdk_distribution:="jdk-8u*linux-x64*.tar.gz"}
@@ -48,6 +50,10 @@ if [ ! -f ${wso2_product_pack_identifier}.zip ]; then
     cp ${wso2_product_distribution} ${wso2_product_pack_identifier}.zip
 fi
 
+if [ ! -f ${wso2_product_keymanager_pack_identifier}.zip ]; then
+    cp ${wso2_product_keymanager_distribution} ${wso2_product_keymanager_pack_identifier}.zip
+fi
+
 if [ ! -f ${wso2_product_analytics_pack_identifier}.zip ]; then
     cp ${wso2_product_analytics_distribution} ${wso2_product_analytics_pack_identifier}.zip
 fi
@@ -57,6 +63,11 @@ fi
 # check if the WSO2 product distributions have been provided
 if [ ! -f ${wso2_product_pack_identifier}.zip ]; then
     echo "---> WSO2 product distribution not found! Please add it to ${distributions} directory."
+    exit 1
+fi
+
+if [ ! -f ${wso2_product_keymanager_pack_identifier}.zip ]; then
+    echo "---> WSO2 Identity Server as Key Manager product distribution not found! Please add it to ${distributions} directory."
     exit 1
 fi
 
@@ -153,6 +164,7 @@ echo "---> Adding blobs..."
 bosh -e vbox add-blob ${distributions}/${jdk_distribution} openjdk/${jdk_distribution}
 bosh -e vbox add-blob ${distributions}/${mysql_driver} mysqldriver/${mysql_driver}
 bosh -e vbox add-blob ${distributions}/${wso2_product_pack_identifier}.zip ${wso2_product}/${wso2_product_pack_identifier}.zip
+bosh -e vbox add-blob ${distributions}/${wso2_product_keymanager_pack_identifier}.zip wso2is_km/${wso2_product_keymanager_pack_identifier}.zip
 bosh -e vbox add-blob ${distributions}/${wso2_product_analytics_pack_identifier}.zip ${wso2_product}_analytics/${wso2_product_analytics_pack_identifier}.zip
 
 echo "---> Uploading blobs..."
