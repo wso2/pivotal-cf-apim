@@ -33,7 +33,7 @@ mkdir -p ${run_dir} ${log_dir}
 chown -R vcap:vcap ${run_dir} ${log_dir}
 
 mkdir -p /var/vcap/store/wso2is_km/data
-export WSO2_APIM_DATA_DIR=/var/vcap/store/wso2is_km/data/wso2is_km
+export WSO2_IS_KM_DATA_DIR=/var/vcap/store/wso2is_km/data/wso2is_km
 
 export JDK_HOME=/var/vcap/packages/openjdk/
 export WSO2_IS_KM_PKG_HOME=/var/vcap/packages/wso2is_km/
@@ -88,8 +88,8 @@ case $1 in
 
     # Sleep for a little while so the server comes up
     sleep 20
-    WSO2_APIM_PID=`ps -ef | grep java | grep -v grep | awk '{print $2}' `
-    echo $WSO2_APIM_PID > ${pid_file}
+    WSO2_IS_KM_PID=`ps -ef | grep java | grep -v grep | awk '{print $2}' `
+    echo $WSO2_IS_KM_PID > ${pid_file}
 
     ;;
 
