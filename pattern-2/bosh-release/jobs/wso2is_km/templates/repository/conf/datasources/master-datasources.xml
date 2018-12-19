@@ -23,7 +23,6 @@
                     <testOnBorrow>true</testOnBorrow>
                     <validationQuery>SELECT 1</validationQuery>
                     <validationInterval>30000</validationInterval>
-                    <defaultAutoCommit>true</defaultAutoCommit>
                 </configuration>
             </definition>
         </datasource>
@@ -134,7 +133,6 @@
                 </configuration>
             </definition>
         </datasource>
-
         <!-- For an explanation of the properties, see: http://people.apache.org/~fhanik/jdbc-pool/jdbc-pool.html -->
         <!--datasource>
             <name>SAMPLE_DATA_SOURCE</name>
