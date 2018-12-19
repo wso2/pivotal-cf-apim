@@ -136,10 +136,10 @@ packages:
             registration_interval: 20s
             uris:
               - wso2apim-analytics.(( ..cf.cloud_controller.system_domain.value ))
-  - name: keymanager
+  - name: wso2is_km
     instances: 2
     templates:
-    - name: keymanager
+    - name: wso2is_km
       release: wso2am-release
     - name: route_registrar
       release: routing
