@@ -31,7 +31,7 @@ set -e
 : ${wso2_product_keymanager_distribution:=${wso2_product_keymanager_pack_identifier}"*.zip"}
 : ${wso2_product_analytics_pack_identifier:="${wso2_product}-analytics-${wso2_product_version}"}
 : ${wso2_product_analytics_distribution:=${wso2_product_analytics_pack_identifier}"*.zip"}
-: ${jdk_distribution:="jdk-8u*linux-x64*.tar.gz"}
+: ${jdk_distribution:="OpenJDK8U-jdk_x64_linux_hotspot_8u192b12.tar.gz"}
 : ${mysql_driver:="mysql-connector-java-5.1.*-bin.jar"}
 
 # repository folder structure variables
