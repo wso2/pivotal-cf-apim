@@ -31,7 +31,7 @@ export wso2_product_pack_identifier="${wso2_product}-${wso2_product_version}"
 export wso2_product_distribution=${wso2_product_pack_identifier}"*.zip"
 export wso2_product_analytics_pack_identifier="${wso2_product}-analytics-${wso2_product_version}"
 export wso2_product_analytics_distribution=${wso2_product_analytics_pack_identifier}"*.zip"
-export jdk_distribution="jdk-8u*linux-x64*.tar.gz"
+export jdk_distribution="OpenJDK8U-jdk_x64_linux_hotspot_8u192b12.tar.gz"
 export mysql_driver="mysql-connector-java-5.1.*-bin.jar"
 
 # repository folder structure variables
