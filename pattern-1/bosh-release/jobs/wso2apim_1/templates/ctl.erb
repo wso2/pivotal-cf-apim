@@ -81,9 +81,9 @@ case $1 in
     kill -9 `cat ${pid_file}`
 
     pushd ${JDK_HOME}
-    archive=`ls jdk*gz`
+    archive=`ls OpenJDK*gz`
     tar -zxvf $archive
-    export JAVA_HOME=`pwd`/jdk1.8.0_202
+    export JAVA_HOME=`pwd`/jdk8u192-b12
     export JAVA_BINARY=${JAVA_HOME}/bin/java
 
     log_debug "JAVA_HOME: ${JAVA_HOME}"
