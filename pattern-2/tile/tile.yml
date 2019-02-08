@@ -43,10 +43,6 @@ forms:
       default: true
     - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
       label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    - name: postgres
-      label: postgres
-    - name: oracle.jdbc.driver.OracleDriver
-      label: oracle.jdbc.driver.OracleDriver
   - name: carbon_db_query
     type: string
     label: Validation Query
@@ -72,10 +68,6 @@ forms:
       default: true
     - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
       label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    - name: postgres
-      label: postgres
-    - name: oracle.jdbc.driver.OracleDriver
-      label: oracle.jdbc.driver.OracleDriver
   - name: am_db_query
     type: string
     label: Validation Query
@@ -101,10 +93,6 @@ forms:
       default: true
     - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
       label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    - name: postgres
-      label: postgres
-    - name: oracle.jdbc.driver.OracleDriver
-      label: oracle.jdbc.driver.OracleDriver
   - name: sp_db_query
     type: string
     label: Validation Query
