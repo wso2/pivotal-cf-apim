@@ -15,7 +15,7 @@ templates:
 
 packages:
 - openjdk
-- mysqldriver
+- jdbcdrivers
 - wso2is_km
 - common
 
