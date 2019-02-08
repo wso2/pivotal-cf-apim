@@ -168,11 +168,13 @@ cd ..
 # add the locally available WSO2 product distribution(s) and dependencies as blobs to the BOSH Director
 echo "---> Adding blobs..."
 
+# add openjdk
 bosh -e vbox add-blob ${distributions}/${jdk_distribution} openjdk/${jdk_distribution}
+# add wso2 product packs
 bosh -e vbox add-blob ${distributions}/${wso2_product_pack_identifier}.zip ${wso2_product}/${wso2_product_pack_identifier}.zip
 bosh -e vbox add-blob ${distributions}/${wso2_product_keymanager_pack_identifier}.zip wso2is_km/${wso2_product_keymanager_pack_identifier}.zip
 bosh -e vbox add-blob ${distributions}/${wso2_product_analytics_pack_identifier}.zip ${wso2_product}_analytics/${wso2_product_analytics_pack_identifier}.zip
-
+# add JDBC Drivers
 bosh -e vbox add-blob ${distributions}/${mysql_driver} jdbcdrivers/${mysql_driver}
 bosh -e vbox add-blob ${distributions}/${mssql_driver} jdbcdrivers/${mssql_driver}
 
