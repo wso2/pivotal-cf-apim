@@ -82,7 +82,7 @@ case $1 in
     cp -Tr ${job_dir}/repository/ ${WSO2_IS_KM_HOME}/repository/
 
     # Here add any libraries your application needs:
-    cp /var/vcap/packages/mysqldriver/* ${WSO2_IS_KM_HOME}/repository/components/lib/
+    cp /var/vcap/packages/jdbcdrivers/* ${WSO2_IS_KM_HOME}/repository/components/lib/
 
     $WSO2_IS_KM_HOME/bin/wso2server.sh start
 

@@ -17,7 +17,7 @@ templates:
 
 packages:
 - openjdk
-- mysqldriver
+- jdbcdrivers
 - wso2apim
 - common
 
