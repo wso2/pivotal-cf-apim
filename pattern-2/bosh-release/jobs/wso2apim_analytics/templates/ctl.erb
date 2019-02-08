@@ -83,7 +83,7 @@ case $1 in
     cp -Tr ${job_dir}/resources/ ${WSO2_APIM_ANALYTICS_HOME}/resources/
 
     # Here add any libraries your application needs:
-    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_ANALYTICS_HOME}/lib/
+    cp /var/vcap/packages/jdbcdrivers/* ${WSO2_APIM_ANALYTICS_HOME}/lib/
 
     $WSO2_APIM_ANALYTICS_HOME/bin/worker.sh start
 

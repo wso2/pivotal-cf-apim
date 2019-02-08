@@ -98,7 +98,7 @@ case $1 in
     cp -Tr ${job_dir}/repository/ ${WSO2_APIM_HOME}/repository/
 
     # Here add any libraries your application needs:
-    cp /var/vcap/packages/mysqldriver/* ${WSO2_APIM_HOME}/repository/components/lib/
+    cp /var/vcap/packages/jdbcdrivers/* ${WSO2_APIM_HOME}/repository/components/lib/
 
     mkdir /tmp/gateway
     mv $WSO2_APIM_HOME/repository/deployment/server/ /tmp/gateway/
