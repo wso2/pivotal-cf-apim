@@ -33,6 +33,7 @@ set -e
 : ${wso2_product_analytics_distribution:=${wso2_product_analytics_pack_identifier}"*.zip"}
 : ${jdk_distribution:="OpenJDK8U-jdk_x64_linux_hotspot_8u192b12.tar.gz"}
 : ${mysql_driver:="mysql-connector-java-5.1.*-bin.jar"}
+: ${mssql_driver:="mssql-jdbc-7.0.0.jre8.jar"}
 
 # repository folder structure variables
 : ${distributions:="dist"}
@@ -85,6 +86,12 @@ fi
 # check if the MySQL Connector has been provided
 if [ ! -f ${mysql_driver} ]; then
     echo "---> MySQL Driver not found! Please add it to ${distributions} directory."
+    exit 1
+fi
+
+# check if the MS SQL Connector has been provided
+if [ ! -f ${mssql_driver} ]; then
+    echo "---> MS SQL Driver not found! Please add it to ${distributions} directory."
     exit 1
 fi
 
@@ -162,10 +169,12 @@ cd ..
 echo "---> Adding blobs..."
 
 bosh -e vbox add-blob ${distributions}/${jdk_distribution} openjdk/${jdk_distribution}
-bosh -e vbox add-blob ${distributions}/${mysql_driver} mysqldriver/${mysql_driver}
 bosh -e vbox add-blob ${distributions}/${wso2_product_pack_identifier}.zip ${wso2_product}/${wso2_product_pack_identifier}.zip
 bosh -e vbox add-blob ${distributions}/${wso2_product_keymanager_pack_identifier}.zip wso2is_km/${wso2_product_keymanager_pack_identifier}.zip
 bosh -e vbox add-blob ${distributions}/${wso2_product_analytics_pack_identifier}.zip ${wso2_product}_analytics/${wso2_product_analytics_pack_identifier}.zip
+
+bosh -e vbox add-blob ${distributions}/${mysql_driver} jdbcdrivers/${mysql_driver}
+bosh -e vbox add-blob ${distributions}/${mssql_driver} jdbcdrivers/${mssql_driver}
 
 echo "---> Uploading blobs..."
 bosh -e vbox -n upload-blobs
