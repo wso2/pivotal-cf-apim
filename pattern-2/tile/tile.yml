@@ -31,12 +31,25 @@ forms:
   label: Carbon DB connection information
   description: WSO2 API Manager - Carbon Database connection information
   properties:
-  - name: carbon_db_hostname
+  - name: carbon_jdbc_url
     type: string
-    label: Hostname
-  - name: carbon_db_name
+    label: JDBC URL
+  - name: carbon_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    - name: postgres
+      label: postgres
+    - name: oracle.jdbc.driver.OracleDriver
+      label: oracle.jdbc.driver.OracleDriver
+  - name: carbon_db_query
     type: string
-    label: Database Name
+    label: Validation Query
   - name: carbon_db_username
     type: string
     label: Username
@@ -47,12 +60,25 @@ forms:
   label: AM DB connection information
   description: WSO2 API Manager Database connection information
   properties:
-  - name: am_db_hostname
+  - name: am_db_jdbc_url
     type: string
-    label: Hostname
-  - name: am_db_name
+    label: JDBC URL
+  - name: am_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    - name: postgres
+      label: postgres
+    - name: oracle.jdbc.driver.OracleDriver
+      label: oracle.jdbc.driver.OracleDriver
+  - name: am_db_query
     type: string
-    label: Database Name
+    label: Validation Query
   - name: am_db_username
     type: string
     label: Username
@@ -63,12 +89,25 @@ forms:
   label: AM Analytics Cluster DB connection information
   description: WSO2 API Manager - Analytics Clustering Database connection information
   properties:
-  - name: sp_db_hostname
+  - name: sp_db_jdbc_url
     type: string
-    label: Hostname
-  - name: sp_db_name
+    label: JDBC URL
+  - name: sp_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    - name: postgres
+      label: postgres
+    - name: oracle.jdbc.driver.OracleDriver
+      label: oracle.jdbc.driver.OracleDriver
+  - name: sp_db_query
     type: string
-    label: Database Name
+    label: Validation Query
   - name: sp_db_username
     type: string
     label: Username
@@ -114,18 +153,21 @@ packages:
     properties:
       wso2apim:
         carbon_db:
-          hostname: (( .properties.carbon_db_hostname.value ))
-          db_name: (( .properties.carbon_db_name.value ))
+          jdbc_url: (( .properties.carbon_jdbc_url.value ))
+          driver: (( .properties.carbon_db_driver.value ))
+          query: (( .properties.carbon_db_query.value ))
           username: (( .properties.carbon_db_username.value ))
           password: (( .properties.carbon_db_password.value ))
         am_db:
-          hostname: (( .properties.am_db_hostname.value ))
-          db_name: (( .properties.am_db_name.value ))
+          jdbc_url: (( .properties.am_db_jdbc_url.value ))
+          driver: (( .properties.am_db_driver.value ))
+          query: (( .properties.am_db_query.value ))
           username: (( .properties.am_db_username.value ))
           password: (( .properties.am_db_password.value ))
         sp_cluster_db:
-          hostname: (( .properties.sp_db_hostname.value ))
-          db_name: (( .properties.sp_db_name.value ))
+          jdbc_url: (( .properties.sp_db_jdbc_url.value ))
+          driver: (( .properties.sp_db_driver.value ))
+          query: (( .properties.sp_db_query.value ))
           username: (( .properties.sp_db_username.value ))
           password: (( .properties.sp_db_password.value ))
       route_registrar:
@@ -156,13 +198,15 @@ packages:
     properties:
       wso2apim:
         carbon_db:
-          hostname: (( .properties.carbon_db_hostname.value ))
-          db_name: (( .properties.carbon_db_name.value ))
+          jdbc_url: (( .properties.carbon_jdbc_url.value ))
+          driver: (( .properties.carbon_db_driver.value ))
+          query: (( .properties.carbon_db_query.value ))
           username: (( .properties.carbon_db_username.value ))
           password: (( .properties.carbon_db_password.value ))
         am_db:
-          hostname: (( .properties.am_db_hostname.value ))
-          db_name: (( .properties.am_db_name.value ))
+          jdbc_url: (( .properties.am_db_jdbc_url.value ))
+          driver: (( .properties.am_db_driver.value ))
+          query: (( .properties.am_db_query.value ))
           username: (( .properties.am_db_username.value ))
           password: (( .properties.am_db_password.value ))
       route_registrar:
@@ -193,13 +237,15 @@ packages:
     properties:
       wso2apim:
         carbon_db:
-          hostname: (( .properties.carbon_db_hostname.value ))
-          db_name: (( .properties.carbon_db_name.value ))
+          jdbc_url: (( .properties.carbon_jdbc_url.value ))
+          driver: (( .properties.carbon_db_driver.value ))
+          query: (( .properties.carbon_db_query.value ))
           username: (( .properties.carbon_db_username.value ))
           password: (( .properties.carbon_db_password.value ))
         am_db:
-          hostname: (( .properties.am_db_hostname.value ))
-          db_name: (( .properties.am_db_name.value ))
+          jdbc_url: (( .properties.am_db_jdbc_url.value ))
+          driver: (( .properties.am_db_driver.value ))
+          query: (( .properties.am_db_query.value ))
           username: (( .properties.am_db_username.value ))
           password: (( .properties.am_db_password.value ))
       route_registrar:
@@ -230,13 +276,15 @@ packages:
     properties:
       wso2apim:
         carbon_db:
-          hostname: (( .properties.carbon_db_hostname.value ))
-          db_name: (( .properties.carbon_db_name.value ))
+          jdbc_url: (( .properties.carbon_jdbc_url.value ))
+          driver: (( .properties.carbon_db_driver.value ))
+          query: (( .properties.carbon_db_query.value ))
           username: (( .properties.carbon_db_username.value ))
           password: (( .properties.carbon_db_password.value ))
         am_db:
-          hostname: (( .properties.am_db_hostname.value ))
-          db_name: (( .properties.am_db_name.value ))
+          jdbc_url: (( .properties.am_db_jdbc_url.value ))
+          driver: (( .properties.am_db_driver.value ))
+          query: (( .properties.am_db_query.value ))
           username: (( .properties.am_db_username.value ))
           password: (( .properties.am_db_password.value ))
       route_registrar:

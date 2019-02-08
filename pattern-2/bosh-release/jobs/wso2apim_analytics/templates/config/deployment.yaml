@@ -448,13 +448,13 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: 'jdbc:mysql://<%= p("wso2apim.sp_cluster_db.hostname") %>:3306/<%= p("wso2apim.sp_cluster_db.db_name") %>?autoReconnect=true&useSSL=false'
+          jdbcUrl: <%= p("wso2apim.sp_cluster_db.jdbc_url") %>
           username: <%= p("wso2apim.sp_cluster_db.username") %>
           password: <%= p("wso2apim.sp_cluster_db.password") %>
-          driverClassName: com.mysql.jdbc.Driver
+          driverClassName: <%= p("wso2apim.sp_cluster_db.driver") %>
           maxPoolSize: 50
           idleTimeout: 60000
-          connectionTestQuery: SELECT 1
+          connectionTestQuery: <%= p("wso2apim.sp_cluster_db.query") %>
           validationTimeout: 30000
           isAutoCommit: false
 
