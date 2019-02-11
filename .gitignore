@@ -25,3 +25,5 @@ pattern-*/bosh-release/deployment/*
 **/tile/tile-history.yml
 
 **/bosh-release/wso2*
+
+*blobs.yml
