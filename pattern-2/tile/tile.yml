@@ -122,7 +122,7 @@ packages:
     cpu: 2
     static_ip: 1
   - name: wso2apim_analytics
-    instances: 1
+    instances: 2
     templates:
     - name: wso2apim_analytics
       release: wso2am-release
