@@ -56,16 +56,27 @@ properties:
   wso2apim.address:
     description: wso2apim address
 
-  wso2apim.carbon_db.jdbc_url:
-    description: WSO2 Carbon database JDBC URL
-  wso2apim.carbon_db.driver:
-    description: WSO2 Carbon database database driver name
-  wso2apim.carbon_db.query:
-    description: WSO2 Carbon database database validation query
-  wso2apim.carbon_db.username:
-    description: WSO2 Carbon database username
-  wso2apim.carbon_db.password:
-    description: WSO2 Carbon database password
+  wso2apim.reg_db.jdbc_url:
+    description: WSO2 Registry database JDBC URL
+  wso2apim.reg_db.driver:
+    description: WSO2 Registry database database driver name
+  wso2apim.reg_db.query:
+    description: WSO2 Registry database database validation query
+  wso2apim.reg_db.username:
+    description: WSO2 Registry database username
+  wso2apim.reg_db.password:
+    description: WSO2 Registry database password
+
+  wso2apim.um_db.jdbc_url:
+    description: WSO2 User Management database JDBC URL
+  wso2apim.um_db.driver:
+    description: WSO2 User Management database database driver name
+  wso2apim.um_db.query:
+    description: WSO2 User Management database database validation query
+  wso2apim.um_db.username:
+    description: WSO2 User Management database username
+  wso2apim.um_db.password:
+    description: WSO2 User Management database password
 
   wso2apim.am_db.jdbc_url:
     description: WSO2 APIM database JDBC URL

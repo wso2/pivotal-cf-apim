@@ -35,7 +35,7 @@
     </dbConfig>
     <remoteInstance url="https://publisher.apim-wso2.com">
         <id>gov</id>
-        <cacheId><%= properties.wso2apim.mysql.username %>@<%= p("wso2apim.carbon_db.jdbc_url") %></cacheId>
+        <cacheId><%= p("wso2apim.reg_db.username") %>@<%= p("wso2apim.reg_db.jdbc_url") %></cacheId>
         <dbConfig>govregistry</dbConfig>
         <readOnly>false</readOnly>
         <enableCache>true</enableCache>
