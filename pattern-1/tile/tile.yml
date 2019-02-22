@@ -27,14 +27,14 @@ stemcell_criteria:
   version: '3541'
 
 forms:
-- name: carbon_db
-  label: Carbon DB connection information
-  description: WSO2 API Manager - Carbon Database connection information
+- name: reg_db
+  label: Registry DB connection information
+  description: WSO2 Enterprise Integrator - Registry Database connection information
   properties:
-  - name: carbon_jdbc_url
+  - name: reg_db_jdbc_url
     type: string
     label: JDBC URL
-  - name: carbon_db_driver
+  - name: reg_db_driver
     type: dropdown_select
     label: Driver Class Name
     options:
@@ -43,13 +43,38 @@ forms:
       default: true
     - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
       label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  - name: carbon_db_query
+  - name: reg_db_query
     type: string
     label: Validation Query
-  - name: carbon_db_username
+  - name: reg_db_username
     type: string
     label: Username
-  - name: carbon_db_password
+  - name: reg_db_password
+    type: secret
+    label: Password
+- name: um_db
+  label: UM DB connection information
+  description: User Manager Database connection information
+  properties:
+  - name: um_db_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: um_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: um_db_query
+    type: string
+    label: Validation Query
+  - name: um_db_username
+    type: string
+    label: Username
+  - name: um_db_password
     type: secret
     label: Password
 - name: am_db
@@ -140,18 +165,6 @@ packages:
     max_in_flight: 1
     properties:
       wso2apim:
-        carbon_db:
-          jdbc_url: (( .properties.carbon_jdbc_url.value ))
-          driver: (( .properties.carbon_db_driver.value ))
-          query: (( .properties.carbon_db_query.value ))
-          username: (( .properties.carbon_db_username.value ))
-          password: (( .properties.carbon_db_password.value ))
-        am_db:
-          jdbc_url: (( .properties.am_db_jdbc_url.value ))
-          driver: (( .properties.am_db_driver.value ))
-          query: (( .properties.am_db_query.value ))
-          username: (( .properties.am_db_username.value ))
-          password: (( .properties.am_db_password.value ))
         sp_cluster_db:
           jdbc_url: (( .properties.sp_db_jdbc_url.value ))
           driver: (( .properties.sp_db_driver.value ))
@@ -192,12 +205,18 @@ packages:
     max_in_flight: 1
     properties:
       wso2apim:
-        carbon_db:
-          jdbc_url: (( .properties.carbon_jdbc_url.value ))
-          driver: (( .properties.carbon_db_driver.value ))
-          query: (( .properties.carbon_db_query.value ))
-          username: (( .properties.carbon_db_username.value ))
-          password: (( .properties.carbon_db_password.value ))
+        reg_db:
+          jdbc_url: (( .properties.reg_db_jdbc_url.value ))
+          driver: (( .properties.reg_db_driver.value ))
+          query: (( .properties.reg_db_query.value ))
+          username: (( .properties.reg_db_username.value ))
+          password: (( .properties.reg_db_password.value ))
+        um_db:
+          jdbc_url: (( .properties.um_db_jdbc_url.value ))
+          driver: (( .properties.um_db_driver.value ))
+          query: (( .properties.um_db_query.value ))
+          username: (( .properties.um_db_username.value ))
+          password: (( .properties.um_db_password.value ))
         am_db:
           jdbc_url: (( .properties.am_db_jdbc_url.value ))
           driver: (( .properties.am_db_driver.value ))

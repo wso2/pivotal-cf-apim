@@ -34,28 +34,6 @@ properties:
   wso2apim_analytics.address:
     description: wso2apim address
 
-  wso2apim.carbon_db.jdbc_url:
-    description: WSO2 Carbon database JDBC URL
-  wso2apim.carbon_db.driver:
-    description: WSO2 Carbon database database driver name
-  wso2apim.carbon_db.query:
-    description: WSO2 Carbon database database validation query
-  wso2apim.carbon_db.username:
-    description: WSO2 Carbon database username
-  wso2apim.carbon_db.password:
-    description: WSO2 Carbon database password
-
-  wso2apim.am_db.jdbc_url:
-    description: WSO2 APIM database JDBC URL
-  wso2apim.am_db.driver:
-    description: WSO2 APIM database database driver name
-  wso2apim.am_db.query:
-    description: WSO2 APIM database database validation query
-  wso2apim.am_db.username:
-    description: WSO2 APIM database username
-  wso2apim.am_db.password:
-    description: WSO2 APIM database password
-
   wso2apim.sp_cluster_db.jdbc_url:
     description: WSO2 APIM Analytics database JDBC URL
   wso2apim.sp_cluster_db.driver:

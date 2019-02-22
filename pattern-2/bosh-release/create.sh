@@ -127,6 +127,8 @@ echo "---> Adding blobs..."
 bosh add-blob ${distributions}/${jdk_distribution} openjdk/${jdk_distribution}
 # add wso2 product packs
 bosh add-blob ${distributions}/${wso2_product_pack_identifier}.zip ${wso2_product}/${wso2_product_pack_identifier}.zip
+bosh add-blob ${distributions}/${wso2_product_keymanager_pack_identifier}.zip wso2is_km/${wso2_product_keymanager_pack_identifier}.zip
+bosh add-blob ${distributions}/${wso2_product_analytics_pack_identifier}.zip ${wso2_product}_analytics/${wso2_product_analytics_pack_identifier}.zip
 # add JDBC Drivers
 bosh add-blob ${distributions}/${mysql_driver} jdbcdrivers/${mysql_driver}
 bosh add-blob ${distributions}/${mssql_driver} jdbcdrivers/${mssql_driver}
