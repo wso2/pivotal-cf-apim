@@ -36,14 +36,14 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url><%= p("wso2apim.carbon_db.jdbc_url") %></url>
-                    <username><%= p("wso2apim.carbon_db.username") %></username>
-                    <password><%= p("wso2apim.carbon_db.password") %></password>
-                    <driverClassName><%= p("wso2apim.carbon_db.driver") %></driverClassName>
+                    <url><%= p("wso2apim.um_db.jdbc_url") %></url>
+                    <username><%= p("wso2apim.um_db.username") %></username>
+                    <password><%= p("wso2apim.um_db.password") %></password>
+                    <driverClassName><%= p("wso2apim.um_db.driver") %></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
-                    <validationQuery><%= p("wso2apim.carbon_db.query") %></validationQuery>
+                    <validationQuery><%= p("wso2apim.um_db.query") %></validationQuery>
                     <validationInterval>30000</validationInterval>
                 </configuration>
             </definition>
@@ -57,14 +57,14 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url><%= p("wso2apim.carbon_db.jdbc_url") %></url>
-                    <username><%= p("wso2apim.carbon_db.username") %></username>
-                    <password><%= p("wso2apim.carbon_db.password") %></password>
-                    <driverClassName><%= p("wso2apim.carbon_db.driver") %></driverClassName>
+                    <url><%= p("wso2apim.reg_db.jdbc_url") %></url>
+                    <username><%= p("wso2apim.reg_db.username") %></username>
+                    <password><%= p("wso2apim.reg_db.password") %></password>
+                    <driverClassName><%= p("wso2apim.reg_db.driver") %></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
-                    <validationQuery><%= p("wso2apim.carbon_db.query") %></validationQuery>
+                    <validationQuery><%= p("wso2apim.reg_db.query") %></validationQuery>
                     <validationInterval>30000</validationInterval>
                 </configuration>
             </definition>
