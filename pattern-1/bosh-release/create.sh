@@ -97,9 +97,6 @@ if [ ! -x "$(command -v bosh)" ]; then
 fi
 
 # move to the deployment directory
-if [ ! -d ../${deployment} ]; then
-    mkdir ../${deployment}
-fi
 cd ../${deployment}
 
 # Git clone the collection of BOSH manifests referenced by cloudfoundry/docs-bosh, required to create the BOSH environment
