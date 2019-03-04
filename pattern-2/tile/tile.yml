@@ -29,7 +29,7 @@ stemcell_criteria:
 forms:
 - name: reg_db
   label: Registry DB connection information
-  description: WSO2 Enterprise Integrator - Registry Database connection information
+  description: WSO2 API Manager - Registry Database connection information
   properties:
   - name: reg_db_jdbc_url
     type: string
@@ -54,7 +54,7 @@ forms:
     label: Password
 - name: um_db
   label: UM DB connection information
-  description: User Manager Database connection information
+  description: User Management Database connection information
   properties:
   - name: um_db_jdbc_url
     type: string
@@ -174,11 +174,17 @@ packages:
       route_registrar:
         routes:
           - name: wso2apim-analytics
-            port: 9764
-            tls_port: 9444
+            port: 9612
+            tls_port: 7612
             registration_interval: 20s
             uris:
               - wso2apim-analytics.(( ..cf.cloud_controller.system_domain.value ))
+          - name: wso2apim-analytics
+            port: 9764
+            tls_port: 7444
+            registration_interval: 20s
+            uris:
+              - wso2apim-analytics-storeapi.(( ..cf.cloud_controller.system_domain.value ))
   - name: wso2is_km
     instances: 2
     templates:

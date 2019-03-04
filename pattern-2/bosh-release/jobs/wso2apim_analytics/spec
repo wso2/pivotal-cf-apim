@@ -15,6 +15,8 @@ packages:
 provides:
 - name: apim-analytics
   type: analytics-node
+  properties:
+  - route_registrar.routes
 
 properties:
   wso2apim_analytics.memory.min_heap:
@@ -51,6 +53,9 @@ properties:
     description: wso2apim mysql event store database name
   wso2apim_analytics.mysql.processed_data_db:
     description: wso2apim mysql analytics processed data database name
+
+  route_registrar.routes:
+    description: routes registered for WSO2 APIM apps and gateway
 
   cf.apps_domain:
     description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
