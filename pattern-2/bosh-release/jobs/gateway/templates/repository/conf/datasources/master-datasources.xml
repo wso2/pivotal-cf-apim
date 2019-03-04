@@ -78,7 +78,7 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>j<%= p("wso2apim.am_db.jdbc_url") %></url>
+                    <url><%= p("wso2apim.am_db.jdbc_url") %></url>
                     <username><%= p("wso2apim.am_db.username") %></username>
                     <password><%= p("wso2apim.am_db.password") %></password>
                     <defaultAutoCommit>false</defaultAutoCommit>
@@ -100,7 +100,7 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>j<%= p("wso2apim.am_db.jdbc_url") %></url>
+                    <url><%= p("wso2apim.am_db.jdbc_url") %></url>
                     <username><%= p("wso2apim.am_db.username") %></username>
                     <password><%= p("wso2apim.am_db.password") %></password>
                     <driverClassName><%= p("wso2apim.am_db.driver") %></driverClassName>
