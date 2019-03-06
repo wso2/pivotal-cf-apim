@@ -114,6 +114,9 @@ case $1 in
     ln -s ${NFS_SHARE_SERVER_DIR} $WSO2_APIM_HOME/repository/deployment/
     ln -s ${NFS_SHARE_TENANTS_DIR} $WSO2_APIM_HOME/repository/tenants
 
+    # Create symbolic link for logging
+    ln -s $WSO2_APIM_HOME/repository/logs/ ${log_dir}
+
     $WSO2_APIM_HOME/bin/wso2server.sh start
 
     # Sleep for a little while so the server comes up
