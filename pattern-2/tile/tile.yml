@@ -46,12 +46,9 @@ forms:
   - name: reg_db_query
     type: string
     label: Validation Query
-  - name: reg_db_username
-    type: string
-    label: Username
-  - name: reg_db_password
-    type: secret
-    label: Password
+  - name: reg_db_credentials
+    label: Registry DB Credentials
+    type: simple_credentials
 - name: um_db
   label: UM DB connection information
   description: User Management Database connection information
@@ -71,12 +68,9 @@ forms:
   - name: um_db_query
     type: string
     label: Validation Query
-  - name: um_db_username
-    type: string
-    label: Username
-  - name: um_db_password
-    type: secret
-    label: Password
+  - name: um_db_credentials
+    label: User Management DB Credentials
+    type: simple_credentials
 - name: am_db
   label: AM DB connection information
   description: WSO2 API Manager Database connection information
@@ -96,12 +90,9 @@ forms:
   - name: am_db_query
     type: string
     label: Validation Query
-  - name: am_db_username
-    type: string
-    label: Username
-  - name: am_db_password
-    type: secret
-    label: Password
+  - name: am_db_credentials
+    label: AM DB Credentials
+    type: simple_credentials
 - name: sp_cluster_db
   label: AM Analytics Cluster DB connection information
   description: WSO2 API Manager - Analytics Clustering Database connection information
@@ -121,12 +112,9 @@ forms:
   - name: sp_db_query
     type: string
     label: Validation Query
-  - name: sp_db_username
-    type: string
-    label: Username
-  - name: sp_db_password
-    type: secret
-    label: Password
+  - name: sp_db_credentials
+    label: Cluster DB Credentials
+    type: simple_credentials
 
 packages:
 - name: routing_release
@@ -169,8 +157,8 @@ packages:
           jdbc_url: (( .properties.sp_db_jdbc_url.value ))
           driver: (( .properties.sp_db_driver.value ))
           query: (( .properties.sp_db_query.value ))
-          username: (( .properties.sp_db_username.value ))
-          password: (( .properties.sp_db_password.value ))
+          username: (( .properties.sp_db_credentials.identity ))
+          password: (( .properties.sp_db_credentials.password ))
       route_registrar:
         routes:
           - name: wso2apim-analytics
@@ -197,6 +185,7 @@ packages:
           from: nats
           deployment: (( ..cf.deployment_name ))
     - name: health_check
+      instances: [wso2is_km]
       release: wso2am-release
       colocated: true
       post_deploy: true
@@ -215,20 +204,20 @@ packages:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))
           query: (( .properties.reg_db_query.value ))
-          username: (( .properties.reg_db_username.value ))
-          password: (( .properties.reg_db_password.value ))
+          username: (( .properties.reg_db_credentials.identity ))
+          password: (( .properties.reg_db_credentials.password ))
         um_db:
           jdbc_url: (( .properties.um_db_jdbc_url.value ))
           driver: (( .properties.um_db_driver.value ))
           query: (( .properties.um_db_query.value ))
-          username: (( .properties.um_db_username.value ))
-          password: (( .properties.um_db_password.value ))
+          username: (( .properties.um_db_credentials.identity ))
+          password: (( .properties.um_db_credentials.password ))
         am_db:
           jdbc_url: (( .properties.am_db_jdbc_url.value ))
           driver: (( .properties.am_db_driver.value ))
           query: (( .properties.am_db_query.value ))
-          username: (( .properties.am_db_username.value ))
-          password: (( .properties.am_db_password.value ))
+          username: (( .properties.am_db_credentials.identity ))
+          password: (( .properties.am_db_credentials.password ))
       route_registrar:
         routes:
         - name: keymanager
@@ -249,6 +238,7 @@ packages:
           from: nats
           deployment: (( ..cf.deployment_name ))
     - name: health_check
+      instances: [wso2apim]
       release: wso2am-release
       colocated: true
       post_deploy: true
@@ -267,20 +257,20 @@ packages:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))
           query: (( .properties.reg_db_query.value ))
-          username: (( .properties.reg_db_username.value ))
-          password: (( .properties.reg_db_password.value ))
+          username: (( .properties.reg_db_credentials.identity ))
+          password: (( .properties.reg_db_credentials.password ))
         um_db:
           jdbc_url: (( .properties.um_db_jdbc_url.value ))
           driver: (( .properties.um_db_driver.value ))
           query: (( .properties.um_db_query.value ))
-          username: (( .properties.um_db_username.value ))
-          password: (( .properties.um_db_password.value ))
+          username: (( .properties.um_db_credentials.identity ))
+          password: (( .properties.um_db_credentials.password ))
         am_db:
           jdbc_url: (( .properties.am_db_jdbc_url.value ))
           driver: (( .properties.am_db_driver.value ))
           query: (( .properties.am_db_query.value ))
-          username: (( .properties.am_db_username.value ))
-          password: (( .properties.am_db_password.value ))
+          username: (( .properties.am_db_credentials.identity ))
+          password: (( .properties.am_db_credentials.password ))
       route_registrar:
         routes:
         - name: wso2apim
@@ -301,6 +291,7 @@ packages:
           from: nats
           deployment: (( ..cf.deployment_name ))
     - name: health_check
+      instances: [gateway]
       release: wso2am-release
       colocated: true
       post_deploy: true
@@ -319,20 +310,20 @@ packages:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))
           query: (( .properties.reg_db_query.value ))
-          username: (( .properties.reg_db_username.value ))
-          password: (( .properties.reg_db_password.value ))
+          username: (( .properties.reg_db_credentials.identity ))
+          password: (( .properties.reg_db_credentials.password ))
         um_db:
           jdbc_url: (( .properties.um_db_jdbc_url.value ))
           driver: (( .properties.um_db_driver.value ))
           query: (( .properties.um_db_query.value ))
-          username: (( .properties.um_db_username.value ))
-          password: (( .properties.um_db_password.value ))
+          username: (( .properties.um_db_credentials.identity ))
+          password: (( .properties.um_db_credentials.password ))
         am_db:
           jdbc_url: (( .properties.am_db_jdbc_url.value ))
           driver: (( .properties.am_db_driver.value ))
           query: (( .properties.am_db_query.value ))
-          username: (( .properties.am_db_username.value ))
-          password: (( .properties.am_db_password.value ))
+          username: (( .properties.am_db_credentials.identity ))
+          password: (( .properties.am_db_credentials.password ))
       route_registrar:
         routes:
         - name: gateway
