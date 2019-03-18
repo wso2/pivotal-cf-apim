@@ -43,3 +43,4 @@ then
     rm cache/wso2_apim.tgz
 fi
 /bin/bash build.sh
+exit 0
