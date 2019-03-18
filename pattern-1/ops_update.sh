@@ -69,10 +69,21 @@ fi
 
 echo "Updating tile..."
 /bin/bash update.sh
+rc=$?;
+if [[ ${rc} != 0 ]]; then
+    echo "Error occurred while updating tile. Terminating with exit code $rc"
+    exit ${rc};
+fi
 
 echo "Obtaining access token..."
 response=$(curl -s -k -H 'Accept: application/json;charset=utf-8' -d 'grant_type=password' -d "username=$username" -d "password=$password" -u 'opsman:' https://localhost/uaa/oauth/token)
 access_token=$(echo ${response} | sed -nE 's/.*"access_token":"(.*)","token.*/\1/p')
+if [ -z "$access_token" ]
+then
+    status_code=$(curl --write-out %{http_code} --output /dev/null -s -k -H 'Accept: application/json;charset=utf-8' -d 'grant_type=password' -d "username=$username" -d "password=$password" -u 'opsman:' https://localhost/uaa/oauth/token)
+    echo "Access token could not be obtained. Status code: $status_code"
+    exit 1
+fi
 
 echo "Uploading new tile..."
 cd tile/product
