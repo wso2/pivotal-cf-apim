@@ -16,10 +16,10 @@
 #
 # ------------------------------------------------------------------------
 ---
-name: wso2apim-tile
+name: wso2apim-tile-pattern-1
 icon_file: resources/wso2-logo.png
 label: WSO2 API Manager 2.6.0
-description: PCF Tile for WSO2 API Manager 2.6.0
+description: PCF Tile for WSO2 API Manager 2.6.0 - Pattern 2
 
 stemcell_criteria:
   os: ubuntu-xenial
@@ -117,11 +117,11 @@ forms:
     type: simple_credentials
 
 packages:
-- name: routing-release
+- name: routing_release
   type: bosh-release
   path: routing-0.178.0.tgz
 
-- name: wso2-apim
+- name: wso2_apim
   type: bosh-release
   path: wso2am-2.6.0-bosh-release.tgz
   jobs:
