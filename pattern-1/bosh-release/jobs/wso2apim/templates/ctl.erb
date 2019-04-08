@@ -40,19 +40,18 @@ export WSO2_APIM_PKG_HOME=/var/vcap/packages/wso2apim/
 export WSO2_APIM_SERVER_PACKAGE=/var/vcap/packages/wso2apim/
 
 # set any environment variables for your software
-export MIN_HEAP=<%=properties.wso2apim.memory.min_heap %>
-export MAX_HEAP=<%=properties.wso2apim.memory.max_heap %>
-export MAX_PERMGEN=<%=properties.wso2apim.memory.max_permgen %>
+export MIN_HEAP=<%= properties.wso2apim.memory.min_heap %>
+export MAX_HEAP=<%= properties.wso2apim.memory.max_heap %>
+export MAX_PERMGEN=<%= properties.wso2apim.memory.max_permgen %>
 export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMGEN}m"
 
 export DEBUG_LOG=${log_dir}/wso2apim.log
 
-export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/wso2am/deployment-server
-export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/wso2am/tenants
+export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/wso2am/repository/deployment
+export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/wso2am/repository
 
-export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/wso2am/repository/deployment/server
-export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/wso2am/repository/tenants
-
+export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/wso2am/repository/deployment
+export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/wso2am/repository
 
 touch $DEBUG_LOG
 chmod -R 755 /var/vcap/sys
@@ -102,17 +101,21 @@ case $1 in
     cp /var/vcap/packages/jdbcdrivers/* ${WSO2_APIM_HOME}/repository/components/lib/
 
     mkdir /tmp/wso2am
-    mv $WSO2_APIM_HOME/repository/deployment/server/ /tmp/wso2am
+    mv $WSO2_APIM_HOME/repository/deployment/server/ /tmp/wso2am/
 
     mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_SERVER_DIR} ${NFS_SHARE_SERVER_DIR}
     mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_TENANTS_DIR} ${NFS_SHARE_TENANTS_DIR}
 
     if [ -z "$(ls -A ${NFS_SHARE_SERVER_DIR})" ]; then
-      cp -r /tmp/wso2am/server/* ${NFS_SHARE_SERVER_DIR}
+      cp -r /tmp/wso2am/* ${NFS_SHARE_SERVER_DIR}/
     fi
 
-    ln -s ${NFS_SHARE_SERVER_DIR} $WSO2_APIM_HOME/repository/deployment/
-    ln -s ${NFS_SHARE_TENANTS_DIR} $WSO2_APIM_HOME/repository/tenants
+    if [ -z "$(ls -A ${NFS_SHARE_TENANTS_DIR})" ]; then
+      cp -r /tmp/wso2am-tenants/* ${NFS_SHARE_TENANTS_DIR}/
+    fi
+
+    ln -s ${NFS_SHARE_SERVER_DIR}/server/ $WSO2_APIM_HOME/repository/deployment
+    ln -s ${NFS_SHARE_TENANTS_DIR}/tenants/ $WSO2_APIM_HOME/repository
 
     # Create symbolic link for logging
     ln -s $WSO2_APIM_HOME/repository/logs/ ${log_dir}
