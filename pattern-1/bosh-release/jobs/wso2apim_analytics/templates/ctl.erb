@@ -40,9 +40,9 @@ export WSO2_APIM_ANALYTICS_PKG_HOME=/var/vcap/packages/wso2apim_analytics/
 export WSO2_APIM_ANALYTICS_SERVER_PACKAGE=/var/vcap/packages/wso2apim_analytics/
 
 # set any environment variables for your software
-export MIN_HEAP=<%=properties.wso2apim_analytics.memory.min_heap %>
-export MAX_HEAP=<%=properties.wso2apim_analytics.memory.max_heap %>
-export MAX_PERMGEN=<%=properties.wso2apim_analytics.memory.max_permgen %>
+export MIN_HEAP=<%= properties.wso2apim_analytics.memory.min_heap %>
+export MAX_HEAP=<%= properties.wso2apim_analytics.memory.max_heap %>
+export MAX_PERMGEN=<%= properties.wso2apim_analytics.memory.max_permgen %>
 export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMGEN}m"
 
 export DEBUG_LOG=${log_dir}/wso2apim_analytics.log
