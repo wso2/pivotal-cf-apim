@@ -86,7 +86,7 @@
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
-                    <validationQuery><%= p("wso2apim.am_db.driver") %></validationQuery>
+                    <validationQuery><%= p("wso2apim.am_db.query") %></validationQuery>
                     <validationInterval>30000</validationInterval>
                 </configuration>
             </definition>
