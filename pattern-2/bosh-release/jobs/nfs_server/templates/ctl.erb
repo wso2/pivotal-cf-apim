@@ -34,7 +34,7 @@ chown -R vcap:vcap ${run_dir} ${log_dir}
 
 export NFS_EXPORT_SERVER_DIR_APIM=/mnt/nfs-export/wso2am/repository/deployment
 export NFS_EXPORT_SERVER_DIR_GATEWAY=/mnt/nfs-export/gateway/repository/deployment
-export NFS_EXPORT_TENANTS_DIR_GATEWAY=/mnt/nfs-export/gateway/repository
+export NFS_EXPORT_TENANTS_DIR_GATEWAY=/mnt/nfs-export/gateway/repository/tenants
 
 export DEBUG_LOG=${log_dir}/nfs_server.log
 
@@ -60,7 +60,7 @@ fi
 
 mkdir -p ${NFS_EXPORT_SERVER_DIR_APIM}
 mkdir -p ${NFS_EXPORT_SERVER_DIR_GATEWAY}
-mkdir -p ${NFS_EXPORT_TENANTS_DIR_GATEWAY}/tenants
+mkdir -p ${NFS_EXPORT_TENANTS_DIR_GATEWAY}
 
 chown nobody:nogroup ${NFS_EXPORT_SERVER_DIR_APIM}
 chown nobody:nogroup ${NFS_EXPORT_SERVER_DIR_GATEWAY}
