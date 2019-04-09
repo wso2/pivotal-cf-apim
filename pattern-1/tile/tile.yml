@@ -19,7 +19,7 @@
 name: wso2apim-tile-pattern-1
 icon_file: resources/wso2-logo.png
 label: WSO2 API Manager 2.6.0
-description: PCF Tile for WSO2 API Manager 2.6.0 - Pattern 2
+description: PCF Tile for WSO2 API Manager 2.6.0 - Pattern 1
 
 stemcell_criteria:
   os: ubuntu-xenial
