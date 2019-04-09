@@ -48,10 +48,10 @@ export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMG
 export DEBUG_LOG=${log_dir}/wso2apim.log
 
 export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/wso2am/repository/deployment
-export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/wso2am/repository
+export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/wso2am/repository/tenants
 
 export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/wso2am/repository/deployment
-export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/wso2am/repository
+export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/wso2am/repository/tenants
 
 touch $DEBUG_LOG
 chmod -R 755 /var/vcap/sys
@@ -103,6 +103,9 @@ case $1 in
     mkdir /tmp/wso2am
     mv $WSO2_APIM_HOME/repository/deployment/server/ /tmp/wso2am/
 
+    mkdir /tmp/wso2am-tenants
+    mv $WSO2_APIM_HOME/repository/tenants/ /tmp/wso2am-tenants/
+
     mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_SERVER_DIR} ${NFS_SHARE_SERVER_DIR}
     mount -t nfs <%= link("nfs-server").instances[0].address %>:${NFS_EXPORT_TENANTS_DIR} ${NFS_SHARE_TENANTS_DIR}
 
@@ -111,11 +114,11 @@ case $1 in
     fi
 
     if [ -z "$(ls -A ${NFS_SHARE_TENANTS_DIR})" ]; then
-      cp -r /tmp/wso2am-tenants/* ${NFS_SHARE_TENANTS_DIR}/
+      cp -r /tmp/wso2am-tenants/tenants/* ${NFS_SHARE_TENANTS_DIR}/
     fi
 
     ln -s ${NFS_SHARE_SERVER_DIR}/server/ $WSO2_APIM_HOME/repository/deployment
-    ln -s ${NFS_SHARE_TENANTS_DIR}/tenants/ $WSO2_APIM_HOME/repository
+    ln -s ${NFS_SHARE_TENANTS_DIR}/ $WSO2_APIM_HOME/repository
 
     # Create symbolic link for logging
     ln -s $WSO2_APIM_HOME/repository/logs/ ${log_dir}
