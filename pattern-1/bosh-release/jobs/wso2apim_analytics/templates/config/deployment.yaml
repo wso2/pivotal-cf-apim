@@ -414,13 +414,13 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/WSO2AM_STATS_DB;AUTO_SERVER=TRUE'
-          username: wso2carbon
-          password: wso2carbon
-          driverClassName: org.h2.Driver
+          jdbcUrl: <%= p("wso2apim.apim_analytics_db.jdbc_url") %>
+          username: <%= p("wso2apim.apim_analytics_db.username") %>
+          password: <%= p("wso2apim.apim_analytics_db.password") %>
+          driverClassName: <%= p("wso2apim.apim_analytics_db.driver") %>
           maxPoolSize: 50
           idleTimeout: 60000
-          connectionTestQuery: SELECT 1
+          connectionTestQuery: <%= p("wso2apim.apim_analytics_db.query") %>
           validationTimeout: 30000
           isAutoCommit: false
 
@@ -438,23 +438,6 @@ wso2.datasources:
           maxPoolSize: 50
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
-          validationTimeout: 30000
-          isAutoCommit: false
-
-    - name: SP_CLUSTER_DB
-      description: "The datasource used for APIM MGW analytics data."
-      jndiConfig:
-        name: jdbc/SP_CLUSTER_DB
-      definition:
-        type: RDBMS
-        configuration:
-          jdbcUrl: <%= p("wso2apim.sp_cluster_db.jdbc_url") %>
-          username: <%= p("wso2apim.sp_cluster_db.username") %>
-          password: <%= p("wso2apim.sp_cluster_db.password") %>
-          driverClassName: <%= p("wso2apim.sp_cluster_db.driver") %>
-          maxPoolSize: 50
-          idleTimeout: 60000
-          connectionTestQuery: <%= p("wso2apim.sp_cluster_db.query") %>
           validationTimeout: 30000
           isAutoCommit: false
 
@@ -483,8 +466,8 @@ siddhi:
 
 # Cluster Configuration
 cluster.config:
-  enabled: true
-  groupId:  sp-worker
+  enabled: false
+  groupId:  sp
   coordinationStrategyClass: org.wso2.carbon.cluster.coordinator.rdbms.RDBMSCoordinationStrategy
   strategyConfig:
     datasource: SP_CLUSTER_DB
@@ -492,22 +475,22 @@ cluster.config:
     heartbeatMaxRetry: 2
     eventPollingInterval: 1000
 
-# Sample of deployment.config for Two node HA
-deployment.config:
-  type: ha
-  eventSyncServer:
-    host: <%= spec.ip %>
-    port: 9893
-    advertisedHost: <%= spec.ip %>
-    advertisedPort: 9893
-    bossThreads: 10
-    workerThreads: 10
-  eventSyncClientPool:
-    maxActive: 10
-    maxTotal: 10
-    maxIdle: 10
-    maxWait: 60000
-    minEvictableIdleTimeMillis: 120000
+  # Sample of deployment.config for Two node HA
+#deployment.config:
+#  type: ha
+#  eventSyncServer:
+#    host: localhost
+#    port: 9893
+#    advertisedHost: localhost
+#    advertisedPort: 9893
+#    bossThreads: 10
+#    workerThreads: 10
+#  eventSyncClientPool:
+#    maxActive: 10
+#    maxTotal: 10
+#    maxIdle: 10
+#    maxWait: 60000
+#    minEvictableIdleTimeMillis: 120000
 
   # Sample of deployment.config for Distributed deployment
 #deployment.config:
