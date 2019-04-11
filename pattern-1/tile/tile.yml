@@ -93,14 +93,14 @@ forms:
   - name: am_db_credentials
     label: AM DB Credentials
     type: simple_credentials
-- name: sp_cluster_db
+- name: apim_analytics_db
   label: AM Analytics Cluster DB connection information
-  description: WSO2 API Manager - Analytics Clustering Database connection information
+  description: WSO2 API Manager Analytics Database connection information
   properties:
-  - name: sp_db_jdbc_url
+  - name: analytics_db_jdbc_url
     type: string
     label: JDBC URL
-  - name: sp_db_driver
+  - name: analytics_db_driver
     type: dropdown_select
     label: Driver Class Name
     options:
@@ -109,10 +109,10 @@ forms:
       default: true
     - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
       label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  - name: sp_db_query
+  - name: analytics_db_query
     type: string
     label: Validation Query
-  - name: sp_db_credentials
+  - name: analytics_db_credentials
     label: Cluster DB Credentials
     type: simple_credentials
 
@@ -153,12 +153,12 @@ packages:
     max_in_flight: 1
     properties:
       wso2apim:
-        sp_cluster_db:
-          jdbc_url: (( .properties.sp_db_jdbc_url.value ))
-          driver: (( .properties.sp_db_driver.value ))
-          query: (( .properties.sp_db_query.value ))
-          username: (( .properties.sp_db_credentials.identity ))
-          password: (( .properties.sp_db_credentials.password ))
+        apim_analytics_db:
+          jdbc_url: (( .properties.analytics_db_jdbc_url.value ))
+          driver: (( .properties.analytics_db_driver.value ))
+          query: (( .properties.analytics_db_query.value ))
+          username: (( .properties.analytics_db_credentials.identity ))
+          password: (( .properties.analytics_db_credentials.password ))
       route_registrar:
         routes:
           - name: wso2apim-analytics
