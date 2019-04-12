@@ -299,12 +299,13 @@ wso2.artifact.deployment:
 
   # Periodic Persistence Configuration
 state.persistence:
-  enabled: false
+  enabled: true
   intervalInMin: 1
   revisionsToKeep: 2
-  persistenceStore: org.wso2.carbon.stream.processor.core.persistence.FileSystemPersistenceStore
+  persistenceStore: org.wso2.carbon.stream.processor.core.persistence.DBPersistenceStore
   config:
-    location: siddhi-app-persistence
+    datasource: PERSISTENCE_DB   # A datasource with this name should be defined in wso2.datasources namespace
+    table: PERSISTENCE_TABLE
 
   # Secure Vault Configuration
 wso2.securevault:
@@ -441,10 +442,10 @@ wso2.datasources:
           validationTimeout: 30000
           isAutoCommit: false
 
-    - name: SP_CLUSTER_DB
+    - name: WSO2_CLUSTER_DB
       description: "The datasource used for APIM MGW analytics data."
       jndiConfig:
-        name: jdbc/SP_CLUSTER_DB
+        name: jdbc/WSO2_CLUSTER_DB
       definition:
         type: RDBMS
         configuration:
@@ -455,6 +456,23 @@ wso2.datasources:
           maxPoolSize: 50
           idleTimeout: 60000
           connectionTestQuery: <%= p("wso2apim.sp_cluster_db.query") %>
+          validationTimeout: 30000
+          isAutoCommit: false
+
+    - name: PERSISTENCE_DB
+      description: The MySQL datasource used for persistence
+      jndiConfig:
+        name: jdbc/PERSISTENCE_DB
+      definition:
+        type: RDBMS
+        configuration:
+          jdbcUrl: <%= p("wso2apim.persistence_db.jdbc_url") %>
+          username: <%= p("wso2apim.persistence_db.username") %>
+          password: <%= p("wso2apim.persistence_db.password") %>
+          driverClassName: <%= p("wso2apim.persistence_db.driver") %>
+          maxPoolSize: 50
+          idleTimeout: 60000
+          connectionTestQuery: SELECT 1
           validationTimeout: 30000
           isAutoCommit: false
 
@@ -487,7 +505,7 @@ cluster.config:
   groupId:  sp-worker
   coordinationStrategyClass: org.wso2.carbon.cluster.coordinator.rdbms.RDBMSCoordinationStrategy
   strategyConfig:
-    datasource: SP_CLUSTER_DB
+    datasource: WSO2_CLUSTER_DB
     heartbeatInterval: 1000
     heartbeatMaxRetry: 2
     eventPollingInterval: 1000
