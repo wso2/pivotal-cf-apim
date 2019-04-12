@@ -47,23 +47,16 @@ properties:
   wso2apim.sp_cluster_db.password:
     description: WSO2 APIM Analytics database password
 
-  wso2apim_analytics.mysql.stats_db:
-    description: wso2apim mysql statistics database name
-  wso2apim_analytics.mysql.event_store_db:
-    description: wso2apim mysql event store database name
-  wso2apim_analytics.mysql.processed_data_db:
-    description: wso2apim mysql analytics processed data database name
+  wso2apim.persistence_db.jdbc_url:
+    description: WSO2 APIM persistence database JDBC URL
+  wso2apim.persistence_db.driver:
+    description: WSO2 APIM persistence database database driver name
+  wso2apim.persistence_db.query:
+    description: WSO2 APIM persistence database database validation query
+  wso2apim.persistence_db.username:
+    description: WSO2 APIM persistence database username
+  wso2apim.persistence_db.password:
+    description: WSO2 APIM persistence database password
 
   route_registrar.routes:
     description: routes registered for WSO2 APIM apps and gateway
-
-  cf.apps_domain:
-    description: Domain shared by the UAA and CF API eg 'bosh-lite.com'
-  cf.nats.host:
-    description: Hostname/IP of NATS
-  cf.nats.port:
-    description: Port that NATS listens on
-  cf.nats.username:
-    description: The user to use when authenticating with NATS
-  cf.nats.password:
-    description: The password to use when authenticating with NATS
