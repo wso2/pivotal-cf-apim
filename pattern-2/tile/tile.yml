@@ -115,6 +115,28 @@ forms:
   - name: sp_db_credentials
     label: Cluster DB Credentials
     type: simple_credentials
+- name: persistence_db
+  label: AM Analytics Persistence DB connection information
+  description: WSO2 API Manager - Persistence Database connection information
+  properties:
+  - name: persistence_db_jdbc_url
+    type: string
+    label: JDBC URL
+  - name: persistence_db_driver
+    type: dropdown_select
+    label: Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: persistence_db_query
+    type: string
+    label: Validation Query
+  - name: persistence_db_credentials
+    label: Persistence DB Credentials
+    type: simple_credentials
 
 packages:
 - name: routing_release
@@ -159,6 +181,12 @@ packages:
           query: (( .properties.sp_db_query.value ))
           username: (( .properties.sp_db_credentials.identity ))
           password: (( .properties.sp_db_credentials.password ))
+        persistence_db:
+          jdbc_url: (( .properties.persistence_db_jdbc_url.value ))
+          driver: (( .properties.persistence_db_driver.value ))
+          query: (( .properties.persistence_db_query.value ))
+          username: (( .properties.persistence_db_credentials.identity ))
+          password: (( .properties.persistence_db_credentials.password ))
       route_registrar:
         routes:
           - name: wso2apim-analytics
@@ -167,7 +195,7 @@ packages:
             registration_interval: 20s
             uris:
               - wso2apim-analytics.(( ..cf.cloud_controller.system_domain.value ))
-          - name: wso2apim-analytics
+          - name: wso2apim-analytics-storeapi
             port: 9764
             tls_port: 7444
             registration_interval: 20s
