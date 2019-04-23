@@ -36,16 +36,27 @@ properties:
   wso2apim_analytics.address:
     description: wso2apim address
 
-  wso2apim.sp_cluster_db.jdbc_url:
+  wso2apim.analytics_db.jdbc_url:
     description: WSO2 APIM Analytics database JDBC URL
-  wso2apim.sp_cluster_db.driver:
+  wso2apim.analytics_db.driver:
     description: WSO2 APIM Analytics database database driver name
-  wso2apim.sp_cluster_db.query:
+  wso2apim.analytics_db.query:
     description: WSO2 APIM Analytics database database validation query
-  wso2apim.sp_cluster_db.username:
+  wso2apim.analytics_db.username:
     description: WSO2 APIM Analytics database username
-  wso2apim.sp_cluster_db.password:
+  wso2apim.analytics_db.password:
     description: WSO2 APIM Analytics database password
+
+  wso2apim.sp_cluster_db.jdbc_url:
+    description: WSO2 APIM Analytics cluster database JDBC URL
+  wso2apim.sp_cluster_db.driver:
+    description: WSO2 APIM Analytics cluster database database driver name
+  wso2apim.sp_cluster_db.query:
+    description: WSO2 APIM Analytics cluster database database validation query
+  wso2apim.sp_cluster_db.username:
+    description: WSO2 APIM Analytics cluster database username
+  wso2apim.sp_cluster_db.password:
+    description: WSO2 APIM Analytics cluster database password
 
   wso2apim.persistence_db.jdbc_url:
     description: WSO2 APIM persistence database JDBC URL
