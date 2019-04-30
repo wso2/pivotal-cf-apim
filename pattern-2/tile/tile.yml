@@ -159,6 +159,13 @@ forms:
   - name: persistence_db_credentials
     label: Persistence DB Credentials
     type: simple_credentials
+- name: Admin user Credentials
+  label: Admin user Credentials
+  description: Admin user Credentials
+  properties:
+    - name: admin_user_credentials
+      label: Admin user Credentials
+      type: simple_credentials
 
 packages:
 - name: routing_release
@@ -197,6 +204,9 @@ packages:
     max_in_flight: 1
     properties:
       wso2apim:
+        admin:
+          username: (( .properties.admin_user_credentials.identity ))
+          password: (( .properties.admin_user_credentials.password ))
         analytics_db:
           jdbc_url: (( .properties.analytics_db_jdbc_url.value ))
           driver: (( .properties.analytics_db_driver.value ))
@@ -256,6 +266,9 @@ packages:
     max_in_flight: 1
     properties:
       wso2apim:
+        admin:
+          username: (( .properties.admin_user_credentials.identity ))
+          password: (( .properties.admin_user_credentials.password ))
         reg_db:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))
@@ -309,6 +322,9 @@ packages:
     max_in_flight: 1
     properties:
       wso2apim:
+        admin:
+          username: (( .properties.admin_user_credentials.identity ))
+          password: (( .properties.admin_user_credentials.password ))
         reg_db:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))
@@ -362,6 +378,9 @@ packages:
     max_in_flight: 1
     properties:
       wso2apim:
+        admin:
+          username: (( .properties.admin_user_credentials.identity ))
+          password: (( .properties.admin_user_credentials.password ))
         reg_db:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))

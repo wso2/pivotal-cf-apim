@@ -49,12 +49,12 @@ properties:
     description: "Max permgen in MB"
     default: 1024
 
-  wso2apim.password:
+  wso2apim.admin.password:
     description: wso2apim password
-  wso2apim.username:
+    default: admin
+  wso2apim.admin.username:
     description: wso2apim username
-  wso2apim.address:
-    description: wso2apim address
+    default: admin
 
   wso2apim.reg_db.jdbc_url:
     description: WSO2 Registry database JDBC URL
