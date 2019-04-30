@@ -29,12 +29,12 @@ properties:
     description: "Max permgen in MB"
     default: 1024
 
-  wso2apim_analytics.password:
+  wso2apim.admin.password:
     description: wso2apim password
-  wso2apim_analytics.username:
+    default: admin
+  wso2apim.admin.username:
     description: wso2apim username
-  wso2apim_analytics.address:
-    description: wso2apim address
+    default: admin
 
   wso2apim.analytics_db.jdbc_url:
     description: WSO2 APIM Analytics database JDBC URL
