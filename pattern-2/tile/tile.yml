@@ -27,138 +27,118 @@ stemcell_criteria:
   version: '170.15'
 
 forms:
-- name: reg_db
-  label: Registry DB connection information
-  description: WSO2 API Manager - Registry Database connection information
+- name: Database configurations
+  label: Database configurations
+  description: Database configurations
   properties:
-  - name: reg_db_jdbc_url
-    type: string
-    label: JDBC URL
-  - name: reg_db_driver
-    type: dropdown_select
-    label: Driver Class Name
-    options:
-    - name: com.mysql.jdbc.Driver
-      label: com.mysql.jdbc.Driver
-      default: true
-    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  - name: reg_db_query
-    type: string
-    label: Validation Query
-  - name: reg_db_credentials
-    label: Registry DB Credentials
-    type: simple_credentials
-- name: um_db
-  label: UM DB connection information
-  description: User Management Database connection information
-  properties:
-  - name: um_db_jdbc_url
-    type: string
-    label: JDBC URL
-  - name: um_db_driver
-    type: dropdown_select
-    label: Driver Class Name
-    options:
-    - name: com.mysql.jdbc.Driver
-      label: com.mysql.jdbc.Driver
-      default: true
-    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  - name: um_db_query
-    type: string
-    label: Validation Query
-  - name: um_db_credentials
-    label: User Management DB Credentials
-    type: simple_credentials
-- name: am_db
-  label: AM DB connection information
-  description: WSO2 API Manager Database connection information
-  properties:
-  - name: am_db_jdbc_url
-    type: string
-    label: JDBC URL
-  - name: am_db_driver
-    type: dropdown_select
-    label: Driver Class Name
-    options:
-    - name: com.mysql.jdbc.Driver
-      label: com.mysql.jdbc.Driver
-      default: true
-    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  - name: am_db_query
-    type: string
-    label: Validation Query
-  - name: am_db_credentials
-    label: AM DB Credentials
-    type: simple_credentials
-- name: analytics_db
-  label: APIM Analytics DB connection information
-  description: WSO2 API Manager Analytics Database connection information
-  properties:
-  - name: analytics_db_jdbc_url
-    type: string
-    label: JDBC URL
-  - name: analytics_db_driver
-    type: dropdown_select
-    label: Driver Class Name
-    options:
-    - name: com.mysql.jdbc.Driver
-      label: com.mysql.jdbc.Driver
-      default: true
-    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  - name: analytics_db_query
-    type: string
-    label: Validation Query
-  - name: analytics_db_credentials
-    label: AM Analytics DB Credentials
-    type: simple_credentials
-- name: sp_cluster_db
-  label: AM Analytics Cluster DB connection information
-  description: WSO2 API Manager - Analytics Clustering Database connection information
-  properties:
-  - name: sp_db_jdbc_url
-    type: string
-    label: JDBC URL
-  - name: sp_db_driver
-    type: dropdown_select
-    label: Driver Class Name
-    options:
-    - name: com.mysql.jdbc.Driver
-      label: com.mysql.jdbc.Driver
-      default: true
-    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  - name: sp_db_query
-    type: string
-    label: Validation Query
-  - name: sp_db_credentials
-    label: Cluster DB Credentials
-    type: simple_credentials
-- name: persistence_db
-  label: AM Analytics Persistence DB connection information
-  description: WSO2 API Manager - Persistence Database connection information
-  properties:
-  - name: persistence_db_jdbc_url
-    type: string
-    label: JDBC URL
-  - name: persistence_db_driver
-    type: dropdown_select
-    label: Driver Class Name
-    options:
-    - name: com.mysql.jdbc.Driver
-      label: com.mysql.jdbc.Driver
-      default: true
-    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  - name: persistence_db_query
-    type: string
-    label: Validation Query
-  - name: persistence_db_credentials
-    label: Persistence DB Credentials
-    type: simple_credentials
+    - name: reg_db_jdbc_url
+      type: string
+      label: Registry DB JDBC URL
+    - name: reg_db_driver
+      type: dropdown_select
+      label: Registry DB Driver Class Name
+      options:
+      - name: com.mysql.jdbc.Driver
+        label: com.mysql.jdbc.Driver
+        default: true
+      - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    - name: reg_db_query
+      type: string
+      label: Registry DB Validation Query
+    - name: reg_db_credentials
+      label: Registry DB Credentials
+      type: simple_credentials
+    - name: um_db_jdbc_url
+      type: string
+      label: User Management DB JDBC URL
+    - name: um_db_driver
+      type: dropdown_select
+      label: User Management DB Driver Class Name
+      options:
+      - name: com.mysql.jdbc.Driver
+        label: com.mysql.jdbc.Driver
+        default: true
+      - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    - name: um_db_query
+      type: string
+      label: User Management DB Validation Query
+    - name: um_db_credentials
+      label: User Management DB Credentials
+      type: simple_credentials
+    - name: am_db_jdbc_url
+      type: string
+      label: AM DB JDBC URL
+    - name: am_db_driver
+      type: dropdown_select
+      label: AM DB Driver Class Name
+      options:
+      - name: com.mysql.jdbc.Driver
+        label: com.mysql.jdbc.Driver
+        default: true
+      - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    - name: am_db_query
+      type: string
+      label: AM DB Validation Query
+    - name: am_db_credentials
+      label: AM DB Credentials
+      type: simple_credentials
+    - name: analytics_db_jdbc_url
+      type: string
+      label: AM Analytics DB JDBC URL
+    - name: analytics_db_driver
+      type: dropdown_select
+      label: AM Analytics DB Driver Class Name
+      options:
+      - name: com.mysql.jdbc.Driver
+        label: com.mysql.jdbc.Driver
+        default: true
+      - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    - name: analytics_db_query
+      type: string
+      label: AM Analytics DB Validation Query
+    - name: analytics_db_credentials
+      label: AM Analytics DB Credentials
+      type: simple_credentials
+    - name: sp_db_jdbc_url
+      type: string
+      label: Cluster DB JDBC URL
+    - name: sp_db_driver
+      type: dropdown_select
+      label: Cluster DB Driver Class Name
+      options:
+      - name: com.mysql.jdbc.Driver
+        label: com.mysql.jdbc.Driver
+        default: true
+      - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    - name: sp_db_query
+      type: string
+      label: Cluster DB Validation Query
+    - name: sp_db_credentials
+      label: Cluster DB Credentials
+      type: simple_credentials
+    - name: persistence_db_jdbc_url
+      type: string
+      label: Persistence DB JDBC URL
+    - name: persistence_db_driver
+      type: dropdown_select
+      label: Persistence DB Driver Class Name
+      options:
+      - name: com.mysql.jdbc.Driver
+        label: com.mysql.jdbc.Driver
+        default: true
+      - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    - name: persistence_db_query
+      type: string
+      label: Persistence DB Validation Query
+    - name: persistence_db_credentials
+      label: Persistence DB Credentials
+      type: simple_credentials
 - name: Admin user Credentials
   label: Admin user Credentials
   description: Admin user Credentials
