@@ -3,8 +3,6 @@ name: wso2apim_analytics
 templates:
   ctl.erb: bin/ctl
   config/deployment.yaml: config/deployment.yaml
-  resources/security/client-truststore.jks: resources/security/client-truststore.jks
-  resources/security/wso2carbon.jks: resources/security/wso2carbon.jks
 
 packages:
 - openjdk
@@ -35,6 +33,9 @@ properties:
   wso2apim.admin.username:
     description: wso2apim username
     default: admin
+
+  wso2apim.certs.value:
+    description: Trusted CA certificate
 
   wso2apim.analytics_db.jdbc_url:
     description: WSO2 APIM Analytics database JDBC URL

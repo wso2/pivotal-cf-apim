@@ -20,8 +20,8 @@
 		<AddAdmin>true</AddAdmin>
             <AdminRole>admin</AdminRole>
             <AdminUser>
-                <UserName<%= p("wso2apim.admin.username") %></UserName>
-                <Password><%= p("wso2apim.admin.password") %>n</Password>
+                <UserName><%= p("wso2apim.admin.username") %></UserName>
+                <Password><%= p("wso2apim.admin.password") %></Password>
             </AdminUser>
             <EveryOneRoleName>everyone</EveryOneRoleName> <!-- By default users in this role sees the registry root -->
             <Property name="isCascadeDeleteEnabled">true</Property>
