@@ -10,14 +10,15 @@
 **/.dev_builds/
 **/blobs/
 **/dev_releases/
-pattern-*/bosh-release/deployment/*
 **/dist/*
 !**/dist/.gitkeep
 **/.final_builds/*
 **/releases/*
 
-**/tile/product/
+**/tile/product/*
 !**/tile/product/.gitkeep
+**/bosh-release/deployment/*
+!**/bosh-release/deployment/.gitkeep
 **/tile/cache/*
 !**/tile/cache/.gitkeep
 **/tile/release/
