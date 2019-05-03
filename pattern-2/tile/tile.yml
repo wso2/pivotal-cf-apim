@@ -230,10 +230,10 @@ packages:
             registration_interval: 20s
             uris:
               - wso2apim-analytics-storeapi.(( ..cf.cloud_controller.system_domain.value ))
-  - name: wso2is_km
+  - name: keymanager
     instances: 2
     templates:
-    - name: wso2is_km
+    - name: keymanager
       release: wso2am-release
     - name: route_registrar
       release: routing
@@ -247,8 +247,8 @@ packages:
       colocated: true
       post_deploy: true
       run_default: on
-      label: IS Key Manager Health Check
-      description: Checks if IS Key Manager is up and running
+      label: Key Manager Health Check
+      description: Checks if Key Manager is up and running
     memory: 4096
     ephemeral_disk: 4096
     persistent_disk: 16384
