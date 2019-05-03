@@ -97,7 +97,7 @@ case $1 in
     #write the cert details to a file
     echo ${CA_CERT} >> tmp.cert
 
-    sudo ${KEYTOOL} -import -noprompt -trustcacerts -alias ${ALIAS} -file tmp.cert \
+    ${KEYTOOL} -import -noprompt -trustcacerts -alias ${ALIAS} -file tmp.cert \
       -storetype JKS -keystore ${KEYSTORE_PATH} -storepass ${TRUSTSTORE_PASSWORD}
 
     rm tmp.cert
