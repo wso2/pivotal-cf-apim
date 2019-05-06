@@ -31,131 +31,137 @@ forms:
   label: Database configurations
   description: Database configurations
   properties:
-    - name: reg_db_jdbc_url
-      type: string
-      label: Registry DB JDBC URL
-    - name: reg_db_driver
-      type: dropdown_select
-      label: Registry DB Driver Class Name
-      options:
-      - name: com.mysql.jdbc.Driver
-        label: com.mysql.jdbc.Driver
-        default: true
-      - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-        label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    - name: reg_db_query
-      type: string
-      label: Registry DB Validation Query
-    - name: reg_db_credentials
-      label: Registry DB Credentials
-      type: simple_credentials
-    - name: um_db_jdbc_url
-      type: string
-      label: User Management DB JDBC URL
-    - name: um_db_driver
-      type: dropdown_select
-      label: User Management DB Driver Class Name
-      options:
-      - name: com.mysql.jdbc.Driver
-        label: com.mysql.jdbc.Driver
-        default: true
-      - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-        label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    - name: um_db_query
-      type: string
-      label: User Management DB Validation Query
-    - name: um_db_credentials
-      label: User Management DB Credentials
-      type: simple_credentials
-    - name: am_db_jdbc_url
-      type: string
-      label: AM DB JDBC URL
-    - name: am_db_driver
-      type: dropdown_select
-      label: AM DB Driver Class Name
-      options:
-      - name: com.mysql.jdbc.Driver
-        label: com.mysql.jdbc.Driver
-        default: true
-      - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-        label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    - name: am_db_query
-      type: string
-      label: AM DB Validation Query
-    - name: am_db_credentials
-      label: AM DB Credentials
-      type: simple_credentials
-    - name: analytics_db_jdbc_url
-      type: string
-      label: AM Analytics DB JDBC URL
-    - name: analytics_db_driver
-      type: dropdown_select
-      label: AM Analytics DB Driver Class Name
-      options:
-      - name: com.mysql.jdbc.Driver
-        label: com.mysql.jdbc.Driver
-        default: true
-      - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-        label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    - name: analytics_db_query
-      type: string
-      label: AM Analytics DB Validation Query
-    - name: analytics_db_credentials
-      label: AM Analytics DB Credentials
-      type: simple_credentials
-    - name: sp_db_jdbc_url
-      type: string
-      label: Cluster DB JDBC URL
-    - name: sp_db_driver
-      type: dropdown_select
-      label: Cluster DB Driver Class Name
-      options:
-      - name: com.mysql.jdbc.Driver
-        label: com.mysql.jdbc.Driver
-        default: true
-      - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-        label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    - name: sp_db_query
-      type: string
-      label: Cluster DB Validation Query
-    - name: sp_db_credentials
-      label: Cluster DB Credentials
-      type: simple_credentials
-    - name: persistence_db_jdbc_url
-      type: string
-      label: Persistence DB JDBC URL
-    - name: persistence_db_driver
-      type: dropdown_select
-      label: Persistence DB Driver Class Name
-      options:
-      - name: com.mysql.jdbc.Driver
-        label: com.mysql.jdbc.Driver
-        default: true
-      - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-        label: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    - name: persistence_db_query
-      type: string
-      label: Persistence DB Validation Query
-    - name: persistence_db_credentials
-      label: Persistence DB Credentials
-      type: simple_credentials
-- name: Admin user Credentials
-  label: Admin user Credentials
-  description: Admin user Credentials
+  - name: reg_db_jdbc_url
+    type: string
+    label: Registry DB JDBC URL
+  - name: reg_db_driver
+    type: dropdown_select
+    label: Registry DB Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: reg_db_query
+    type: string
+    label: Registry DB Validation Query
+  - name: reg_db_credentials
+    label: Registry DB Credentials
+    type: simple_credentials
+  - name: um_db_jdbc_url
+    type: string
+    label: User Management DB JDBC URL
+  - name: um_db_driver
+    type: dropdown_select
+    label: User Management DB Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: um_db_query
+    type: string
+    label: User Management DB Validation Query
+  - name: um_db_credentials
+    label: User Management DB Credentials
+    type: simple_credentials
+  - name: am_db_jdbc_url
+    type: string
+    label: AM DB JDBC URL
+  - name: am_db_driver
+    type: dropdown_select
+    label: AM DB Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: am_db_query
+    type: string
+    label: AM DB Validation Query
+  - name: am_db_credentials
+    label: AM DB Credentials
+    type: simple_credentials
+  - name: analytics_db_jdbc_url
+    type: string
+    label: AM Analytics DB JDBC URL
+  - name: analytics_db_driver
+    type: dropdown_select
+    label: AM Analytics DB Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: analytics_db_query
+    type: string
+    label: AM Analytics DB Validation Query
+  - name: analytics_db_credentials
+    label: AM Analytics DB Credentials
+    type: simple_credentials
+  - name: sp_db_jdbc_url
+    type: string
+    label: Cluster DB JDBC URL
+  - name: sp_db_driver
+    type: dropdown_select
+    label: Cluster DB Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: sp_db_query
+    type: string
+    label: Cluster DB Validation Query
+  - name: sp_db_credentials
+    label: Cluster DB Credentials
+    type: simple_credentials
+  - name: persistence_db_jdbc_url
+    type: string
+    label: Persistence DB JDBC URL
+  - name: persistence_db_driver
+    type: dropdown_select
+    label: Persistence DB Driver Class Name
+    options:
+    - name: com.mysql.jdbc.Driver
+      label: com.mysql.jdbc.Driver
+      default: true
+    - name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      label: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - name: persistence_db_query
+    type: string
+    label: Persistence DB Validation Query
+  - name: persistence_db_credentials
+    label: Persistence DB Credentials
+    type: simple_credentials
+- name: Super Admin user Credentials
+  label: 'The credentials here can be chnaged via Ops Manager UI only with the initial deployment. If you prefer to change the password you can do so by accessing the carbon console.'
+  description: Super Admin user Credentials
   properties:
-    - name: admin_user_credentials
-      label: Admin user Credentials
-      type: simple_credentials
-      configurable: true
-      optional: true
+  - name: admin_username
+    type: string
+    configurable: true
+    label: Super admin username
+    default: 'admin'
+    constraints:
+    - must_match_regex: '/^admin$/'
+      error_message: 'The username should be admin.'
+  - name: admin_password
+    type: string
+    label: Super admin password
 - name: Certificate Information
   label: Trusted CA certificate
   description: Trusted CA certificate
   properties:
-    - name: ca_cert
-      label: These certificates will be trusted by the deployed services
-      type: ca_certificate
-      configurable: true
+  - name: ca_cert
+    label: These certificates will be trusted by the deployed services
+    type: ca_certificate
+    configurable: true
 packages:
 - name: routing_release
   type: bosh-release
@@ -196,8 +202,8 @@ packages:
         certs:
           value: (( .properties.ca_cert.value ))
         admin:
-          username: (( .properties.admin_user_credentials.identity ))
-          password: (( .properties.admin_user_credentials.password ))
+          username: (( .properties.admin_username.value ))
+          password: (( .properties.admin_password.value ))
         analytics_db:
           jdbc_url: (( .properties.analytics_db_jdbc_url.value ))
           driver: (( .properties.analytics_db_driver.value ))
@@ -260,8 +266,8 @@ packages:
         certs:
           value: (( .properties.ca_cert.value ))
         admin:
-          username: (( .properties.admin_user_credentials.identity ))
-          password: (( .properties.admin_user_credentials.password ))
+          username: (( .properties.admin_username.value ))
+          password: (( .properties.admin_password.value ))
         reg_db:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))
@@ -318,8 +324,8 @@ packages:
         certs:
           value: (( .properties.ca_cert.value ))
         admin:
-          username: (( .properties.admin_user_credentials.identity ))
-          password: (( .properties.admin_user_credentials.password ))
+          username: (( .properties.admin_username.value ))
+          password: (( .properties.admin_password.value ))
         reg_db:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))
@@ -376,8 +382,8 @@ packages:
         certs:
           value: (( .properties.ca_cert.value ))
         admin:
-          username: (( .properties.admin_user_credentials.identity ))
-          password: (( .properties.admin_user_credentials.password ))
+          username: (( .properties.admin_username.value ))
+          password: (( .properties.admin_password.value ))
         reg_db:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))
