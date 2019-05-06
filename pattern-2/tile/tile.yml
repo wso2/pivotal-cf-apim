@@ -139,21 +139,6 @@ forms:
   - name: persistence_db_credentials
     label: Persistence DB Credentials
     type: simple_credentials
-- name: Super Admin user Credentials
-  label: 'The credentials here can be chnaged via Ops Manager UI only with the initial deployment. If you prefer to change the password you can do so by accessing the carbon console.'
-  description: Super Admin user Credentials
-  properties:
-  - name: admin_username
-    type: string
-    configurable: true
-    label: Super admin username
-    default: 'admin'
-    constraints:
-    - must_match_regex: '/^admin$/'
-      error_message: 'The username should be admin.'
-  - name: admin_password
-    type: string
-    label: Super admin password
 - name: Certificate Information
   label: Trusted CA certificate
   description: Trusted CA certificate
@@ -201,9 +186,6 @@ packages:
       wso2apim:
         certs:
           value: (( .properties.ca_cert.value ))
-        admin:
-          username: (( .properties.admin_username.value ))
-          password: (( .properties.admin_password.value ))
         analytics_db:
           jdbc_url: (( .properties.analytics_db_jdbc_url.value ))
           driver: (( .properties.analytics_db_driver.value ))
@@ -248,7 +230,7 @@ packages:
           from: nats
           deployment: (( ..cf.deployment_name ))
     - name: health_check
-      instances: [wso2is_km]
+      instances: [keymanager]
       release: wso2am-release
       colocated: true
       post_deploy: true
@@ -265,9 +247,6 @@ packages:
       wso2apim:
         certs:
           value: (( .properties.ca_cert.value ))
-        admin:
-          username: (( .properties.admin_username.value ))
-          password: (( .properties.admin_password.value ))
         reg_db:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))
@@ -323,9 +302,6 @@ packages:
       wso2apim:
         certs:
           value: (( .properties.ca_cert.value ))
-        admin:
-          username: (( .properties.admin_username.value ))
-          password: (( .properties.admin_password.value ))
         reg_db:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))
@@ -381,9 +357,6 @@ packages:
       wso2apim:
         certs:
           value: (( .properties.ca_cert.value ))
-        admin:
-          username: (( .properties.admin_username.value ))
-          password: (( .properties.admin_password.value ))
         reg_db:
           jdbc_url: (( .properties.reg_db_jdbc_url.value ))
           driver: (( .properties.reg_db_driver.value ))
