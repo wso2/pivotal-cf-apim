@@ -229,7 +229,7 @@ packages:
         nats:
           from: nats
           deployment: (( ..cf.deployment_name ))
-    - name: health_check
+    - name: km_health_check
       instances: [keymanager]
       release: wso2am-release
       colocated: true
@@ -284,7 +284,7 @@ packages:
         nats:
           from: nats
           deployment: (( ..cf.deployment_name ))
-    - name: health_check
+    - name: apim_health_check
       instances: [wso2apim]
       release: wso2am-release
       colocated: true
@@ -339,7 +339,7 @@ packages:
         nats:
           from: nats
           deployment: (( ..cf.deployment_name ))
-    - name: health_check
+    - name: gw_health_check
       instances: [gateway]
       release: wso2am-release
       colocated: true
