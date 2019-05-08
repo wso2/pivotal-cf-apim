@@ -29,6 +29,10 @@ run_dir=/var/vcap/sys/run/wso2apim_analytics
 log_dir=/var/vcap/sys/log/wso2apim_analytics
 pid_file=${run_dir}/pid
 
+CA_CERT="<%= p("wso2apim.certs.value") %>"
+ALIAS='custom'
+TRUSTSTORE_PASSWORD='wso2carbon'
+
 mkdir -p ${run_dir} ${log_dir}
 chown -R vcap:vcap ${run_dir} ${log_dir}
 
@@ -69,6 +73,8 @@ case $1 in
     export JAVA_HOME=`pwd`/jdk8u192-b12
     export JAVA_BINARY=${JAVA_HOME}/bin/java
 
+    KEYTOOL=`pwd`/jdk8u192-b12/jre/bin/keytool
+
     log_debug "JAVA_HOME: ${JAVA_HOME}"
     log_debug "JAVA_BINARY: ${JAVA_BINARY}"
 
@@ -78,6 +84,8 @@ case $1 in
     cd wso2am-analytics*
     WSO2_APIM_ANALYTICS_HOME=`pwd`
 
+    keystore_location=${WSO2_APIM_ANALYTICS_HOME}/resources/security/client-truststore.jks
+
     # Here any config files your application needs:
     cp -r ${job_dir}/config/* ${WSO2_APIM_ANALYTICS_HOME}/conf/worker/
 
@@ -86,6 +94,14 @@ case $1 in
 
     # Create symbolic link for logging
     ln -s $WSO2_APIM_ANALYTICS_HOME/wso2/worker/logs ${log_dir}
+
+    #write the cert details to a file
+    echo ${CA_CERT} >> tmp.cert
+
+    ${KEYTOOL} -import -noprompt -trustcacerts -alias ${ALIAS} -file tmp.cert \
+      -storetype JKS -keystore ${KEYSTORE_PATH} -storepass ${TRUSTSTORE_PASSWORD}
+
+    rm tmp.cert
 
     $WSO2_APIM_ANALYTICS_HOME/bin/worker.sh start
 
