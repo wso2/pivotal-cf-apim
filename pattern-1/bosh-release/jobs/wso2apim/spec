@@ -13,8 +13,6 @@ templates:
   repository/deployment/server/jaggeryapps/admin/site/conf/site.json: repository/deployment/server/jaggeryapps/admin/site/conf/site.json
   repository/deployment/server/jaggeryapps/store/site/conf/site.json: repository/deployment/server/jaggeryapps/store/site/conf/site.json
   repository/deployment/server/jaggeryapps/publisher/site/conf/site.json: repository/deployment/server/jaggeryapps/publisher/site/conf/site.json
-  repository/resources/security/client-truststore.jks: repository/resources/security/client-truststore.jks
-  repository/resources/security/wso2carbon.jks: repository/resources/security/wso2carbon.jks
 
 packages:
 - openjdk
@@ -45,6 +43,9 @@ properties:
     description: wso2apim username
   wso2apim.address:
     description: wso2apim address
+
+  wso2apim.certs.value:
+    description: Trusted CA certificate
 
   wso2apim.reg_db.jdbc_url:
     description: WSO2 Registry database JDBC URL
