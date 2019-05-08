@@ -32,6 +32,9 @@ properties:
   wso2apim_analytics.address:
     description: wso2apim address
 
+  wso2apim.certs.value:
+    description: Trusted CA certificate
+
   wso2apim.apim_analytics_db.jdbc_url:
     description: WSO2 APIM Analytics database JDBC URL
   wso2apim.apim_analytics_db.driver:
