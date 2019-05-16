@@ -218,10 +218,10 @@ packages:
             registration_interval: 20s
             uris:
               - wso2apim-analytics-storeapi.(( ..cf.cloud_controller.system_domain.value ))
-  - name: wso2is-km
+  - name: wso2is_km
     instances: 2
     templates:
-    - name: wso2is-km
+    - name: wso2is_km
       release: wso2am-release
     - name: route_registrar
       release: routing
@@ -230,7 +230,7 @@ packages:
           from: nats
           deployment: (( ..cf.deployment_name ))
     - name: km_health_check
-      instances: [wso2is-km]
+      instances: [wso2is_km]
       release: wso2am-release
       colocated: true
       post_deploy: true
