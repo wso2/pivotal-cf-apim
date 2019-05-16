@@ -1,0 +1,13 @@
+# abort script on any command that exit with a non zero value
+set -e
+
+archive=`echo openjdk/OpenJDK8U-jdk_x64_linux_hotspot_8u192b12.tar.gz`
+
+if [[ -f $archive ]] ; then
+  echo "Open JDK archive found"
+else
+  echo "Open JDK archive not found"
+  exit 1
+fi
+
+cp -r $archive ${BOSH_INSTALL_TARGET}
