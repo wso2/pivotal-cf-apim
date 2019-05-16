@@ -1,0 +1,74 @@
+---
+name: wso2apim_analytics
+templates:
+  ctl.erb: bin/ctl
+  config/deployment.yaml: config/deployment.yaml
+
+packages:
+- openjdk
+- jdbcdrivers
+- wso2apim_analytics
+- common
+
+provides:
+- name: apim-analytics
+  type: analytics-node
+  properties:
+  - route_registrar.routes
+
+properties:
+  wso2apim_analytics.memory.min_heap:
+    description: "Min Heap in MB"
+    default: 2048
+  wso2apim_analytics.memory.max_heap:
+    description: "Max Heap in MB"
+    default: 2048
+  wso2apim_analytics.memory.max_permgen:
+    description: "Max permgen in MB"
+    default: 1024
+
+  wso2apim.admin.password:
+    description: wso2apim password
+    default: admin
+  wso2apim.admin.username:
+    description: wso2apim username
+    default: admin
+
+  wso2apim.certs.value:
+    description: Trusted CA certificate
+
+  wso2apim.analytics_db.jdbc_url:
+    description: WSO2 APIM Analytics database JDBC URL
+  wso2apim.analytics_db.driver:
+    description: WSO2 APIM Analytics database database driver name
+  wso2apim.analytics_db.query:
+    description: WSO2 APIM Analytics database database validation query
+  wso2apim.analytics_db.username:
+    description: WSO2 APIM Analytics database username
+  wso2apim.analytics_db.password:
+    description: WSO2 APIM Analytics database password
+
+  wso2apim.sp_cluster_db.jdbc_url:
+    description: WSO2 APIM Analytics cluster database JDBC URL
+  wso2apim.sp_cluster_db.driver:
+    description: WSO2 APIM Analytics cluster database database driver name
+  wso2apim.sp_cluster_db.query:
+    description: WSO2 APIM Analytics cluster database database validation query
+  wso2apim.sp_cluster_db.username:
+    description: WSO2 APIM Analytics cluster database username
+  wso2apim.sp_cluster_db.password:
+    description: WSO2 APIM Analytics cluster database password
+
+  wso2apim.persistence_db.jdbc_url:
+    description: WSO2 APIM persistence database JDBC URL
+  wso2apim.persistence_db.driver:
+    description: WSO2 APIM persistence database database driver name
+  wso2apim.persistence_db.query:
+    description: WSO2 APIM persistence database database validation query
+  wso2apim.persistence_db.username:
+    description: WSO2 APIM persistence database username
+  wso2apim.persistence_db.password:
+    description: WSO2 APIM persistence database password
+
+  route_registrar.routes:
+    description: routes registered for WSO2 APIM apps and gateway
