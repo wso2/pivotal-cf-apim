@@ -38,7 +38,6 @@ The first step in running API Manager on PCF is creating a BOSH release. The fol
         * [OpenJDK8U-jdk_x64_linux_hotspot_8u192b12.tar.gz](https://adoptopenjdk.net/archive.html)
         * [wso2am-2.6.0.zip](https://wso2.com/api-management/install/)
         * [wso2am-analytics-2.6.0.zip](https://wso2.com/api-management/install/analytics/)
-        * [wso2is-km-5.7.0.zip](https://wso2.com/api-management/install/key-manager/)
 
         JDBC Drivers for MySQL and MS SQL are added into the `dist` directory to add flexibility to the deployment. The tile cannot be changed once created, as the tile is immutable. However, options to switch between different databases can be provided.
 
