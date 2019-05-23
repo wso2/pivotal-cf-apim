@@ -19,7 +19,6 @@
 #
 # ----------------------------------------------------------------------------
 
-set +e
 set -xv
 
 script_dir=$(dirname $0)
@@ -51,10 +50,10 @@ export JAVA_OPTS=" -Xmx${MAX_HEAP}m -Xms${MIN_HEAP}m -XX:MaxPermSize=${MAX_PERMG
 
 export DEBUG_LOG=${log_dir}/wso2apim.log
 
-export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/gateway/repository/deployment
+export NFS_EXPORT_SERVER_DIR=/mnt/nfs-export/gateway/repository/deployment/server
 export NFS_EXPORT_TENANTS_DIR=/mnt/nfs-export/gateway/repository/tenants
 
-export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/gateway/repository/deployment
+export NFS_SHARE_SERVER_DIR=/mnt/nfs-share/gateway/repository/deployment/server
 export NFS_SHARE_TENANTS_DIR=/mnt/nfs-share/gateway/repository/tenants
 
 touch $DEBUG_LOG
@@ -69,13 +68,20 @@ log_debug "Kicking off ctl script as `whoami` with $1"
 
 dpkg -s nfs-common >/dev/null 2>&1
 if [ $? -ne 0 ] ; then
+  chmod 1777 /tmp
+  apt-get update
   log_debug "Installing NFS Client"
-  sudo apt-get update
-  sudo apt-get install nfs-common -y
+  apt-get install nfs-common=1:1.2.8-9ubuntu12 -y
+  if [ $? -ne 0 ] ; then
+    log_debug "Installing nfs-common failed"
+  fi
 fi
 
 mkdir -p ${NFS_SHARE_SERVER_DIR}
+log_debug "`ls -la ${NFS_SHARE_SERVER_DIR}`"
+
 mkdir -p ${NFS_SHARE_TENANTS_DIR}
+log_debug "`ls -la ${NFS_SHARE_TENANTS_DIR}`"
 
 case $1 in
 
@@ -108,7 +114,7 @@ case $1 in
     cp /var/vcap/packages/jdbcdrivers/* ${WSO2_APIM_HOME}/repository/components/lib/
 
     mkdir /tmp/gateway
-    mv $WSO2_APIM_HOME/repository/deployment/server/ /tmp/gateway/
+    mv $WSO2_APIM_HOME/repository/deployment/server/synapse-configs/ /tmp/gateway/
 
     mkdir /tmp/wso2am-tenants
     mv $WSO2_APIM_HOME/repository/tenants/ /tmp/wso2am-tenants/
@@ -124,7 +130,7 @@ case $1 in
       cp -r /tmp/wso2am-tenants/tenants/* ${NFS_SHARE_TENANTS_DIR}/
     fi
 
-    ln -s ${NFS_SHARE_SERVER_DIR}/server $WSO2_APIM_HOME/repository/deployment
+    ln -s ${NFS_SHARE_SERVER_DIR}/synapse-configs $WSO2_APIM_HOME/repository/deployment/server
     ln -s ${NFS_SHARE_TENANTS_DIR}/ $WSO2_APIM_HOME/repository
 
     # Create symbolic link for logging
