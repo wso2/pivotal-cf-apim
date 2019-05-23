@@ -1,7 +1,0 @@
-check process gateway
-  with pidfile /var/vcap/sys/run/gateway/pid
-  start program "/var/vcap/jobs/gateway/bin/ctl start"
-    with timeout 100 seconds
-  stop program "/var/vcap/jobs/gateway/bin/ctl stop"
-    with timeout 30 seconds
-  group vcap

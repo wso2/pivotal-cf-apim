@@ -1,7 +1,0 @@
-check process wso2is_km
-  with pidfile /var/vcap/sys/run/wso2is_km/pid
-  start program "/var/vcap/jobs/wso2is_km/bin/ctl start"
-    with timeout 100 seconds
-  stop program "/var/vcap/jobs/wso2is_km/bin/ctl stop"
-    with timeout 30 seconds
-  group vcap
