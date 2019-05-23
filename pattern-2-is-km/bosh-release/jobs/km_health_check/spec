@@ -1,9 +1,0 @@
----
-name: km_health_check
-
-templates:
-    run.sh: bin/run
-
-packages: []
-
-properties: {}

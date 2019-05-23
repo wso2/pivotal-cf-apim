@@ -1,7 +1,0 @@
----
-name: wso2is_km
-
-dependencies: []
-
-files:
-- wso2is_km/wso2is-km-5.7.0.zip
