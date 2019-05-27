@@ -578,7 +578,7 @@
             </DataPublisherThreadPool>
         </DataPublisher>
         <PolicyDeployer>
-            <Enabled>true</Enabled>
+            <Enabled>false</Enabled>
             <ServiceURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
