@@ -39,6 +39,7 @@
                     <url><%= p("wso2apim.um_db.jdbc_url") %></url>
                     <username><%= p("wso2apim.um_db.username") %></username>
                     <password><%= p("wso2apim.um_db.password") %></password>
+                    <defaultAutoCommit>true</defaultAutoCommit>
                     <driverClassName><%= p("wso2apim.um_db.driver") %></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
@@ -60,6 +61,7 @@
                     <url><%= p("wso2apim.reg_db.jdbc_url") %></url>
                     <username><%= p("wso2apim.reg_db.username") %></username>
                     <password><%= p("wso2apim.reg_db.password") %></password>
+                    <defaultAutoCommit>true</defaultAutoCommit>
                     <driverClassName><%= p("wso2apim.reg_db.driver") %></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
@@ -81,7 +83,7 @@
                     <url><%= p("wso2apim.am_db.jdbc_url") %></url>
                     <username><%= p("wso2apim.am_db.username") %></username>
                     <password><%= p("wso2apim.am_db.password") %></password>
-                    <defaultAutoCommit>false</defaultAutoCommit>
+                    <defaultAutoCommit>true</defaultAutoCommit>
                     <driverClassName><%= p("wso2apim.am_db.driver") %></driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
@@ -92,26 +94,27 @@
             </definition>
         </datasource>
 
-         <datasource>
-            <name>WSO2AM_STATS_DB</name>
-            <description>The datasource used for getting statistics to API Manager</description>
-            <jndiConfig>
-                <name>jdbc/WSO2AM_STATS_DB</name>
-            </jndiConfig>
-            <definition type="RDBMS">
-                <configuration>
-                    <url><%= p("wso2apim.am_db.jdbc_url") %></url>
-                    <username><%= p("wso2apim.am_db.username") %></username>
-                    <password><%= p("wso2apim.am_db.password") %></password>
-                    <driverClassName><%= p("wso2apim.am_db.driver") %></driverClassName>
-                    <maxActive>50</maxActive>
-                    <maxWait>60000</maxWait>
-                    <testOnBorrow>true</testOnBorrow>
-                    <validationQuery><%= p("wso2apim.am_db.query") %></validationQuery>
-                    <validationInterval>30000</validationInterval>
-                </configuration>
-            </definition>
-         </datasource>
+        <datasource>
+           <name>WSO2AM_STATS_DB</name>
+           <description>The datasource used for getting statistics to API Manager</description>
+           <jndiConfig>
+               <name>jdbc/WSO2AM_STATS_DB</name>
+           </jndiConfig>
+           <definition type="RDBMS">
+               <configuration>
+                   <url>jdbc:h2:../tmpStatDB/WSO2AM_STATS_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;AUTO_SERVER=TRUE</url>
+                   <username>wso2carbon</username>
+                   <password>wso2carbon</password>
+                   <defaultAutoCommit>true</defaultAutoCommit>
+                   <driverClassName>org.h2.Driver</driverClassName>
+                   <maxActive>50</maxActive>
+                   <maxWait>60000</maxWait>
+                   <testOnBorrow>true</testOnBorrow>
+                   <validationQuery>SELECT 1</validationQuery>
+                   <validationInterval>30000</validationInterval>
+               </configuration>
+           </definition>
+        </datasource>
 
         <datasource>
             <name>WSO2_MB_STORE_DB</name>
