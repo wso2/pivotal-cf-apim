@@ -30,12 +30,16 @@ consumes:
   type: keymanager-node
 - name: nfs-server
   type: nfs
+- name: apim-peers
+  type: apim-peers
 
 provides:
 - name: wso2apim
   type: wso2apim-node
   properties:
   - route_registrar.routes
+- name: apim-peers
+  type: apim-peers
 
 properties:
   wso2apim.memory.min_heap:
