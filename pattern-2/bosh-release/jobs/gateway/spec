@@ -8,6 +8,7 @@ templates:
   repository/conf/api-manager.xml: repository/conf/api-manager.xml
   repository/conf/datasources/master-datasources.xml: repository/conf/datasources/master-datasources.xml
   repository/conf/log4j.properties: repository/conf/log4j.properties
+  repository/conf/metrics.xml: repository/conf/metrics.xml
   repository/conf/user-mgt.xml: repository/conf/user-mgt.xml
   repository/conf/tomcat/catalina-server.xml: repository/conf/tomcat/catalina-server.xml
   repository/deployment/server/jaggeryapps/store/site/conf/site.json: repository/deployment/server/jaggeryapps/store/site/conf/site.json
