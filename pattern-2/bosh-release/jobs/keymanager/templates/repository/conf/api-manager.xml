@@ -91,7 +91,8 @@
                 <!-- Admin password for the API gateway.-->
                 <Password>${admin.password}</Password>
                 <!-- Endpoint URLs for the APIs hosted in this API gateway.-->
-                <GatewayEndpoint>http://<%= link("gateway").p('route_registrar.routes')[0]['uris'][0] %>,https://<%= link("gateway").p('route_registrar.routes')[0]['uris'][0] %></GatewayEndpoint>
+                <GatewayEndpoint>http://${carbon.local.ip}:${http.nio.port},https://${carbon.local.ip}:${https.nio.port}</GatewayEndpoint>
+                <!-- <GatewayEndpoint>http://<%= link("gateway").p('route_registrar.routes')[0]['uris'][0] %>,https://<%= link("gateway").p('route_registrar.routes')[0]['uris'][0] %></GatewayEndpoint> -->
                 <!-- Endpoint of the Websocket APIs hosted in this API Gateway -->
                 <GatewayWSEndpoint>ws://${carbon.local.ip}:9099</GatewayWSEndpoint>
             </Environment>
@@ -139,7 +140,7 @@
     -->
     <Analytics>
         <!-- Enable Analytics for API Manager -->
-        <Enabled>true</Enabled>
+        <Enabled>false</Enabled>
 
         <!-- Server URL of the remote StreamProcessor server used to collect statistics. Must
              be specified in protocol://hostname:port/ format.
@@ -151,8 +152,7 @@
 
              Ex - Multiple Receiver Groups with two receivers each
              {tcp://localhost:7612/,tcp://localhost:7613},{tcp://localhost:7712/,tcp://localhost:7713/} -->
-        <!--StreamProcessorServerURL>{tcp://<%= link("apim-analytics").instances[0].address %>:7612|tcp://<%= link("apim-analytics").instances[0].address %>:7612}</StreamProcessorServerURL-->
-        <StreamProcessorServerURL>{tcp://<%= link("apim-analytics").instances[0].address %>:7612|tcp://<%= link("apim-analytics").instances[1].address %>:7612}</StreamProcessorServerURL>
+       <StreamProcessorServerURL>{tcp://localhost:7612}</StreamProcessorServerURL>
         <!--StreamProcessorAuthServerURL>{ssl://localhost:7712}</StreamProcessorAuthServerURL-->
         <!-- Administrator username to login to the remote StreamProcessor server. -->
         <StreamProcessorUsername>${admin.username}</StreamProcessorUsername>
@@ -163,7 +163,7 @@
         <StatsProviderImpl>org.wso2.carbon.apimgt.usage.client.impl.APIUsageStatisticsRestClientImpl</StatsProviderImpl>
 
         <!-- StreamProcessor REST API configuration -->
-        <StreamProcessorRestApiURL>https://<%= link("apim-analytics").p('route_registrar.routes')[1]['uris'][0] %></StreamProcessorRestApiURL>
+        <StreamProcessorRestApiURL>https://localhost:7444</StreamProcessorRestApiURL>
         <StreamProcessorRestApiUsername>${admin.username}</StreamProcessorRestApiUsername>
         <StreamProcessorRestApiPassword>${admin.password}</StreamProcessorRestApiPassword>
 
@@ -303,10 +303,10 @@
         <!--This property is used to indicate how we do user name comparision for token generation https://wso2.org/jira/browse/APIMANAGER-2225-->
         <CompareCaseInsensitively>true</CompareCaseInsensitively>
         <DisplayURL>false</DisplayURL>
-        <URL>https://<%= link("wso2apim").p('route_registrar.routes')[0]['uris'][0] %>/store</URL>
+        <URL>https://localhost:${mgt.transport.https.port}/store</URL>
 
         <!-- Server URL of the API Store. -->
-        <ServerURL>https://<%= link("wso2apim").p('route_registrar.routes')[0]['uris'][0] %>${carbon.context}services/</ServerURL>
+        <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL>
         <!-- Admin username for API Store. -->
         <Username>${admin.username}</Username>
 
@@ -342,7 +342,7 @@
 
     <APIPublisher>
         <DisplayURL>false</DisplayURL>
-        <URL>https://<%= link("wso2apim").p('route_registrar.routes')[0]['uris'][0] %>/publisher</URL>
+        <URL>https://localhost:${mgt.transport.https.port}/publisher</URL>
         <!-- This parameter specifies enabling the capability of setting API documentation level granular visibility levels.
              By default any document associate with an API will have the same permissions set as the API.With enabling below
              property,it will show two additional permission levels as visible only to all registered users in a particular
