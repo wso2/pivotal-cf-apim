@@ -277,7 +277,8 @@
              In distributed deployment we should configure this property in key manager node by pointing
              gateway https( /http, we recommend users to use 'https' endpoints for security purpose) url.
              Also please note that we should point gateway revoke service to key manager -->
-        <RevokeAPIURL>https://localhost:${https.nio.port}/revoke</RevokeAPIURL>
+        <!-- <RevokeAPIURL>https://localhost:${https.nio.port}/revoke</RevokeAPIURL> -->
+        <RevokeAPIURL>https://<%= link("gateway").p('route_registrar.routes')[0]['uris'][0] %>/revoke</RevokeAPIURL>
         <!-- Whether to encrypt tokens when storing in the Database
         Note: If changing this value to true, change the value of <TokenPersistenceProcessor> to
         org.wso2.carbon.identity.oauth.tokenprocessor.EncryptionDecryptionPersistenceProcessor in the identity.xml -->
@@ -301,10 +302,11 @@
         <!--GroupingExtractor>org.wso2.carbon.apimgt.impl.DefaultGroupIDExtractorImpl</GroupingExtractor-->
         <!--This property is used to indicate how we do user name comparision for token generation https://wso2.org/jira/browse/APIMANAGER-2225-->
         <CompareCaseInsensitively>true</CompareCaseInsensitively>
-        <DisplayURL>false</DisplayURL>
+        <DisplayURL>true</DisplayURL>
         <URL>https://<%= p('route_registrar.routes')[0]['uris'][0] %>/store</URL>
 
         <!-- Server URL of the API Store. -->
+        <!-- <ServerURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServerURL> -->
         <ServerURL>https://<%= p('route_registrar.routes')[0]['uris'][0] %>${carbon.context}services/</ServerURL>
         <!-- Admin username for API Store. -->
         <Username>${admin.username}</Username>
@@ -559,13 +561,13 @@
         <EnableAdvanceThrottling>true</EnableAdvanceThrottling>
         <TrafficManager>
             <Type>Binary</Type>
-            <ReceiverUrlGroup>tcp://${carbon.local.ip}:${receiver.url.port}</ReceiverUrlGroup>
-            <AuthUrlGroup>ssl://${carbon.local.ip}:${auth.url.port}</AuthUrlGroup>
+            <ReceiverUrlGroup>{tcp://<%= link("apim-peers").instances[0].address %>:9611}, {tcp://<%= link("apim-peers").instances[1].address %>:9611}</ReceiverUrlGroup>
+            <AuthUrlGroup>{ssl://<%= link("apim-peers").instances[0].address %>:9711}, {ssl://<%= link("apim-peers").instances[1].address %>:9711}</AuthUrlGroup>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </TrafficManager>
         <DataPublisher>
-            <Enabled>true</Enabled>
+            <Enabled>false</Enabled>
             <DataPublisherPool>
                 <MaxIdle>1000</MaxIdle>
                 <InitIdleCapacity>200</InitIdleCapacity>
@@ -578,12 +580,12 @@
         </DataPublisher>
         <PolicyDeployer>
             <Enabled>true</Enabled>
-            <ServiceURL>https://localhost:${mgt.transport.https.port}${carbon.context}services/</ServiceURL>
+            <ServiceURL>https://<%= p('route_registrar.routes')[0]['uris'][0] %>${carbon.context}services/</ServiceURL>
             <Username>${admin.username}</Username>
             <Password>${admin.password}</Password>
         </PolicyDeployer>
         <BlockCondition>
-            <Enabled>true</Enabled>
+            <Enabled>false</Enabled>
             <!--InitDelay>300000</InitDelay>
             <Period>3600000</Period-->
         </BlockCondition>
