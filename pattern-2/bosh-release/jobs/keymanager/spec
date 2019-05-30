@@ -7,6 +7,7 @@ templates:
   repository/conf/registry.xml: repository/conf/registry.xml
   repository/conf/api-manager.xml: repository/conf/api-manager.xml
   repository/conf/datasources/master-datasources.xml: repository/conf/datasources/master-datasources.xml
+  repository/conf/identity/identity.xml: repository/conf/identity/identity.xml
   repository/conf/log4j.properties: repository/conf/log4j.properties
   repository/conf/metrics.xml: repository/conf/metrics.xml
   repository/conf/user-mgt.xml: repository/conf/user-mgt.xml
