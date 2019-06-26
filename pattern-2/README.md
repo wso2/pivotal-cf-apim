@@ -53,14 +53,15 @@ The first step in running API Manager on PCF is creating a BOSH release. The fol
     This may take up to 20 minutes. After the build is complete, a bosh-release is completed in the root of the `bosh-deployment` directory.  This release pack is named `wso2am-2.6.0-bosh-release.tgz`.
 
 ## Building the Pivotal Tile for API Manager
-1. Add the [routing-release](https://github.com/cloudfoundry/routing-release/releases/tag/0.178.0) provided by PCF to the root of the `tile` directory. This delivers HTTP and TCP routing for Cloud Foundry.
-2. Copy the bosh release from the `bosh-release` directory into the `tile` directory by issuing the following command.
+1. Add the [routing-release](https://github.com/cloudfoundry/routing-release/releases/tag/0.188.0) provided by PCF to the root of the `tile` directory. This delivers HTTP and TCP routing for Cloud Foundry.
+2. Add the [bpm-release](https://github.com/cloudfoundry/bpm-release/releases/tag/v1.1.0) provided by PCF to the root of the `tile` directory. Routing release depends on this.
+3. Copy the bosh release from the `bosh-release` directory into the `tile` directory by issuing the following command.
     ```bash
     cd bosh-release
     mv wso2am-2.6.0-bosh-release.tgz ../tile
     cd ../tile
     ```
-3. Run the build script to build the tile by issuing the following command.
+4. Run the build script to build the tile by issuing the following command.
     ```bash
     ./build.sh
     ```
