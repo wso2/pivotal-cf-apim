@@ -22,7 +22,8 @@
 **/tile/cache/*
 !**/tile/cache/.gitkeep
 **/tile/release/
-**/tile/routing-0.178.0.tgz
+**/tile/routing-*.tgz
+**/tile/bpm-release-*.tgz
 **/tile/wso2am-2.6.0*
 **/tile/tile-history.yml
 
