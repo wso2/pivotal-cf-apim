@@ -229,6 +229,15 @@ packages:
             router_group: wso2apim-analytics-storeapi
             external_port: 7444
             server_cert_domain_san: localhost
+          - name: wso2apim-analytics-http-transport
+            port: 9091
+            tls_port: 9444
+            registration_interval: 20s
+            uris:
+              - wso2apim-analytics-http-transport.(( ..cf.cloud_controller.system_domain.value ))
+            router_group: wso2apim-analytics-http-transport
+            external_port: 9444
+            server_cert_domain_san: localhost
   - name: keymanager
     instances: 2
     templates:
