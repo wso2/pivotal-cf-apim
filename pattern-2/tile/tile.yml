@@ -163,9 +163,9 @@ packages:
     templates:
     - name: nfs_server
       release: wso2am-release
-    memory: 4096
-    ephemeral_disk: 4096
-    persistent_disk: 16384
+    memory: 1024
+    ephemeral_disk: 1024
+    persistent_disk: 1024
     cpu: 2
     static_ip: 1
   - name: wso2apim_analytics
@@ -183,7 +183,7 @@ packages:
           deployment: (( ..cf.deployment_name ))
     memory: 4096
     ephemeral_disk: 4096
-    persistent_disk: 16384
+    persistent_disk: 1024
     cpu: 2
     static_ip: 1
     max_in_flight: 1
@@ -261,7 +261,7 @@ packages:
       description: Checks if Key Manager is up and running
     memory: 4096
     ephemeral_disk: 4096
-    persistent_disk: 16384
+    persistent_disk: 1024
     cpu: 2
     static_ip: 1
     max_in_flight: 1
@@ -321,7 +321,7 @@ packages:
       description: Checks if API Manager is up and running
     memory: 4096
     ephemeral_disk: 4096
-    persistent_disk: 16384
+    persistent_disk: 1024
     cpu: 2
     static_ip: 1
     max_in_flight: 1
@@ -381,7 +381,7 @@ packages:
       description: Checks if API Manager Gateway is up and running
     memory: 4096
     ephemeral_disk: 4096
-    persistent_disk: 16384
+    persistent_disk: 1024
     cpu: 2
     static_ip: 1
     max_in_flight: 1
