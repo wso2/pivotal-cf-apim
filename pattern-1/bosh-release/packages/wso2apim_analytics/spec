@@ -1,7 +1,0 @@
----
-name: wso2apim_analytics
-
-dependencies: []
-
-files:
-- wso2am_analytics/wso2am-analytics-2.6.0.zip
